@@ -52,19 +52,48 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
     linear-gradient(180deg,#1B1D22 0%, #16171C 60%, #121317 100%); }
 .app{max-width:660px; margin:0 auto; padding:22px 16px 70px;}
 
-/* ---------- 나. 나. 나. 상단 명패 ---------- */
-.plate{ text-align:center; margin:8px 0 20px; position:relative; }
-.plate .line{ width:54px; height:2px; background:var(--gold); margin:0 auto 12px; opacity:.7; }
-.plate h1{ font-size:24px; font-weight:800; letter-spacing:.02em; margin:0; }
-.plate h1 .mk{ color:var(--gold); }
-.plate .sub{ font-size:11.5px; letter-spacing:.32em; color:var(--muted); margin-top:6px; text-transform:uppercase; }
+/* ---------- 상단 유틸바 ---------- */
+.topbar{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+.theme-btn{ flex:0 0 auto; width:42px; height:42px; border-radius:13px; border:1px solid var(--line-2);
+  cursor:pointer; background:var(--surface); font-size:18px; color:var(--ink); box-shadow:var(--shadow); transition:transform .12s; }
+.theme-btn:active{ transform:scale(.92) rotate(-8deg); }
+.linkbar{ flex:1 1 auto; display:flex; gap:7px; overflow-x:auto; padding:2px; -webkit-overflow-scrolling:touch; scrollbar-width:none; justify-content:flex-end; }
+.linkbar::-webkit-scrollbar{ display:none; }
+.linkchip{ flex:0 0 auto; display:inline-flex; align-items:center; gap:5px; text-decoration:none; white-space:nowrap;
+  font-family:var(--sans); font-size:12.5px; font-weight:700; color:var(--ink); background:var(--surface);
+  border:1px solid var(--line-2); border-radius:11px; padding:9px 12px; box-shadow:var(--shadow); transition:transform .12s, border-color .12s; }
+.linkchip:hover{ transform:translateY(-2px); border-color:var(--gold); }
+.linkchip:active{ transform:translateY(0) scale(.97); }
+.linkchip .lc-ic{ font-size:14px; }
+.linkchip.cafe{ background:linear-gradient(135deg,#2DB400,#22A000); color:#fff; border-color:transparent; }
+.linkchip.cafe:hover{ border-color:rgba(255,255,255,.4); }
+
+/* ---------- 상단 명패 ---------- */
+.plate{ text-align:center; margin:6px 0 18px; position:relative; }
+.plate .lab-badge{ display:inline-flex; align-items:center; gap:5px; padding:6px 14px; border-radius:999px; margin-bottom:12px;
+  background:linear-gradient(135deg, var(--gold), #C8A24E); color:#fff; font-size:11.5px; font-weight:800; letter-spacing:.03em;
+  box-shadow:0 3px 12px rgba(176,141,58,.4); border:1px solid rgba(255,255,255,.3); }
+[data-theme=dark] .plate .lab-badge{ color:#1B1D22; background:linear-gradient(135deg,#D8B65E,#B99B3E); }
+.plate .line{ width:54px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 12px; }
+.plate h1{ font-size:27px; font-weight:800; letter-spacing:-.01em; margin:0; background:linear-gradient(180deg,var(--ink),color-mix(in srgb,var(--ink) 70%, var(--gold)));
+  -webkit-background-clip:text; background-clip:text; }
+.plate h1 .mk{ color:var(--gold); -webkit-text-fill-color:var(--gold); }
+.plate .sub{ font-size:11px; letter-spacing:.34em; color:var(--muted); margin-top:7px; text-transform:uppercase; }
+/* 방문 통계 */
+.stats{ display:flex; align-items:center; gap:10px; width:fit-content; max-width:100%; margin:0 auto 12px; padding:7px 15px; border-radius:999px;
+  background:var(--surface); border:1px solid var(--line-2); box-shadow:var(--shadow); font-size:12px; color:var(--muted); white-space:nowrap; }
+.stats b{ color:var(--ink); font-weight:800; font-variant-numeric:tabular-nums; }
+.stats .stat-div{ opacity:.4; }
+.stats .live-dot{ width:7px; height:7px; border-radius:50%; background:#2DB400; box-shadow:0 0 0 0 rgba(45,180,0,.5); animation:pulse 2s infinite; }
+@keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(45,180,0,.5);} 70%{box-shadow:0 0 0 6px rgba(45,180,0,0);} 100%{box-shadow:0 0 0 0 rgba(45,180,0,0);} }
+
 /* 설정 툴바 */
 .app{ zoom:var(--zoom,1); }
-.toolbar{ display:flex; gap:8px; justify-content:center; align-items:center; margin:-6px 0 14px; flex-wrap:wrap; }
-.tb-group{ display:inline-flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:10px; padding:3px; }
+.toolbar{ display:flex; gap:8px; justify-content:center; align-items:center; margin:-4px 0 14px; flex-wrap:wrap; }
+.tb-group{ display:inline-flex; gap:4px; background:var(--surface); border:1px solid var(--line-2); border-radius:11px; padding:3px; box-shadow:var(--shadow); }
 .tb-btn{ border:1px solid var(--line-2); background:var(--surface); color:var(--ink); cursor:pointer; font-family:var(--sans);
-  font-weight:700; font-size:12.5px; padding:7px 11px; border-radius:9px; min-width:38px; }
-.tb-group .tb-btn{ border:0; padding:6px 9px; min-width:34px; }
+  font-weight:700; font-size:12.5px; padding:7px 11px; border-radius:9px; min-width:38px; box-shadow:var(--shadow); }
+.tb-group .tb-btn{ border:0; padding:6px 9px; min-width:34px; box-shadow:none; }
 .tb-btn.wide{ padding:7px 13px; }
 .tb-btn.on{ background:var(--accent); color:#fff; border-color:var(--accent); }
 .tb-btn:active{ transform:scale(.94); }
@@ -75,13 +104,7 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 [data-contrast=high][data-theme=dark] body{ background:#000000 !important; }
 [data-contrast=high] .card,[data-contrast=high] .result,[data-contrast=high] .guide,[data-contrast=high] .panel,[data-contrast=high] .directory,[data-contrast=high] .hist-item{ border-width:2px; }
 [data-contrast=high] .card .cdesc,[data-contrast=high] .result .label{ color:var(--ink); }
-.theme-btn{ position:absolute; left:0; top:0; width:40px; height:40px; border-radius:12px; border:1px solid var(--line-2);
-  cursor:pointer; background:var(--surface); font-size:17px; color:var(--ink); }
-.lab-badge{ position:absolute; right:0; top:0; display:inline-flex; align-items:center; gap:4px; height:40px; padding:0 13px; border-radius:12px;
-  background:linear-gradient(135deg, var(--gold), #C8A24E); color:#fff; font-size:12px; font-weight:800; letter-spacing:.02em;
-  box-shadow:0 2px 8px rgba(176,141,58,.35); border:1px solid rgba(255,255,255,.25); white-space:nowrap; }
-[data-theme=dark] .lab-badge{ color:#1B1D22; background:linear-gradient(135deg,#D8B65E,#B99B3E); }
-@media (max-width:480px){ .lab-badge{ font-size:10.5px; padding:0 9px; height:34px; } .theme-btn{ width:34px; height:34px; } }
+@media (max-width:480px){ .linkchip{ font-size:11px; padding:8px 10px; } .plate h1{ font-size:23px; } .theme-btn{ width:38px; height:38px; } }
 
 /* ---------- 검색 ---------- */
 .search{position:relative; margin-bottom:16px;}
@@ -117,13 +140,24 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 .grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:11px; }
 .card{ position:relative; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-sm); padding:15px;
   cursor:pointer; text-align:left; font-family:var(--sans); color:var(--ink); box-shadow:0 1px 4px rgba(60,50,20,.05);
-  transition:transform .12s, box-shadow .12s; display:flex; flex-direction:column; gap:9px; min-height:112px; }
-.card:hover{ transform:translateY(-3px); box-shadow:var(--shadow); }
+  transition:transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s, border-color .16s; display:flex; flex-direction:column; gap:9px; min-height:112px; overflow:hidden; }
+.card::after{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:var(--accent,var(--gold)); opacity:0; transition:opacity .16s; }
+.card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--line-2); }
+.card:hover::after{ opacity:.55; }
 .card:active{ transform:translateY(-1px) scale(.99); }
-.card .chip{ width:40px; height:40px; border-radius:11px; display:grid; place-items:center; font-size:20px; }
+.card .chip{ width:42px; height:42px; border-radius:12px; display:grid; place-items:center; font-size:21px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.15); }
 .card .cname{ font-size:15px; font-weight:700; letter-spacing:-.01em; color:var(--ink); }
 .card .cdesc{ font-size:12px; color:var(--muted); line-height:1.4; margin-top:-4px; }
 .empty{ text-align:center; color:var(--muted); padding:44px 0; font-size:15px; }
+/* 관련 계산기 */
+.related{ margin-top:22px; padding-top:18px; border-top:1px dashed var(--line-2); }
+.related .rel-t{ font-size:12px; font-weight:800; color:var(--muted); letter-spacing:.02em; margin-bottom:11px; }
+.related .rel-row{ display:flex; flex-wrap:wrap; gap:8px; }
+.relchip{ display:inline-flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--line-2);
+  border-radius:11px; padding:9px 12px; cursor:pointer; font-family:var(--sans); font-size:13px; font-weight:600; color:var(--ink);
+  box-shadow:var(--shadow); transition:transform .12s, border-color .12s; }
+.relchip:hover{ transform:translateY(-2px); border-color:var(--accent); }
+.relchip:active{ transform:scale(.96); }
 
 /* ---------- 상세 화면 ---------- */
 .home.hide{display:none;} .directory.hide{display:none;} .shop-head.hide{display:none;}
@@ -174,13 +208,27 @@ select{cursor:pointer;}
 .btn.primary{flex:2; color:#fff; background:var(--accent);} .btn.ghost{background:var(--surface-2); color:#C6483C;}
 
 /* ---------- 결과 ---------- */
-.result{position:relative; margin-top:18px; border-radius:var(--radius-sm); padding:18px; display:none; background:var(--surface-2); border:1px solid var(--line-2);}
-.result.show{display:block; animation:pop .2s ease;}
-@keyframes pop{from{opacity:0;} to{opacity:1;}}
+.result{position:relative; margin-top:18px; border-radius:var(--radius-sm); padding:20px 18px; display:none; background:var(--surface-2);
+  border:1px solid var(--line-2); border-left:3px solid var(--accent,var(--gold)); box-shadow:0 6px 22px -16px rgba(60,50,20,.5);}
+.result.show{display:block; animation:pop .24s cubic-bezier(.2,.7,.3,1);}
+@keyframes pop{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
 .result .label{font-size:13px; color:var(--muted); font-weight:600; margin-bottom:4px;}
 .result .big{font-family:var(--mono); font-size:27px; font-weight:700; letter-spacing:-.01em; line-height:1.2; word-break:break-all;}
 .result .sub{font-size:14.5px; margin-top:11px; line-height:1.7; color:var(--ink);}
 .result .sub b{font-weight:700;} .result hr{border:0; border-top:1px solid var(--line-2); margin:14px 0;}
+/* 그래프 */
+.chart{ margin-top:14px; }
+.chart svg{ display:block; }
+.chart.donut{ display:flex; align-items:center; gap:16px; }
+.chart.donut .legend{ display:flex; flex-direction:column; gap:7px; }
+.chart.donut .lg{ font-size:13px; color:var(--ink); display:flex; align-items:center; gap:7px; }
+.chart.donut .lg .dot{ width:11px; height:11px; border-radius:3px; }
+.chart .bars{ display:flex; flex-direction:column; gap:9px; }
+.chart .bar-row{ display:flex; align-items:center; gap:9px; }
+.chart .bar-row .bl{ flex:0 0 88px; font-size:12.5px; color:var(--muted); font-weight:600; text-align:right; }
+.chart .bar-row .bt{ flex:1; height:16px; background:var(--line); border-radius:6px; overflow:hidden; }
+.chart .bar-row .bf{ height:100%; border-radius:6px; transition:width .5s cubic-bezier(.2,.7,.3,1); }
+.chart .bar-row .bv{ flex:0 0 auto; font-size:12px; font-family:var(--mono); color:var(--ink); font-weight:600; }
 .result.err{background:#FBEBE9; border-color:#F0CFC9; color:#C6483C;} [data-theme=dark] .result.err{background:#3A2320; border-color:#5A3630;}
 .result.err .big{font-size:17px;}
 .result .copy{position:absolute; top:14px; right:14px; border:1px solid var(--line-2); cursor:pointer; font-family:var(--sans); font-size:12px; font-weight:600; color:var(--muted); background:var(--surface); padding:6px 11px; border-radius:8px;}
@@ -252,8 +300,22 @@ select{cursor:pointer;}
 </head>
 <body>
 <div class="app">
+  <div class="stats" id="stats">
+    <span class="live-dot"></span>
+    <span class="stat"><b id="statTotal">…</b> 누적 방문</span>
+    <span class="stat-div">·</span>
+    <span class="stat"><b id="statMine">…</b> 내 방문</span>
+  </div>
+  <div class="topbar">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">🌙</button>
+    <div class="linkbar">
+      <a class="linkchip cafe" href="https://cafe.naver.com/aiprogram1" target="_blank" rel="noopener"><span class="lc-ic">☕</span>네이버 카페</a>
+      <a class="linkchip" href="https://shared-research-monitor.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">🔬</span>모두의 리서치</a>
+      <a class="linkchip" href="https://ai-app-tech.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">💰</span>부의 로드맵</a>
+      <a class="linkchip" href="https://product-sourcing-1.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">🛒</span>소싱 작업대</a>
+    </div>
+  </div>
   <div class="plate">
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
     <div class="lab-badge">✦ AI 재테크 연구소</div>
     <div class="line"></div>
     <h1>모두의 계산기 <span class="mk">백화점</span></h1>
@@ -425,9 +487,10 @@ select{cursor:pointer;}
         <option value="house">주택 (유상 취득)</option><option value="car">자동차 (승용) 7%</option><option value="other">그 외 부동산 4.6%</option><option value="custom">직접 입력</option></select></div>
       <div class="field" id="txCustomWrap" style="display:none"><label>세율(%)</label><input type="number" id="txCustom" placeholder="예: 2.2" oninput="calcTax()"></div>
       <div class="field"><label>취득 금액(원)</label><input type="number" id="txVal" placeholder="예: 500000000" oninput="calcTax()"></div>
-      <div id="txHouseOpt"><div class="field"><label><input type="checkbox" id="txBig" style="width:auto;vertical-align:middle;margin-right:6px" onchange="calcTax()">전용면적 85㎡ 초과 (농특세 0.2% 추가)</label></div>
-        <div class="field"><label><input type="checkbox" id="txFirst" style="width:auto;vertical-align:middle;margin-right:6px" onchange="calcTax()">생애최초 구입 감면 (취득세 최대 200만원)</label></div></div>
-      <div class="result" id="txRes"></div><p class="hint">1주택 유상취득 기준(6억↓ 1%, 6~9억 1~3%, 9억↑ 3%) + 지방교육세·농특세를 분리 계산합니다. 다주택 중과 등은 미반영 <b>참고용</b>.</p></div></section>
+      <div id="txHouseOpt"><div class="field"><label>주택 수·지역</label><select id="txMulti" onchange="calcTax()"><option value="std">1주택 (또는 비조정 2주택) · 표준</option><option value="h8">조정지역 2주택·비조정 3주택 (8% 중과)</option><option value="h12">조정지역 3주택↑·비조정 4주택↑ (12% 중과)</option></select></div>
+        <div class="field"><label><input type="checkbox" id="txBig" style="width:auto;vertical-align:middle;margin-right:6px" onchange="calcTax()">전용면적 85㎡ 초과 (농특세 추가)</label></div>
+        <div class="field"><label><input type="checkbox" id="txFirst" style="width:auto;vertical-align:middle;margin-right:6px" onchange="calcTax()">생애최초 구입 감면 (취득세 최대 200만원, 표준세율만)</label></div></div>
+      <div class="result" id="txRes"></div><p class="hint">주택 유상취득: 표준(6억↓ 1%, 6~9억 1~3%, 9억↑ 3%) 또는 다주택 중과(8%·12%) + 지방교육세·농특세를 분리 계산해요. 일시적 2주택·감면 특례는 미반영 <b>참고용</b>.</p></div></section>
 
     <section class="view" id="v-jeonse" data-floor="2"><div class="panel">
       <div class="seg"><button class="on" data-jm="toWol" onclick="jeonseMode('toWol')">전세→월세</button><button data-jm="toJeon" onclick="jeonseMode('toJeon')">월세→전세</button></div>
@@ -690,6 +753,111 @@ select{cursor:pointer;}
       <div id="bkWolWrap" style="display:none"><div class="field"><label>월세(원) · 월세거래만</label><input type="number" id="bkWol" placeholder="예: 500000" oninput="calcBrokerage()"></div></div>
       <div class="result" id="bkRes"></div><p class="hint">주택 기준 상한 요율이에요. 월세는 거래금액=보증금+월세×100(5천만 미만이면 ×70). 실제 보수는 상한 내 협의이며 부가세 별도일 수 있어요.</p></div></section>
 
+    <!-- 국민연금 예상 -->
+    <section class="view" id="v-pension" data-floor="2"><div class="panel">
+      <div class="field"><label>가입기간(년)</label><input type="number" id="pnYear" placeholder="예: 20" oninput="calcPension()"></div>
+      <div class="field"><label>가입기간 평균 월소득(원)</label><input type="number" id="pnIncome" placeholder="예: 3000000" oninput="calcPension()"></div>
+      <div class="result" id="pnRes"></div><p class="hint">노령연금은 최소 10년(120개월) 가입해야 받아요. A값(전체 가입자 평균소득) 약 299만원·상수 1.2 기준의 <b>개산</b>이며, 실제는 매년 재평가돼요.</p></div></section>
+
+    <!-- 연봉 역산 -->
+    <section class="view" id="v-netreverse" data-floor="2"><div class="panel">
+      <div class="field"><label>목표 월 실수령액(원)</label><input type="number" id="nrNet" placeholder="예: 3000000" oninput="calcNetreverse()"></div>
+      <div class="field"><label>부양가족 수(본인 포함)</label><input type="number" id="nrFam" placeholder="1" oninput="calcNetreverse()"></div>
+      <div class="result" id="nrRes"></div><p class="hint">4대보험·근로소득세·지방세를 근사 반영해 필요한 세전 연봉을 역산해요. 비과세·수당·공제에 따라 달라지는 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 상환방식 비교 -->
+    <section class="view" id="v-loancompare" data-floor="2"><div class="panel">
+      <div class="field"><label>대출 원금(원)</label><input type="number" id="lcP" placeholder="예: 100000000" oninput="calcLoancompare()"></div>
+      <div class="grid2"><div class="field"><label>연 이율(%)</label><input type="number" id="lcR" placeholder="예: 4.5" oninput="calcLoancompare()"></div><div class="field"><label>기간(개월)</label><input type="number" id="lcN" placeholder="예: 360" oninput="calcLoancompare()"></div></div>
+      <div class="result" id="lcRes"></div><p class="hint">원리금균등(매월 동일)과 원금균등(원금 일정, 이자 감소)의 월 상환액·총이자를 비교해요.</p></div></section>
+
+    <!-- 육아휴직 급여 -->
+    <section class="view" id="v-parental" data-floor="2"><div class="panel">
+      <div class="field"><label>월 통상임금(원)</label><input type="number" id="ptWage" placeholder="예: 3000000" oninput="calcParental()"></div>
+      <div class="field"><label>육아휴직 기간(개월)</label><input type="number" id="ptMonth" placeholder="예: 12" oninput="calcParental()"></div>
+      <div class="result" id="ptRes"></div><p class="hint">통상임금의 80%, 월 상한 150만·하한 70만(2024 기준). 급여의 25%는 복직 6개월 후 지급(사후지급금). 6+6 부모육아휴직제 등 특례는 미반영한 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 학자금 상환 -->
+    <section class="view" id="v-studentloan" data-floor="2"><div class="panel">
+      <div class="field"><label>연 소득(원)</label><input type="number" id="slIncome" placeholder="예: 30000000" oninput="calcStudentloan()"></div>
+      <div class="field"><label>학자금 대출 잔액(원)</label><input type="number" id="slBalance" placeholder="예: 20000000" oninput="calcStudentloan()"></div>
+      <div class="result" id="slRes"></div><p class="hint">취업 후 상환(ICL): 연소득이 상환기준소득(약 1,751만원, 2024) 초과 시 초과분의 20%를 의무상환해요. 기준은 매년 바뀌는 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 적금 만기표 -->
+    <section class="view" id="v-savingtable" data-floor="2"><div class="panel">
+      <div class="field"><label>월 납입액(원)</label><input type="number" id="stM" placeholder="예: 300000" oninput="calcSavingtable()"></div>
+      <div class="grid2"><div class="field"><label>연 이율(%)</label><input type="number" id="stR" placeholder="예: 3.5" oninput="calcSavingtable()"></div><div class="field"><label>기간(개월)</label><input type="number" id="stN" placeholder="예: 24" oninput="calcSavingtable()"></div></div>
+      <div class="field"><label>과세 유형</label><select id="stTax" onchange="calcSavingtable()"><option value="0.154">일반과세 15.4%</option><option value="0.095">세금우대 9.5%</option><option value="0">비과세</option></select></div>
+      <div class="result" id="stRes"></div><p class="hint">정기적금(단리) 기준. 이자=월납입×(연이율/12)×n(n+1)/2. 이자에만 세금이 붙어요.</p></div></section>
+
+    <!-- 중간예납 -->
+    <section class="view" id="v-interimtax" data-floor="3"><div class="panel">
+      <div class="field"><label>전년도 종합소득세 결정세액(원)</label><input type="number" id="imTax" placeholder="예: 4000000" oninput="calcInterimtax()"></div>
+      <div class="result" id="imRes"></div><p class="hint">중간예납세액 = 전년도 결정세액 × 1/2. 11월에 납부하고, 다음해 5월 확정신고 때 정산해요. 30만원 미만이면 고지 제외돼요.</p></div></section>
+
+    <!-- 종합부동산세 -->
+    <section class="view" id="v-jongbu" data-floor="3"><div class="panel">
+      <div class="field"><label>주택 공시가격 합계(원)</label><input type="number" id="jbPrice" placeholder="예: 1500000000" oninput="calcJongbu()"></div>
+      <div class="field"><label>보유 형태</label><select id="jbType" onchange="calcJongbu()"><option value="one">1세대 1주택 (12억 공제)</option><option value="multi">그 외 (9억 공제)</option><option value="heavy">3주택↑ 중과</option></select></div>
+      <div class="result" id="jbRes"></div><p class="hint">과세표준=(공시가 합계−공제)×공정시장가액비율 60%. 누진세율 적용. 재산세 중복분·세부담 상한·1주택 고령/장기보유 세액공제는 미반영한 <b>개산</b>이에요.</p></div></section>
+
+    <!-- 상속세 -->
+    <section class="view" id="v-inherit" data-floor="3"><div class="panel">
+      <div class="field"><label>상속 재산가액(원)</label><input type="number" id="ihAmt" placeholder="예: 1000000000"></div>
+      <div class="field"><label>공제</label><select id="ihDed" onchange="document.getElementById('ihCustomWrap').style.display=this.value==='custom'?'':'none'"><option value="500000000">일괄공제 5억</option><option value="1000000000">배우자+일괄 10억</option><option value="custom">직접 입력</option></select></div>
+      <div class="field" id="ihCustomWrap" style="display:none"><label>공제액 직접 입력(원)</label><input type="number" id="ihCustom" placeholder="예: 700000000"></div>
+      <div class="field"><label><input type="checkbox" id="ihCredit" style="width:auto;vertical-align:middle;margin-right:6px">신고세액공제 3% 적용</label></div>
+      <div class="actions"><button class="btn primary" onclick="calcInherit()">계산</button><button class="btn ghost" onclick="reset('v-inherit')">초기화</button></div><div class="result" id="ihRes"></div><p class="hint">과세표준=상속재산−공제. 세율 10~50% 누진(증여세와 동일 구조). 배우자공제는 실제 5억~30억 범위에서 달라지는 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 택시요금 -->
+    <section class="view" id="v-taxi" data-floor="1"><div class="panel">
+      <div class="field"><label>이동 거리(km)</label><input type="number" id="txDist" placeholder="예: 8" oninput="calcTaxi()"></div>
+      <div class="grid2"><div class="field"><label>기본요금(원)</label><input type="number" id="txBase" placeholder="4800" oninput="calcTaxi()"></div><div class="field"><label>기본거리(km)</label><input type="number" id="txBaseKm" placeholder="1.6" oninput="calcTaxi()"></div></div>
+      <div class="field"><label>할증</label><select id="txSur" onchange="calcTaxi()"><option value="1">주간 (할증 없음)</option><option value="1.2">심야 20%</option><option value="1.4">심야 40%</option></select></div>
+      <div class="result" id="txRes"></div><p class="hint">서울 중형택시 기준(기본 4,800원/1.6km, 131원/131m). 시간요금(저속)은 제외한 <b>거리 기준 근사치</b>예요. 지역마다 요금이 달라요.</p></div></section>
+
+    <!-- 주차요금 -->
+    <section class="view" id="v-parking" data-floor="1"><div class="panel">
+      <div class="field"><label>주차 시간(분)</label><input type="number" id="pkMin" placeholder="예: 150" oninput="calcParking()"></div>
+      <div class="grid2"><div class="field"><label>기본요금(원)</label><input type="number" id="pkBase" placeholder="1000" oninput="calcParking()"></div><div class="field"><label>기본 시간(분)</label><input type="number" id="pkBaseMin" placeholder="30" oninput="calcParking()"></div></div>
+      <div class="grid2"><div class="field"><label>추가요금(원)</label><input type="number" id="pkAdd" placeholder="1000" oninput="calcParking()"></div><div class="field"><label>추가 단위(분)</label><input type="number" id="pkUnit" placeholder="10" oninput="calcParking()"></div></div>
+      <div class="field"><label>일 최대요금(원) · 선택</label><input type="number" id="pkMax" placeholder="비우면 무제한" oninput="calcParking()"></div>
+      <div class="result" id="pkRes"></div></div></section>
+
+    <!-- 유지비 비교 -->
+    <section class="view" id="v-fuelcost" data-floor="1"><div class="panel">
+      <div class="field"><label>월 주행거리(km)</label><input type="number" id="fcKm" placeholder="예: 1500" oninput="calcFuelcost()"></div>
+      <div class="sub-title">내연기관</div>
+      <div class="grid2"><div class="field"><label>연비(km/L)</label><input type="number" id="fcEff" placeholder="예: 12" oninput="calcFuelcost()"></div><div class="field"><label>유가(원/L)</label><input type="number" id="fcFuel" placeholder="예: 1700" oninput="calcFuelcost()"></div></div>
+      <div class="sub-title">전기차</div>
+      <div class="grid2"><div class="field"><label>전비(km/kWh)</label><input type="number" id="fcKwh" placeholder="예: 5" oninput="calcFuelcost()"></div><div class="field"><label>충전요금(원/kWh)</label><input type="number" id="fcRate" placeholder="예: 300" oninput="calcFuelcost()"></div></div>
+      <div class="result" id="fcRes"></div></div></section>
+
+    <!-- 택배 부피무게 -->
+    <section class="view" id="v-parcel" data-floor="6"><div class="panel">
+      <div class="grid3"><div class="field"><label>가로(cm)</label><input type="number" id="pcW" placeholder="30" oninput="calcParcel()"></div><div class="field"><label>세로(cm)</label><input type="number" id="pcD" placeholder="25" oninput="calcParcel()"></div><div class="field"><label>높이(cm)</label><input type="number" id="pcHh" placeholder="20" oninput="calcParcel()"></div></div>
+      <div class="field"><label>실제 무게(kg) · 선택</label><input type="number" id="pcActual" placeholder="예: 2" oninput="calcParcel()"></div>
+      <div class="result" id="pcRes2"></div><p class="hint">부피무게(kg)=가로×세로×높이÷6000. 택배는 부피무게와 실무게 중 <b>큰 값</b>으로 요금을 매겨요. 세 변의 합으로 크기 규격(80/100/120…)도 확인해요.</p></div></section>
+
+    <!-- 건강보험 지역가입자 -->
+    <section class="view" id="v-reghealth" data-floor="2"><div class="panel">
+      <div class="field"><label>연 소득(사업·근로·기타 합계, 원)</label><input type="number" id="rhIncome" placeholder="예: 30000000" oninput="calcReghealth()"></div>
+      <div class="result" id="rhRes"></div><p class="hint">지역가입자 소득보험료(7.09%, 2024)와 장기요양(건보의 12.95%)을 개산해요. <b>재산·자동차 점수분은 별도로 가산</b>되므로, 정확한 금액은 건강보험공단 모의계산을 권장해요.</p></div></section>
+
+    <!-- 노동시간 환산 -->
+    <section class="view" id="v-worktime" data-floor="1"><div class="panel">
+      <div class="field"><label>사고 싶은 물건 가격(원)</label><input type="number" id="wtPrice" placeholder="예: 1500000" oninput="calcWorktime()"></div>
+      <div class="seg"><button class="on" data-wm="hour" onclick="wtMode('hour')">시급으로</button><button data-wm="month" onclick="wtMode('month')">월급으로</button></div>
+      <div id="wtHourIn"><div class="field"><label>내 시급(원)</label><input type="number" id="wtHourly" placeholder="예: 12000" oninput="calcWorktime()"></div></div>
+      <div id="wtMonthIn" style="display:none"><div class="field"><label>월 실수령(원)</label><input type="number" id="wtMonthly" placeholder="예: 2800000" oninput="calcWorktime()"></div></div>
+      <div class="result" id="wtRes2"></div><p class="hint">가격을 시급으로 나눠 "몇 시간·며칠 일해야 살 수 있는지" 소비의 진짜 무게를 보여줘요. (월급 기준은 하루 8시간·주 5일·월 209시간 가정)</p></div></section>
+
+    <!-- 구독료 합산 -->
+    <section class="view" id="v-subs" data-floor="1"><div class="panel">
+      <div class="field"><label>구독 목록 (한 줄에 "이름 금액" 또는 "이름 금액 연")</label><textarea id="subList" placeholder="넷플릭스 13500&#10;유튜브 14900&#10;쿠팡 58000 연&#10;클로드 20000" style="min-height:120px"></textarea></div>
+      <div class="actions"><button class="btn primary" onclick="calcSubs()">합산</button><button class="btn ghost" onclick="reset('v-subs')">초기화</button></div><div class="result" id="subRes"></div>
+      <p class="hint">각 줄 끝에 "연"을 붙이면 연 결제로 보고 월로 환산해요. 월 합계·연 합계와 항목별 비중을 보여줘요.</p></div></section>
+
     <!-- 카페인 반감기 -->
     <section class="view" id="v-caffeine" data-floor="4"><div class="panel">
       <div class="field"><label>음료 빠른 선택</label><select id="cfPreset" onchange="cfFill()"><option value="">직접 입력</option><option value="75">에스프레소 1샷 (75mg)</option><option value="150">아메리카노 톨 (150mg)</option><option value="90">캔커피 (90mg)</option><option value="30">녹차 1잔 (30mg)</option><option value="80">에너지드링크 (80mg)</option></select></div>
@@ -948,6 +1116,22 @@ const CALCS=[
   {id:'loanlimit',floor:2,icon:'🏦',name:'대출한도(DSR)',desc:'LTV·DSR',kw:'대출한도 ltv dsr 주택담보 영끌'},
   {id:'unemploy',floor:2,icon:'💼',name:'실업급여',desc:'구직급여 추정',kw:'실업급여 구직급여 고용보험 퇴사'},
   {id:'brokerage',floor:2,icon:'🏘️',name:'중개보수(복비)',desc:'거래금액별',kw:'중개보수 복비 부동산 중개수수료 매매 전세'},
+  {id:'pension',floor:2,icon:'💰',name:'국민연금 예상',desc:'노령연금 개산',kw:'국민연금 노령연금 예상 수령액 연금'},
+  {id:'netreverse',floor:2,icon:'🔄',name:'연봉 역산',desc:'실수령→연봉',kw:'연봉 역산 실수령 목표 세전'},
+  {id:'loancompare',floor:2,icon:'⚖️',name:'상환방식 비교',desc:'원리금vs원금',kw:'원리금균등 원금균등 대출 상환 비교 이자'},
+  {id:'parental',floor:2,icon:'🍼',name:'육아휴직 급여',desc:'통상임금 기준',kw:'육아휴직 급여 출산 통상임금'},
+  {id:'studentloan',floor:2,icon:'🎓',name:'학자금 상환',desc:'취업후상환',kw:'학자금 상환 icl 취업후 대출'},
+  {id:'savingtable',floor:2,icon:'🏦',name:'적금 만기표',desc:'세후 실수령',kw:'적금 만기 세후 이자 실수령 표'},
+  {id:'interimtax',floor:3,icon:'🧾',name:'중간예납',desc:'전년세액 1/2',kw:'중간예납 종합소득세 11월 예납'},
+  {id:'jongbu',floor:3,icon:'🏢',name:'종합부동산세',desc:'공시가 합산',kw:'종합부동산세 종부세 공시가격 다주택'},
+  {id:'inherit',floor:3,icon:'📜',name:'상속세',desc:'일괄·배우자공제',kw:'상속세 상속 공제 누진'},
+  {id:'taxi',floor:1,icon:'🚕',name:'택시요금',desc:'거리·할증',kw:'택시 요금 거리 심야할증 미터'},
+  {id:'parking',floor:1,icon:'🅿️',name:'주차요금',desc:'시간·일최대',kw:'주차 요금 시간 주차장'},
+  {id:'fuelcost',floor:1,icon:'⛽',name:'유지비 비교',desc:'주유vs전기차',kw:'주유 전기차 유지비 연료비 충전 비교'},
+  {id:'parcel',floor:6,icon:'📦',name:'택배 부피무게',desc:'부피·청구무게',kw:'택배 부피무게 크기 세변합 무게'},
+  {id:'reghealth',floor:2,icon:'🏥',name:'건강보험(지역)',desc:'지역가입자 개산',kw:'건강보험 지역가입자 보험료 소득 장기요양'},
+  {id:'worktime',floor:1,icon:'⏳',name:'노동시간 환산',desc:'이거 몇 시간?',kw:'노동시간 시급 환산 가격 며칠'},
+  {id:'subs',floor:1,icon:'💳',name:'구독료 합산',desc:'월·연 구독비',kw:'구독 구독료 넷플릭스 정기결제 합산'},
 ];
 const GUIDE={
   basic:'숫자와 연산 버튼으로 계산해요. 키보드 입력도 되고 <b>%</b>는 백분율, <b>⌫</b>는 한 글자 지우기예요.',
@@ -1035,7 +1219,23 @@ const GUIDE={
   insurance:'월급(보수월액)으로 국민연금·건강보험·장기요양·고용보험 근로자 부담액과 세전 실수령 근사치를 계산해요.',
   loanlimit:'집값·소득·기존 대출로 LTV 한도와 DSR 한도를 각각 계산해 실제 받을 수 있는 대출 한도를 알려줘요.',
   unemploy:'평균임금·나이·고용보험 가입기간으로 1일 구직급여와 소정급여일수·총 수령액을 추정해요.',
-  brokerage:'매매·전세·월세 거래금액대별 중개보수 상한 요율로 부동산 복비를 계산해요.'
+  brokerage:'매매·전세·월세 거래금액대별 중개보수 상한 요율로 부동산 복비를 계산해요.',
+  pension:'가입기간과 평균 소득으로 국민연금 노령연금 월 수령액을 개산해요. 실제 A값·상수는 매년 바뀌어요.',
+  netreverse:'목표 월 실수령액을 넣으면 필요한 연봉(세전)을 역산해요. 4대보험·소득세를 근사 반영해요.',
+  loancompare:'같은 대출을 원리금균등과 원금균등으로 갚을 때 월 상환액과 총이자를 비교해요.',
+  parental:'통상임금으로 육아휴직 급여(80%·상하한)와 기간 총액을 계산해요. 사후지급금은 별도예요.',
+  studentloan:'취업 후 상환(ICL) 방식으로 연소득 기준 의무상환액과 예상 상환기간을 계산해요.',
+  savingtable:'정기적금(단리)의 만기 원금·세전이자·세금·세후 실수령을 계산해요.',
+  interimtax:'종합소득세 중간예납세액(전년 결정세액의 1/2)을 계산해요. 11월에 납부해요.',
+  jongbu:'주택 공시가격 합계로 종합부동산세를 개산해요. 1주택 12억·다주택 9억 공제와 누진세율을 반영해요.',
+  inherit:'상속재산에서 일괄·배우자 공제를 빼고 상속세를 누진세율로 계산해요.',
+  taxi:'기본요금과 거리로 택시요금을 계산하고 심야·시외 할증을 반영해요.',
+  parking:'기본시간·추가단위 요금으로 주차요금을 계산하고 일 최대요금을 적용해요.',
+  fuelcost:'월 주행거리로 내연기관 주유비와 전기차 충전비를 비교해요.',
+  parcel:'상자 크기(가로·세로·높이)로 부피무게와 청구무게(실무게와 비교)를 계산해요.',
+  reghealth:'연소득으로 지역가입자 건강보험료(소득분)와 장기요양보험료를 개산해요. 재산·자동차분은 별도예요.',
+  worktime:'사고 싶은 물건 가격이 내 시급 기준 몇 시간·며칠치 일인지 환산해 소비의 진짜 무게를 보여줘요.',
+  subs:'여러 구독 서비스의 월·연 결제액을 합산해요. 연 결제는 월로 환산해 총 지출을 알려줘요.'
 };
 let recents = store.get('cds_recent') || [];
 let history = store.get('cds_history') || [];
@@ -1113,6 +1313,10 @@ function openView(id){
       head.after(g);
       const res=view.querySelector('.result'); if(res && !res.classList.contains('show')){ res.dataset.blank='1'; res.innerHTML=`<div class="blank"><div class="bi">${calc.icon}</div><div class="bt">${T('blank')}${EXAMPLES[id]?'<br>'+T('blankEx'):''}</div></div>`; res.classList.add('show'); }
     }
+    const sib=CALCS.filter(c=>c.floor===calc.floor&&c.id!==id).sort(()=>Math.random()-0.5).slice(0,4);
+    if(sib.length){ const rel=document.createElement('div'); rel.className='related';
+      rel.innerHTML=`<div class="rel-t">${LANG==='en'?'Related':'같은 층 다른 계산기'}</div><div class="rel-row">`+sib.map(c=>`<button class="relchip" onclick="openView('${c.id}')"><span>${c.icon}</span>${name(c)}</button>`).join('')+`</div>`;
+      const anchor=view.querySelector('.panel'); if(anchor)anchor.after(rel); else view.appendChild(rel); }
   }
   setAccent(info.color);
   recents=[id,...recents.filter(x=>x!==id)].slice(0,10); store.set('cds_recent',recents);
@@ -1168,8 +1372,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -1183,6 +1387,19 @@ function toggleLang(){ LANG=LANG==='ko'?'en':'ko'; store.set('cds_lang',LANG); a
 
 /* ===== 유틸 ===== */
 function fmt(n,d=2){ if(!isFinite(n))return'—'; return Number(n.toFixed(d)).toLocaleString('ko-KR',{maximumFractionDigits:d}); }
+/* ===== 그래프 헬퍼 ===== */
+function chartArea(vals,labels,color){ color=color||'var(--accent)'; const n=vals.length; if(n<2)return ''; const W=340,H=140,pL=6,pR=6,pT=12,pB=22;
+  const mx=Math.max(...vals),mn=Math.min(0,...vals),rng=(mx-mn)||1; const X=i=>pL+i/(n-1)*(W-pL-pR); const Y=v=>(H-pB)-(v-mn)/rng*(H-pB-pT);
+  let d=''; vals.forEach((v,i)=>{d+=(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1);});
+  const area=`M${X(0).toFixed(1)},${(H-pB).toFixed(1)}`+vals.map((v,i)=>`L${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join('')+`L${X(n-1).toFixed(1)},${(H-pB).toFixed(1)}Z`;
+  const idxs=[0,Math.floor((n-1)/2),n-1]; const xlab=idxs.filter((v,i,a)=>a.indexOf(v)===i).map(i=>`<text x="${X(i).toFixed(1)}" y="${H-6}" text-anchor="${i===0?'start':i===n-1?'end':'middle'}" font-size="10" fill="var(--muted)">${labels[i]}</text>`).join('');
+  const last=vals[n-1]; const uid='cg'+Math.random().toString(36).slice(2,7);
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto"><defs><linearGradient id="${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity="0.30"/><stop offset="1" stop-color="${color}" stop-opacity="0.02"/></linearGradient></defs><path d="${area}" fill="url(#${uid})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${X(n-1).toFixed(1)}" cy="${Y(last).toFixed(1)}" r="3.5" fill="${color}"/>${xlab}</svg></div>`; }
+function chartBars(items){ const max=Math.max(...items.map(i=>i.value))||1; return `<div class="chart"><div class="bars">`+items.map(it=>`<div class="bar-row"><span class="bl">${it.label}</span><div class="bt"><div class="bf" style="width:${(it.value/max*100).toFixed(1)}%;background:${it.color||'var(--accent)'}"></div></div><span class="bv">${fmt(Math.round(it.value),0)}</span></div>`).join('')+`</div></div>`; }
+function chartDonut(segs){ const total=segs.reduce((s,x)=>s+x.value,0)||1,R=52,C=2*Math.PI*R; let off=0;
+  const arcs=segs.map(s=>{const dash=s.value/total*C;const el=`<circle cx="70" cy="70" r="${R}" fill="none" stroke="${s.color}" stroke-width="20" stroke-dasharray="${dash.toFixed(2)} ${(C-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 70 70)"/>`;off+=dash;return el;}).join('');
+  const legend=segs.map(s=>`<div class="lg"><span class="dot" style="background:${s.color}"></span>${s.label} <b>${fmt(Math.round(s.value/total*100),0)}%</b></div>`).join('');
+  return `<div class="chart donut"><svg viewBox="0 0 140 140" width="118" height="118">${arcs}</svg><div class="legend">${legend}</div></div>`; }
 function show(id,html,err=false){ const el=document.getElementById(id); el.innerHTML=html+(err?'':`<button class="save" onclick="saveRes(this)">${T('save')}</button><button class="img" onclick="imgRes(this)">${T('image')}</button><button class="copy" onclick="copyRes(this)">${T('copy')}</button>`); el.classList.toggle('err',err); el.classList.add('show'); el.dataset.calc=curCalcName; el.dataset.blank=''; }
 function imgRes(btn){ const box=btn.parentElement; const c=box.cloneNode(true); c.querySelectorAll('.copy,.save,.img').forEach(x=>x.remove());
   const lines=c.innerText.trim().split('\n').filter(Boolean); const title=box.dataset.calc||'계산 결과';
@@ -1294,9 +1511,12 @@ let loanCur='equal';
 function loanMode(m){ loanCur=m; document.querySelectorAll('#v-loan .seg button').forEach(b=>b.classList.toggle('on',b.dataset.lm===m)); }
 function calcLoan(){ const P=parseFloat(document.getElementById('lP').value),R=parseFloat(document.getElementById('lR').value),N=parseInt(document.getElementById('lN').value,10); let G=parseInt(document.getElementById('lGrace').value,10); if(isNaN(G)||G<0)G=0; if(isNaN(P)||isNaN(R)||isNaN(N)||P<=0||N<=0||R<0)return show('lRes','<div class="big">값을 올바르게 입력하세요</div>',true); if(G>=N)return show('lRes','<div class="big">거치기간은 전체 기간보다 짧아야 해요</div>',true); const r=R/100/12; const M=N-G; const graceInt=P*r*G;
   if(loanCur==='equal'){ let m=r===0?P/M:P*r*Math.pow(1+r,M)/(Math.pow(1+r,M)-1); const repayInt=m*M-P; const i=repayInt+graceInt; const t=P+i;
-    show('lRes',`<div class="label">${G>0?'거치 후 ':''}매월 상환금 (원리금균등)</div><div class="big" style="color:var(--f2)">${fmt(m,0)} 원</div><div class="sub">${G>0?`거치기간 ${G}개월 월 이자 <b>${fmt(P*r,0)}원</b><br>이후 ${M}개월 원리금 상환<br>`:''}총 상환 <b>${fmt(t,0)}원</b><br>총 이자 <b style="color:var(--f2)">${fmt(i,0)}원</b></div>`);
+    const bal=[],labels=[]; let b=P; const step=Math.max(1,Math.round(N/12)); for(let k=0;k<=N;k++){ if(k<=G){ if(k%step===0){bal.push(b);labels.push(k+'개월');} } else { if(k%step===0){bal.push(b);labels.push(k+'개월');} if(r===0)b-=P/M; else b=b*(1+r)-m; b=Math.max(b,0); } } bal.push(0); labels.push(N+'개월');
+    const chart=chartArea(bal,labels,'var(--f2)'); const donut=chartDonut([{label:'원금',value:P,color:'var(--f2)'},{label:'총이자',value:i,color:'var(--f4)'}]);
+    show('lRes',`<div class="label">${G>0?'거치 후 ':''}매월 상환금 (원리금균등)</div><div class="big" style="color:var(--f2)">${fmt(m,0)} 원</div><div class="sub">${G>0?`거치기간 ${G}개월 월 이자 <b>${fmt(P*r,0)}원</b><br>이후 ${M}개월 원리금 상환<br>`:''}총 상환 <b>${fmt(t,0)}원</b><br>총 이자 <b style="color:var(--f2)">${fmt(i,0)}원</b></div><div class="label" style="margin-top:14px">잔액 추이</div>${chart}${donut}`);
   }else{ const pr=P/M,first=pr+P*r,last=pr+pr*r,repayInt=P*r*(M+1)/2; const i=repayInt+graceInt;
-    show('lRes',`<div class="label">${G>0?'거치 후 ':''}첫 달 상환금 (원금균등)</div><div class="big" style="color:var(--f2)">${fmt(first,0)} 원</div><div class="sub">${G>0?`거치기간 ${G}개월 월 이자 <b>${fmt(P*r,0)}원</b><br>`:''}마지막 달 <b>${fmt(last,0)}원</b><br>매달 원금 <b>${fmt(pr,0)}원</b> 고정<br>총 이자 <b style="color:var(--f2)">${fmt(i,0)}원</b> · 총 <b>${fmt(P+i,0)}원</b></div>`); } }
+    const donut=chartDonut([{label:'원금',value:P,color:'var(--f2)'},{label:'총이자',value:i,color:'var(--f4)'}]);
+    show('lRes',`<div class="label">${G>0?'거치 후 ':''}첫 달 상환금 (원금균등)</div><div class="big" style="color:var(--f2)">${fmt(first,0)} 원</div><div class="sub">${G>0?`거치기간 ${G}개월 월 이자 <b>${fmt(P*r,0)}원</b><br>`:''}마지막 달 <b>${fmt(last,0)}원</b><br>매달 원금 <b>${fmt(pr,0)}원</b> 고정<br>총 이자 <b style="color:var(--f2)">${fmt(i,0)}원</b> · 총 <b>${fmt(P+i,0)}원</b></div>${donut}`); } }
 
 /* ===== 예적금 ===== */
 let savCur='dep-simple';
@@ -1308,7 +1528,9 @@ function calcSaving(){ const A=parseFloat(document.getElementById('svAmt').value
 /* ===== 복리 성장 ===== */
 function calcCompound(){ const P=parseFloat(document.getElementById('cpP').value),R=parseFloat(document.getElementById('cpR').value),Y=parseFloat(document.getElementById('cpY').value),m=parseInt(document.getElementById('cpM').value); let add=parseFloat(document.getElementById('cpAdd').value); if(isNaN(add)||add<0)add=0; if(isNaN(P)||isNaN(R)||isNaN(Y)||P<0||Y<=0||R<0||(P<=0&&add<=0))return show('cpRes','<div class="big">원금 또는 월 적립액을 입력하세요</div>',true);
   const fvP=P*Math.pow(1+R/100/m,m*Y); const im=R/100/12,months=Y*12; const fvAdd=add>0?(im===0?add*months:add*((Math.pow(1+im,months)-1)/im)):0; const fv=fvP+fvAdd; const paid=P+add*months;
-  show('cpRes',`<div class="label">${Y}년 후 미래가치</div><div class="big" style="color:var(--f2)">${fmt(fv,0)} 원</div><div class="sub">투입 원금 ${fmt(paid,0)}원${add>0?` (초기 ${fmt(P,0)} + 월 ${fmt(add,0)}×${months})`:''}<br>이자·수익 <b>${fmt(fv-paid,0)}원</b> (원금 대비 ${(fv/Math.max(paid,1)*100-100).toFixed(1)}%)</div>`); }
+  const yrs=Math.min(Math.max(Math.round(Y),1),40); const series=[],labels=[]; for(let t=0;t<=yrs;t++){ const bp=P*Math.pow(1+R/100/m,m*t); const ba=add>0?(im===0?add*(12*t):add*((Math.pow(1+im,12*t)-1)/im)):0; series.push(bp+ba); labels.push(t+'년'); }
+  const chart=chartArea(series,labels,'var(--f2)'); const donut=chartDonut([{label:'원금',value:paid,color:'var(--f2)'},{label:'이자·수익',value:Math.max(fv-paid,0),color:'var(--star)'}]);
+  show('cpRes',`<div class="label">${Y}년 후 미래가치</div><div class="big" style="color:var(--f2)">${fmt(fv,0)} 원</div><div class="sub">투입 원금 ${fmt(paid,0)}원${add>0?` (초기 ${fmt(P,0)} + 월 ${fmt(add,0)}×${months})`:''}<br>이자·수익 <b>${fmt(fv-paid,0)}원</b> (원금 대비 ${(fv/Math.max(paid,1)*100-100).toFixed(1)}%)</div>${chart}${donut}`); }
 
 /* ===== 부가세 ===== */
 let vatCur='add';
@@ -1367,12 +1589,17 @@ function calcGoal(){ const F=parseFloat(document.getElementById('goTarget').valu
   const haveFV=have*Math.pow(1+i,n); const need=Math.max(F-haveFV,0);
   if(need<=0)return show('goRes',`<div class="label">이미 목표 달성 가능</div><div class="big" style="color:var(--f1)">추가 적립 불필요 ✓</div><div class="sub">현재 ${fmt(have,0)}원이 ${Y}년 뒤 <b>${fmt(haveFV,0)}원</b>이 되어 목표 ${fmt(F,0)}원을 넘어요.</div>`);
   const lump=i===0?need:need/Math.pow(1+i,n),pmt=i===0?need/n:need*i/(Math.pow(1+i,n)-1);
-  show('goRes',`<div class="label">매월 적립해야 할 금액</div><div class="big" style="color:var(--f2)">${fmt(pmt,0)} 원</div><div class="sub">${have>0?`현재 ${fmt(have,0)}원 → ${Y}년 뒤 ${fmt(haveFV,0)}원<br>부족분 <b>${fmt(need,0)}원</b>을 채우려면:<br>`:''}또는 지금 일시 예치 <b>${fmt(lump,0)}원</b><br>(연 ${fmt(R,2)}% 월복리)</div>`); }
+  const yrs=Math.min(Math.max(Math.round(Y),1),40),series=[],labels=[]; for(let t=0;t<=yrs;t++){ const hv=have*Math.pow(1+i,12*t); const pv=i===0?pmt*12*t:pmt*((Math.pow(1+i,12*t)-1)/i); series.push(hv+pv); labels.push(t+'년'); }
+  const chart=chartArea(series,labels,'var(--f2)');
+  show('goRes',`<div class="label">매월 적립해야 할 금액</div><div class="big" style="color:var(--f2)">${fmt(pmt,0)} 원</div><div class="sub">${have>0?`현재 ${fmt(have,0)}원 → ${Y}년 뒤 ${fmt(haveFV,0)}원<br>부족분 <b>${fmt(need,0)}원</b>을 채우려면:<br>`:''}또는 지금 일시 예치 <b>${fmt(lump,0)}원</b><br>(연 ${fmt(R,2)}% 월복리)</div><div class="label" style="margin-top:14px">목표까지 성장</div>${chart}`); }
 
 /* ===== 취득세 ===== */
 function calcTax(){ const type=document.getElementById('txType').value,custom=type==='custom'; document.getElementById('txCustomWrap').style.display=custom?'':'none'; document.getElementById('txHouseOpt').style.display=type==='house'?'':'none'; const v=parseFloat(document.getElementById('txVal').value); if(isNaN(v)||v<=0){document.getElementById('txRes').classList.remove('show');return;}
-  if(type==='house'){ let br; if(v<=6e8)br=1.0; else if(v<=9e8){br=(v/1e8)*(2/3)-3; br=Math.min(Math.max(br,1),3);} else br=3.0;
-    let main=v*br/100; const edu=v*(br*0.1)/100; const big=document.getElementById('txBig').checked; const farm=big?v*0.2/100:0;
+  if(type==='house'){ const multi=document.getElementById('txMulti').value; const big=document.getElementById('txBig').checked;
+    if(multi!=='std'){ const br=multi==='h8'?8:12; const main=v*br/100; const edu=v*0.4/100; const farm=big?v*(br===8?0.6:1.0)/100:0; const total=main+edu+farm;
+      return show('txRes',`<div class="label">예상 취득세 합계 (중과 ${br}%)</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="sub">취득세 <b>${fmt(main,0)}원</b><br>지방교육세(0.4%) <b>${fmt(edu,0)}원</b>${big?`<br>농어촌특별세 <b>${fmt(farm,0)}원</b>`:''}<br>취득가액 ${fmt(v,0)}원 · 다주택 중과</div>`); }
+    let br; if(v<=6e8)br=1.0; else if(v<=9e8){br=(v/1e8)*(2/3)-3; br=Math.min(Math.max(br,1),3);} else br=3.0;
+    let main=v*br/100; const edu=v*(br*0.1)/100; const farm=big?v*0.2/100:0;
     if(document.getElementById('txFirst').checked){ main=Math.max(main-2000000,0); }
     const total=main+edu+farm;
     return show('txRes',`<div class="label">예상 취득세 합계 (본세율 ${fmt(br,2)}%)</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="sub">취득세 <b>${fmt(main,0)}원</b><br>지방교육세 <b>${fmt(edu,0)}원</b>${big?`<br>농어촌특별세 <b>${fmt(farm,0)}원</b>`:''}<br>취득가액 ${fmt(v,0)}원</div>`); }
@@ -1480,7 +1707,8 @@ function calcStat(){ const raw=document.getElementById('stVal').value.trim(); co
   const n=arr.length,sum=arr.reduce((a,b)=>a+b,0),mean=sum/n,sorted=[...arr].sort((a,b)=>a-b),mid=n%2?sorted[(n-1)/2]:(sorted[n/2-1]+sorted[n/2])/2;
   const varP=arr.reduce((s,x)=>s+(x-mean)**2,0)/n, sdP=Math.sqrt(varP); const varS=n>1?arr.reduce((s,x)=>s+(x-mean)**2,0)/(n-1):0, sdS=Math.sqrt(varS);
   const freq={}; arr.forEach(x=>freq[x]=(freq[x]||0)+1); const maxF=Math.max(...Object.values(freq)); const modes=maxF>1?Object.keys(freq).filter(k=>freq[k]===maxF).map(Number):[];
-  show('stRes',`<div class="label">개수 ${n}개 · 합계 ${fmt(sum,3)}</div><div class="big" style="color:var(--f4)">평균 ${fmt(mean,3)}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">중앙값</span><span class="vl">${fmt(mid,3)}</span></div><div class="ri"><span class="nm">최빈값</span><span class="vl">${modes.length?modes.map(m=>fmt(m,2)).join(', '):'없음'}</span></div><div class="ri"><span class="nm">표준편차(모)</span><span class="vl">${fmt(sdP,3)}</span></div><div class="ri"><span class="nm">표준편차(표본)</span><span class="vl">${fmt(sdS,3)}</span></div><div class="ri"><span class="nm">분산(모)</span><span class="vl">${fmt(varP,3)}</span></div><div class="ri"><span class="nm">범위</span><span class="vl">${fmt(sorted[n-1]-sorted[0],3)} (${fmt(sorted[0],2)}~${fmt(sorted[n-1],2)})</span></div></div>`); }
+  const quant=p=>{ const idx=(n-1)*p; const lo=Math.floor(idx),hi=Math.ceil(idx); return sorted[lo]+(sorted[hi]-sorted[lo])*(idx-lo); }; const q1=quant(0.25),q3=quant(0.75),iqr=q3-q1;
+  show('stRes',`<div class="label">개수 ${n}개 · 합계 ${fmt(sum,3)}</div><div class="big" style="color:var(--f4)">평균 ${fmt(mean,3)}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">중앙값 (Q2)</span><span class="vl">${fmt(mid,3)}</span></div><div class="ri"><span class="nm">1사분위 Q1 · 3사분위 Q3</span><span class="vl">${fmt(q1,2)} · ${fmt(q3,2)}</span></div><div class="ri"><span class="nm">사분위범위 IQR</span><span class="vl">${fmt(iqr,3)}</span></div><div class="ri"><span class="nm">최빈값</span><span class="vl">${modes.length?modes.map(m=>fmt(m,2)).join(', '):'없음'}</span></div><div class="ri"><span class="nm">표준편차(모)</span><span class="vl">${fmt(sdP,3)}</span></div><div class="ri"><span class="nm">표준편차(표본)</span><span class="vl">${fmt(sdS,3)}</span></div><div class="ri"><span class="nm">범위</span><span class="vl">${fmt(sorted[n-1]-sorted[0],3)} (${fmt(sorted[0],2)}~${fmt(sorted[n-1],2)})</span></div></div>`); }
 
 /* ===== 순열·조합 ===== */
 function calcCombo(){ const n=parseInt(document.getElementById('cbN').value),r=parseInt(document.getElementById('cbR').value); if(isNaN(n)||isNaN(r)){document.getElementById('cbRes').classList.remove('show');return;} if(r<0||n<0||r>n)return show('cbRes','<div class="big">0 ≤ r ≤ n 이어야 해요</div>',true);
@@ -1905,6 +2133,22 @@ const EXAMPLES={
   loanlimit:{fields:{llPrice:'600000000',llLtv:'70',llIncome:'60000000',llDsr:'40',llRate:'4.5',llYears:'30'},run:'calcLoanlimit'},
   unemploy:{fields:{unWage:'100000',unAge:'35',unYear:'4'},run:'calcUnemploy'},
   brokerage:{fields:{bkAmt:'500000000'},run:'calcBrokerage'},
+  pension:{fields:{pnYear:'20',pnIncome:'3000000'},run:'calcPension'},
+  netreverse:{fields:{nrNet:'3000000',nrFam:'1'},run:'calcNetreverse'},
+  loancompare:{fields:{lcP:'100000000',lcR:'4.5',lcN:'360'},run:'calcLoancompare'},
+  parental:{fields:{ptWage:'3000000',ptMonth:'12'},run:'calcParental'},
+  studentloan:{fields:{slIncome:'30000000',slBalance:'20000000'},run:'calcStudentloan'},
+  savingtable:{fields:{stM:'300000',stR:'3.5',stN:'24'},run:'calcSavingtable'},
+  interimtax:{fields:{imTax:'4000000'},run:'calcInterimtax'},
+  jongbu:{fields:{jbPrice:'1500000000'},run:'calcJongbu'},
+  inherit:{fields:{ihAmt:'1000000000'},run:'calcInherit'},
+  taxi:{fields:{txDist:'8'},run:'calcTaxi'},
+  parking:{fields:{pkMin:'150'},run:'calcParking'},
+  fuelcost:{fields:{fcKm:'1500',fcEff:'12',fcFuel:'1700',fcKwh:'5',fcRate:'300'},run:'calcFuelcost'},
+  parcel:{fields:{pcW:'30',pcD:'25',pcHh:'20',pcActual:'2'},run:'calcParcel'},
+  reghealth:{fields:{rhIncome:'30000000'},run:'calcReghealth'},
+  worktime:{fields:{wtPrice:'1500000',wtHourly:'12000'},run:'calcWorktime'},
+  subs:{fields:{subList:'넷플릭스 13500\n유튜브 14900\n쿠팡 58000 연\n클로드 20000'},run:'calcSubs'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2040,8 +2284,126 @@ function calcBrokerage(){ const amt=parseFloat(document.getElementById('bkAmt').
   const fee=Math.min(dealAmt*rate,cap);
   show('bkRes',`<div class="label">중개보수 상한 (${brokCur==='trade'?'매매':'임대차'})</div><div class="big" style="color:var(--f2)">${fmt(fee,0)} 원</div><div class="sub">${note?note+'<br>':''}상한요율 ${fmt(rate*100,1)}%${cap!==Infinity?` (한도 ${fmt(cap,0)}원)`:''}<br>부가세 별도일 수 있어요.</div>`); }
 
+/* ===== 국민연금 예상 ===== */
+function calcPension(){ const N=parseFloat(document.getElementById('pnYear').value),B=parseFloat(document.getElementById('pnIncome').value); if(isNaN(N)||isNaN(B)||N<=0||B<=0){document.getElementById('pnRes').classList.remove('show');return;}
+  if(N<10)return show('pnRes',`<div class="label">가입기간 부족</div><div class="big" style="color:var(--f3)">수급 불가</div><div class="sub">노령연금은 최소 10년(120개월) 가입해야 받을 수 있어요. (현재 ${fmt(N,0)}년)</div>`);
+  const A=2989237; const factor=1+0.05*(N-20); const monthly=1.2*(A+B)*factor/12;
+  show('pnRes',`<div class="label">예상 월 노령연금 (개산)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthly/10)*10,0)} 원</div><div class="sub">가입 ${fmt(N,0)}년 · 평균소득 ${fmt(B,0)}원<br>연 환산 약 <b>${fmt(monthly*12,0)}원</b><br>소득대체율 상수 1.2·A값 299만 기준</div>`); }
+
+/* ===== 연봉 역산 ===== */
+function _net(annual,fam){ const mg=annual/12; const pb=Math.min(Math.max(mg,370000),5900000); const ins=(pb*0.045+mg*0.03545+mg*0.03545*0.1295+mg*0.009)*12;
+  const base=Math.max(annual-laborDeduction(annual)-1500000*fam,0); let it=incomeTax(base); it=Math.max(it-Math.min(it*0.55,715000),0); const local=it*0.1;
+  return annual-ins-it-local; }
+function calcNetreverse(){ const target=parseFloat(document.getElementById('nrNet').value); let fam=parseInt(document.getElementById('nrFam').value,10); if(isNaN(fam)||fam<1)fam=1; if(isNaN(target)||target<=0){document.getElementById('nrRes').classList.remove('show');return;}
+  const targetAnnual=target*12; let lo=targetAnnual,hi=targetAnnual*2.2; for(let k=0;k<60;k++){ const mid=(lo+hi)/2; if(_net(mid,fam)<targetAnnual)lo=mid; else hi=mid; } const annual=(lo+hi)/2;
+  show('nrRes',`<div class="label">필요한 세전 연봉</div><div class="big" style="color:var(--f2)">${fmt(Math.round(annual/1e4)*1e4,0)} 원</div><div class="sub">월 세전 급여 약 <b>${fmt(annual/12,0)}원</b><br>목표 월 실수령 ${fmt(target,0)}원${fam>1?` · 부양 ${fam}인`:''}<br>공제 합계 약 ${fmt(annual-_net(annual,fam),0)}원/년</div>`); }
+
+/* ===== 상환방식 비교 ===== */
+function calcLoancompare(){ const P=parseFloat(document.getElementById('lcP').value),R=parseFloat(document.getElementById('lcR').value),n=parseInt(document.getElementById('lcN').value,10); if(isNaN(P)||isNaN(R)||isNaN(n)||P<=0||n<=0||R<0){document.getElementById('lcRes').classList.remove('show');return;} const i=R/100/12;
+  const A=i>0?P*i/(1-Math.pow(1+i,-n)):P/n; const int1=A*n-P;
+  const prin=P/n; const first=prin+P*i; const int2=P*i*(n+1)/2;
+  show('lcRes',`<div class="label">총이자 비교 (원리금 vs 원금균등)</div><div class="big" style="color:var(--f2)">차이 ${fmt(Math.round(int1-int2),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">원리금균등 월납</span><span class="vl">${fmt(A,0)}원</span></div><div class="ri"><span class="nm">원리금균등 총이자</span><span class="vl">${fmt(int1,0)}원</span></div><div class="ri"><span class="nm">원금균등 첫달</span><span class="vl">${fmt(first,0)}원</span></div><div class="ri"><span class="nm">원금균등 총이자</span><span class="vl">${fmt(int2,0)}원</span></div></div><div class="label" style="margin-top:14px">총이자 비교</div>${chartBars([{label:'원리금균등',value:int1,color:'var(--f4)'},{label:'원금균등',value:int2,color:'var(--f1)'}])}<div class="sub">원금균등이 총이자는 적지만 초기 부담이 커요.</div>`); }
+
+/* ===== 육아휴직 급여 ===== */
+function calcParental(){ const w=parseFloat(document.getElementById('ptWage').value),m=parseInt(document.getElementById('ptMonth').value,10); if(isNaN(w)||isNaN(m)||w<=0||m<=0){document.getElementById('ptRes').classList.remove('show');return;}
+  const pay=Math.min(Math.max(w*0.8,700000),1500000); const monthlyPaid=pay*0.75; const hold=pay*0.25; const total=pay*m;
+  show('ptRes',`<div class="label">월 육아휴직 급여 (지급액)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyPaid),0)} 원</div><div class="sub">산정액 ${fmt(pay,0)}원 (통상임금 80%, 상·하한 적용)<br>매월 75% 지급 + 사후지급금(25%) ${fmt(Math.round(hold),0)}원/월은 복직 6개월 후<br>${m}개월 총 급여 <b>${fmt(total,0)}원</b></div>`); }
+
+/* ===== 학자금 상환(ICL) ===== */
+function calcStudentloan(){ const income=parseFloat(document.getElementById('slIncome').value),bal=parseFloat(document.getElementById('slBalance').value); if(isNaN(income)||isNaN(bal)||income<0||bal<=0){document.getElementById('slRes').classList.remove('show');return;} const th=17510000;
+  const over=Math.max(income-th,0); const annual=over*0.2;
+  if(annual<=0)return show('slRes',`<div class="label">의무 상환액</div><div class="big" style="color:var(--f1)">0 원</div><div class="sub">연소득이 상환기준소득(${fmt(th,0)}원) 이하라 올해 의무상환은 없어요.</div>`);
+  const yearsToPay=bal/annual;
+  show('slRes',`<div class="label">연 의무 상환액 (ICL)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(annual),0)} 원</div><div class="sub">기준소득 초과분 ${fmt(over,0)}원 × 20%<br>월 약 ${fmt(Math.round(annual/12),0)}원<br>잔액 ${fmt(bal,0)}원 → 이자 제외 약 <b>${fmt(yearsToPay,1)}년</b> 소요</div>`); }
+
+/* ===== 적금 만기표 ===== */
+function calcSavingtable(){ const m=parseFloat(document.getElementById('stM').value),r=parseFloat(document.getElementById('stR').value),n=parseInt(document.getElementById('stN').value,10),tax=parseFloat(document.getElementById('stTax').value); if(isNaN(m)||isNaN(r)||isNaN(n)||m<=0||n<=0||r<0){document.getElementById('stRes').classList.remove('show');return;}
+  const principal=m*n; const interest=m*(r/100/12)*n*(n+1)/2; const taxAmt=interest*tax; const net=principal+interest-taxAmt;
+  const series=[],labels=[]; const step=Math.max(1,Math.round(n/12)); for(let k=step;k<=n;k+=step){ const pr=m*k; const it=m*(r/100/12)*k*(k+1)/2; series.push(pr+it); labels.push(k+'개월'); } if(labels[labels.length-1]!==n+'개월'){ series.push(principal+interest); labels.push(n+'개월'); } series.unshift(0); labels.unshift('0');
+  const chart=chartArea(series,labels,'var(--f2)'); const donut=chartDonut([{label:'원금',value:principal,color:'var(--f2)'},{label:'세후이자',value:Math.max(interest-taxAmt,0),color:'var(--star)'}]);
+  show('stRes',`<div class="label">만기 세후 수령액</div><div class="big" style="color:var(--f2)">${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">납입 원금 (${n}개월)</span><span class="vl">${fmt(principal,0)}원</span></div><div class="ri"><span class="nm">세전 이자</span><span class="vl">${fmt(Math.round(interest),0)}원</span></div><div class="ri"><span class="nm">이자 과세 (${fmt(tax*100,1)}%)</span><span class="vl">−${fmt(Math.round(taxAmt),0)}원</span></div><div class="ri"><span class="nm">세후 이자</span><span class="vl">${fmt(Math.round(interest-taxAmt),0)}원</span></div></div><div class="label" style="margin-top:14px">적립 성장</div>${chart}${donut}`); }
+
+/* ===== 중간예납 ===== */
+function calcInterimtax(){ const t=parseFloat(document.getElementById('imTax').value); if(isNaN(t)||t<0){document.getElementById('imRes').classList.remove('show');return;} const half=t*0.5;
+  show('imRes',`<div class="label">종합소득세 중간예납세액</div><div class="big" style="color:var(--f3)">${fmt(Math.round(half),0)} 원</div><div class="sub">전년 결정세액 ${fmt(t,0)}원 × 1/2<br>${half<300000?'30만원 미만이라 <b>고지 제외</b> 대상이에요.':'11월 30일까지 납부, 다음해 5월 확정신고 때 정산해요.'}</div>`); }
+
+/* ===== 종합부동산세 ===== */
+function _jongbuTax(base,heavy){ const br=heavy?[[3e8,0.005],[6e8,0.007],[12e8,0.01],[25e8,0.02],[50e8,0.03],[94e8,0.04],[Infinity,0.05]]:[[3e8,0.005],[6e8,0.007],[12e8,0.01],[25e8,0.013],[50e8,0.015],[94e8,0.02],[Infinity,0.027]];
+  let tax=0,prev=0; for(const[cap,rate]of br){ if(base>prev){ tax+=(Math.min(base,cap)-prev)*rate; prev=cap; } else break; } return tax; }
+function calcJongbu(){ const price=parseFloat(document.getElementById('jbPrice').value),type=document.getElementById('jbType').value; if(isNaN(price)||price<=0){document.getElementById('jbRes').classList.remove('show');return;}
+  const ded=type==='one'?1.2e9:9e8; const base=Math.max(price-ded,0)*0.6;
+  if(base<=0)return show('jbRes',`<div class="label">종합부동산세</div><div class="big" style="color:var(--f1)">0 원</div><div class="sub">공시가 합계 ${fmt(price,0)}원이 공제(${fmt(ded,0)}원) 이하라 대상이 아니에요.</div>`);
+  const tax=_jongbuTax(base,type==='heavy'); const edu=tax*0.2; const total=tax+edu;
+  show('jbRes',`<div class="label">종합부동산세 (농특세 포함, 개산)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="sub">공제 ${fmt(ded,0)}원 · 과세표준 ${fmt(Math.round(base),0)}원 (×60%)<br>종부세 본세 <b>${fmt(Math.round(tax),0)}원</b> + 농어촌특별세(20%) ${fmt(Math.round(edu),0)}원<br>${type==='heavy'?'3주택↑ 중과세율 적용':''}</div>`); }
+
+/* ===== 상속세 ===== */
+function calcInherit(){ const amt=parseFloat(document.getElementById('ihAmt').value); const sel=document.getElementById('ihDed').value; let ded=sel==='custom'?parseFloat(document.getElementById('ihCustom').value):parseFloat(sel); if(isNaN(ded)||ded<0)ded=0; if(isNaN(amt)||amt<=0)return show('ihRes','<div class="big">상속 재산가액을 입력하세요</div>',true);
+  const base=Math.max(amt-ded,0);
+  if(base<=0)return show('ihRes',`<div class="label">과세표준 없음</div><div class="big" style="color:var(--f1)">상속세 0원</div><div class="sub">상속재산 ${fmt(amt,0)}원이 공제 ${fmt(ded,0)}원 이하예요.</div>`);
+  let rate,ndc; if(base<=1e8){rate=0.1;ndc=0;}else if(base<=5e8){rate=0.2;ndc=1e7;}else if(base<=1e9){rate=0.3;ndc=6e7;}else if(base<=3e9){rate=0.4;ndc=1.6e8;}else{rate=0.5;ndc=4.6e8;}
+  const tax=base*rate-ndc; const credit=document.getElementById('ihCredit').checked?tax*0.03:0; const fin=tax-credit;
+  show('ihRes',`<div class="label">예상 상속세</div><div class="big" style="color:var(--f3)">${fmt(Math.round(fin),0)} 원</div><div class="sub">과세표준 ${fmt(base,0)}원 (상속 ${fmt(amt,0)} − 공제 ${fmt(ded,0)})<br>산출세액 ${fmt(Math.round(tax),0)}원 (세율 ${fmt(rate*100,0)}%, 누진공제 ${fmt(ndc,0)})${credit>0?`<br>신고세액공제 −${fmt(Math.round(credit),0)}원`:''}<br>실효세율 <b>${fmt(fin/amt*100,2)}%</b></div>`); }
+
+/* ===== 택시요금 ===== */
+function calcTaxi(){ const dist=parseFloat(document.getElementById('txDist').value); let base=parseFloat(document.getElementById('txBase').value); if(isNaN(base)||base<=0)base=4800; let baseKm=parseFloat(document.getElementById('txBaseKm').value); if(isNaN(baseKm)||baseKm<0)baseKm=1.6; const sur=parseFloat(document.getElementById('txSur').value)||1; if(isNaN(dist)||dist<=0){document.getElementById('txRes').classList.remove('show');return;}
+  const extraM=Math.max(dist-baseKm,0)*1000; const units=Math.ceil(extraM/131); const fare=(base+units*131)*sur;
+  show('txRes',`<div class="label">예상 택시요금${sur>1?` (할증 ${Math.round((sur-1)*100)}%)`:''}</div><div class="big" style="color:var(--f1)">${fmt(Math.round(fare/100)*100,0)} 원</div><div class="sub">기본 ${fmt(base,0)}원(${baseKm}km) + 추가 ${fmt(dist-baseKm>0?dist-baseKm:0,2)}km<br>131m당 131원 · 거리 기준 근사</div>`); }
+
+/* ===== 주차요금 ===== */
+function calcParking(){ const min=parseFloat(document.getElementById('pkMin').value); let base=parseFloat(document.getElementById('pkBase').value); if(isNaN(base)||base<0)base=1000; let baseMin=parseFloat(document.getElementById('pkBaseMin').value); if(isNaN(baseMin)||baseMin<0)baseMin=30; let add=parseFloat(document.getElementById('pkAdd').value); if(isNaN(add)||add<0)add=1000; let unit=parseFloat(document.getElementById('pkUnit').value); if(isNaN(unit)||unit<=0)unit=10; const max=parseFloat(document.getElementById('pkMax').value); if(isNaN(min)||min<=0){document.getElementById('pkRes').classList.remove('show');return;}
+  let fee=min<=baseMin?base:base+Math.ceil((min-baseMin)/unit)*add; let capped=false; if(!isNaN(max)&&max>0&&fee>max){fee=max;capped=true;}
+  const h=Math.floor(min/60),mm=min%60;
+  show('pkRes',`<div class="label">예상 주차요금</div><div class="big" style="color:var(--f1)">${fmt(fee,0)} 원</div><div class="sub">주차 ${h>0?h+'시간 ':''}${mm}분<br>기본 ${fmt(base,0)}원(${baseMin}분) + ${unit}분당 ${fmt(add,0)}원${capped?'<br>일 최대요금 적용됨':''}</div>`); }
+
+/* ===== 유지비 비교 ===== */
+function calcFuelcost(){ const km=parseFloat(document.getElementById('fcKm').value),eff=parseFloat(document.getElementById('fcEff').value),fuel=parseFloat(document.getElementById('fcFuel').value),kwh=parseFloat(document.getElementById('fcKwh').value),rate=parseFloat(document.getElementById('fcRate').value); if(isNaN(km)||isNaN(eff)||isNaN(fuel)||isNaN(kwh)||isNaN(rate)||km<=0||eff<=0||kwh<=0){document.getElementById('fcRes').classList.remove('show');return;}
+  const gas=km/eff*fuel; const ev=km/kwh*rate; const save=gas-ev;
+  show('fcRes',`<div class="label">월 연료비 비교</div><div class="big" style="color:var(--f1)">전기차가 월 ${fmt(Math.round(Math.abs(save)),0)}원 ${save>=0?'절약':'더 듦'}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">내연기관 (${eff}km/L)</span><span class="vl">${fmt(Math.round(gas),0)}원/월</span></div><div class="ri"><span class="nm">전기차 (${kwh}km/kWh)</span><span class="vl">${fmt(Math.round(ev),0)}원/월</span></div><div class="ri"><span class="nm">연간 차이</span><span class="vl">${fmt(Math.round(Math.abs(save)*12),0)}원</span></div></div>`); }
+
+/* ===== 택배 부피무게 ===== */
+function calcParcel(){ const w=parseFloat(document.getElementById('pcW').value),d=parseFloat(document.getElementById('pcD').value),h=parseFloat(document.getElementById('pcHh').value); if(isNaN(w)||isNaN(d)||isNaN(h)||w<=0||d<=0||h<=0){document.getElementById('pcRes2').classList.remove('show');return;}
+  const vol=w*d*h/6000; const actual=parseFloat(document.getElementById('pcActual').value); const charge=Math.max(vol,isNaN(actual)?0:actual); const sum=w+d+h;
+  const spec=sum<=80?'80 규격 (극소)':sum<=100?'100 규격 (소)':sum<=120?'120 규격 (중)':sum<=140?'140 규격 (대)':sum<=160?'160 규격 (특대)':'160 초과 (별도문의)';
+  show('pcRes2',`<div class="label">부피무게 / 청구무게</div><div class="big" style="color:var(--f6)">${fmt(charge,2)} kg</div><div class="sub">부피무게 ${fmt(vol,2)}kg (${w}×${d}×${h}÷6000)${!isNaN(actual)?`<br>실무게 ${fmt(actual,2)}kg → 큰 값으로 청구`:''}<br>세 변 합 ${fmt(sum,0)}cm · <b>${spec}</b></div>`); }
+
+/* ===== 건강보험 지역가입자 ===== */
+function calcReghealth(){ const income=parseFloat(document.getElementById('rhIncome').value); if(isNaN(income)||income<0){document.getElementById('rhRes').classList.remove('show');return;}
+  const monthlyIncome=income/12; const health=monthlyIncome*0.0709; const care=health*0.1295; const total=health+care;
+  show('rhRes',`<div class="label">지역가입자 건강보험료 (소득분, 월)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="sub">건강보험료 <b>${fmt(Math.round(health),0)}원</b> (소득월액 ${fmt(Math.round(monthlyIncome),0)}원 × 7.09%)<br>장기요양보험료 <b>${fmt(Math.round(care),0)}원</b> (건보의 12.95%)<hr>※ 재산·자동차 점수분이 추가로 붙어요.</div>`); }
+
+/* ===== 노동시간 환산 ===== */
+let wtCur='hour';
+function wtMode(m){ wtCur=m; document.querySelectorAll('#v-worktime .seg button').forEach(b=>b.classList.toggle('on',b.dataset.wm===m)); document.getElementById('wtHourIn').style.display=m==='hour'?'':'none'; document.getElementById('wtMonthIn').style.display=m==='month'?'':'none'; calcWorktime(); }
+function calcWorktime(){ const price=parseFloat(document.getElementById('wtPrice').value); if(isNaN(price)||price<=0){document.getElementById('wtRes2').classList.remove('show');return;}
+  let hourly; if(wtCur==='hour'){ hourly=parseFloat(document.getElementById('wtHourly').value); } else { const m=parseFloat(document.getElementById('wtMonthly').value); hourly=isNaN(m)?NaN:m/209; }
+  if(isNaN(hourly)||hourly<=0){document.getElementById('wtRes2').classList.remove('show');return;}
+  const hours=price/hourly; const days=hours/8; const weeks=days/5; const months=price/(hourly*209);
+  let human; if(hours<8)human=`약 <b>${fmt(hours,1)}시간</b>`; else if(days<5)human=`약 <b>${fmt(days,1)}일</b> (하루 8시간)`; else if(weeks<8)human=`약 <b>${fmt(weeks,1)}주</b> (주 5일)`; else human=`약 <b>${fmt(months,1)}개월</b> 치 월급`;
+  show('wtRes2',`<div class="label">이 물건의 진짜 가격</div><div class="big" style="color:var(--f1)">${fmt(hours,1)} 시간</div><div class="sub">${human} 일해야 살 수 있어요.<br>시급 ${fmt(hourly,0)}원 기준 · ${fmt(days,1)}일 / ${fmt(months,2)}개월</div>`); }
+
+/* ===== 구독료 합산 ===== */
+function calcSubs(){ const lines=document.getElementById('subList').value.split(/\n+/).map(s=>s.trim()).filter(Boolean); const items=[];
+  for(const ln of lines){ const yearly=/\s(연|년|year|yr|y)\s*$/i.test(ln); const clean=ln.replace(/\s(연|년|year|yr|y)\s*$/i,''); const m=clean.match(/^(.*?)[\s:]+([0-9,]+)\s*$/); if(m){ const amt=parseFloat(m[2].replace(/,/g,'')); if(!isNaN(amt)){ const monthly=yearly?amt/12:amt; items.push([m[1].trim(),monthly,yearly,amt]); } } }
+  if(!items.length)return show('subRes','<div class="big">"이름 금액" 형식으로 입력하세요</div>',true);
+  const monthlyTotal=items.reduce((s,x)=>s+x[1],0); const yearlyTotal=monthlyTotal*12;
+  items.sort((a,b)=>b[1]-a[1]);
+  const rows=items.map(([n,mo,yr,orig])=>`<div class="ri"><span class="nm">${n}${yr?' <span style="font-size:11px;color:var(--muted)">(연)</span>':''}</span><span class="vl">${fmt(Math.round(mo),0)}원/월 · ${fmt(Math.round(mo/monthlyTotal*100),0)}%</span></div>`).join('');
+  show('subRes',`<div class="label">월 구독료 합계 (${items.length}개)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyTotal),0)} 원</div><div class="sub">연간 <b>${fmt(Math.round(yearlyTotal),0)}원</b> 지출</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
+
 /* ===== 초기 ===== */
-renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick();
+renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats();
+function initStats(){
+  // 내 방문 (이 기기, 로컬)
+  let mine=store.get('cds_visits')||0; mine+=1; store.set('cds_visits',mine);
+  const mEl=document.getElementById('statMine'); if(mEl)mEl.textContent=mine.toLocaleString();
+  // 누적 방문 (전체, counterapi.dev · 실패 시 폴백)
+  const tEl=document.getElementById('statTotal'); const dot=document.querySelector('.stats .live-dot');
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),5000);
+  fetch('https://api.counterapi.dev/v1/modu-calc-dept/visits/up',{signal:ctrl.signal})
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(d=>{ clearTimeout(to); const n=d.count??d.value??(d.data&&(d.data.count??d.data.up_count??d.data.value)); if(typeof n==='number'){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); } else throw 0; })
+    .catch(()=>{ clearTimeout(to); const cached=store.get('cds_total'); if(tEl)tEl.textContent=cached?cached.toLocaleString()+'+':'—'; if(dot)dot.style.background='var(--muted)'; });
+}
 </script>
 </body>
 </html>
