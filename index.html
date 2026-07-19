@@ -29,28 +29,42 @@
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
-body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font-smoothing:antialiased; font-size:16px; line-height:1.5;
+body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font-smoothing:antialiased; font-size:16px; line-height:1.5; position:relative;
   background:
-    linear-gradient(180deg, rgba(176,141,58,.30) 0, rgba(176,141,58,.08) 84px, transparent 150px),
-    radial-gradient(60px 26px at 50% 30px, rgba(255,240,200,.9), transparent 70%),
-    radial-gradient(1200px 560px at 50% -260px, rgba(255,252,242,.96), transparent 72%),
-    radial-gradient(560px 400px at 6% 4%, rgba(216,182,94,.16), transparent 58%),
-    radial-gradient(560px 400px at 94% 6%, rgba(216,182,94,.16), transparent 58%),
-    radial-gradient(760px 520px at 0% 34%, rgba(46,125,107,.05), transparent 60%),
-    repeating-linear-gradient(90deg, rgba(120,100,60,.05) 0 1px, rgba(120,100,60,.015) 1px 3px, transparent 3px 128px),
-    repeating-linear-gradient(135deg, rgba(176,141,58,.05) 0 1px, transparent 1px 24px),
-    linear-gradient(180deg,#F8F3E9 0%, #F1EBDD 40%, #EAE3D2 100%);
+    radial-gradient(1300px 620px at 50% -280px, rgba(255,253,246,.98), transparent 72%),
+    radial-gradient(720px 480px at 6% 4%, rgba(216,182,94,.15), transparent 60%),
+    radial-gradient(720px 480px at 94% 6%, rgba(216,182,94,.15), transparent 60%),
+    linear-gradient(90deg, rgba(120,96,44,.10) 0, transparent 8%, transparent 92%, rgba(120,96,44,.10) 100%),
+    radial-gradient(1000px 700px at 50% 118%, rgba(46,125,107,.06), transparent 60%),
+    repeating-linear-gradient(26deg, rgba(150,124,72,.045) 0 1px, transparent 1px 5px, transparent 5px 46px),
+    repeating-linear-gradient(-22deg, rgba(150,124,72,.03) 0 1px, transparent 1px 7px, transparent 7px 60px),
+    radial-gradient(1100px 820px at 28% 16%, rgba(255,255,255,.55), transparent 56%),
+    radial-gradient(950px 720px at 80% 74%, rgba(226,216,192,.42), transparent 55%),
+    linear-gradient(180deg,#FBF6ED 0%, #F2ECDE 44%, #E6DECC 100%);
   background-attachment:fixed; transition:color .25s; }
+/* 상단 금빛 어닝 + 스캘럽 밸런스 + 샹들리에 글로우 */
+body::before{ content:""; position:fixed; left:0; right:0; top:0; height:150px; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(220px 90px at 50% 4px, rgba(255,246,214,.9), transparent 70%),
+    radial-gradient(circle at 20px 30px, rgba(160,122,44,.95) 0 13px, transparent 14px) 0 30px/40px 26px repeat-x,
+    linear-gradient(180deg, rgba(255,240,198,.55) 0 2px, transparent 2px),
+    repeating-linear-gradient(90deg, #C9A24E 0 20px, #A67C2E 20px 40px) 0 0/100% 30px no-repeat;
+  filter:drop-shadow(0 4px 8px rgba(120,90,30,.28)); }
 [data-theme=dark] body{ background:
-    linear-gradient(180deg, rgba(216,182,94,.20) 0, rgba(216,182,94,.05) 84px, transparent 150px),
-    radial-gradient(60px 26px at 50% 30px, rgba(216,182,94,.35), transparent 70%),
-    radial-gradient(1200px 560px at 50% -260px, rgba(216,182,94,.10), transparent 72%),
-    radial-gradient(560px 400px at 6% 4%, rgba(216,182,94,.08), transparent 58%),
-    radial-gradient(560px 400px at 94% 6%, rgba(216,182,94,.08), transparent 58%),
-    repeating-linear-gradient(90deg, rgba(216,182,94,.03) 0 1px, transparent 1px 128px),
-    repeating-linear-gradient(135deg, rgba(216,182,94,.03) 0 1px, transparent 1px 24px),
-    linear-gradient(180deg,#1B1D22 0%, #16171C 60%, #121317 100%); }
-.app{max-width:660px; margin:0 auto; padding:22px 16px 70px;}
+    radial-gradient(1300px 620px at 50% -280px, rgba(216,182,94,.10), transparent 72%),
+    radial-gradient(720px 480px at 6% 4%, rgba(216,182,94,.08), transparent 60%),
+    radial-gradient(720px 480px at 94% 6%, rgba(216,182,94,.08), transparent 60%),
+    linear-gradient(90deg, rgba(0,0,0,.25) 0, transparent 8%, transparent 92%, rgba(0,0,0,.25) 100%),
+    radial-gradient(1100px 820px at 28% 16%, rgba(255,255,255,.045), transparent 56%),
+    repeating-linear-gradient(26deg, rgba(216,182,94,.03) 0 1px, transparent 1px 5px, transparent 5px 46px),
+    linear-gradient(180deg,#1C1E24 0%, #16171C 60%, #111216 100%); }
+[data-theme=dark] body::before{ background:
+    radial-gradient(220px 90px at 50% 4px, rgba(216,182,94,.35), transparent 70%),
+    radial-gradient(circle at 20px 30px, rgba(140,104,40,.9) 0 13px, transparent 14px) 0 30px/40px 26px repeat-x,
+    linear-gradient(180deg, rgba(216,182,94,.35) 0 2px, transparent 2px),
+    repeating-linear-gradient(90deg, #9C7A34 0 20px, #6E521F 20px 40px) 0 0/100% 30px no-repeat;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+.app{max-width:660px; margin:0 auto; padding:22px 16px 70px; position:relative; z-index:1;}
 
 /* ---------- 상단 유틸바 ---------- */
 .topbar{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
@@ -85,6 +99,7 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 .stats b{ color:var(--ink); font-weight:800; font-variant-numeric:tabular-nums; }
 .stats .stat-div{ opacity:.4; }
 .stats .live-dot{ width:7px; height:7px; border-radius:50%; background:#2DB400; box-shadow:0 0 0 0 rgba(45,180,0,.5); animation:pulse 2s infinite; }
+.stats .online-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:#2DB400; margin-right:5px; vertical-align:middle; animation:pulse 2s infinite; }
 @keyframes pulse{ 0%{box-shadow:0 0 0 0 rgba(45,180,0,.5);} 70%{box-shadow:0 0 0 6px rgba(45,180,0,0);} 100%{box-shadow:0 0 0 0 rgba(45,180,0,0);} }
 
 /* 설정 툴바 */
@@ -181,6 +196,19 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
   font-family:var(--sans); font-size:14px; font-weight:600; padding:12px 20px; border-radius:12px; box-shadow:0 8px 30px -8px rgba(0,0,0,.5);
   opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:9999; white-space:nowrap;}
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+/* QR 모달 */
+.qr-modal{ position:fixed; inset:0; background:rgba(20,18,12,.55); backdrop-filter:blur(3px); display:none; align-items:center; justify-content:center; z-index:10000; padding:20px; }
+.qr-modal.show{ display:flex; animation:pop .2s ease; }
+.qr-box{ position:relative; background:var(--surface); border:1px solid var(--line-2); border-radius:20px; padding:24px 22px; max-width:300px; width:100%; text-align:center; box-shadow:0 20px 60px -12px rgba(0,0,0,.5); }
+.qr-x{ position:absolute; top:12px; right:12px; border:0; background:var(--surface-2); color:var(--muted); width:30px; height:30px; border-radius:9px; cursor:pointer; font-size:15px; }
+.qr-title{ font-size:15px; font-weight:800; color:var(--ink); margin-bottom:14px; }
+.qr-img{ display:inline-block; padding:12px; background:#fff; border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,.1); }
+.qr-img svg{ display:block; }
+.qr-hint{ font-size:12.5px; color:var(--muted); margin-top:13px; line-height:1.5; }
+.qr-url{ font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:8px; word-break:break-all; background:var(--surface-2); padding:8px 10px; border-radius:8px; }
+.qr-copy{ margin-top:14px; width:100%; border:0; background:var(--gold); color:#fff; font-family:var(--sans); font-weight:800; font-size:14px; padding:12px; border-radius:12px; cursor:pointer; }
+.qr-copy:active{ transform:scale(.97); }
+.qr-toolong{ font-size:13px; color:var(--muted); padding:20px 10px; line-height:1.6; }
 .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);}
 .guide{ background:var(--surface-2); border:1px solid var(--line-2); border-left:3px solid var(--gold); border-radius:11px;
   padding:12px 14px; margin-bottom:16px; font-size:13px; line-height:1.65; color:var(--muted); }
@@ -338,7 +366,7 @@ select{cursor:pointer;}
     <span class="live-dot"></span>
     <span class="stat"><b id="statTotal">…</b> 누적 방문자</span>
     <span class="stat-div">·</span>
-    <span class="stat"><b id="statMine">…</b> 내 방문</span>
+    <span class="stat"><span class="online-dot"></span><b id="statOnline">…</b> 현재 접속</span>
   </div>
   <div class="topbar">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">🌙</button>
@@ -939,6 +967,22 @@ select{cursor:pointer;}
       <div class="field"><label>자동차 차량가액(원) · 4천만↑만 부과</label><input type="number" id="rhxCar" placeholder="예: 0 (없으면 0)" oninput="calcReghealthx()"></div>
       <div class="result" id="rhxRes"></div><p class="hint">소득분(7.09%)에 재산·자동차 <b>부과점수 × 208.4원</b>(2024)을 더한 개산이에요. 실제 점수표는 60등급으로 세분화돼 있어 <b>참고용</b>이며, 정확한 금액은 건보공단 모의계산을 권장해요.</p></div></section>
 
+    <!-- 연차 소진 플래너 -->
+    <section class="view" id="v-leaveplan" data-floor="1"><div class="panel">
+      <div class="field"><label>남은 연차(일)</label><input type="number" id="lpDays" placeholder="예: 10" oninput="calcLeaveplan()"></div>
+      <div class="field"><label>소진 마감까지 남은 개월 · 선택</label><input type="number" id="lpMonths" placeholder="비우면 올해 말까지 자동" oninput="calcLeaveplan()"></div>
+      <div class="result" id="lpRes"></div><p class="hint">연차 1일을 금요일이나 월요일에 붙이면 3일 연휴, 2일이면 4일 연휴가 돼요. 주 5일·주말 2일 기준으로 계산해요.</p></div></section>
+
+    <!-- 자동차 총소유비용 TCO -->
+    <section class="view" id="v-cartco" data-floor="1"><div class="panel">
+      <div class="grid2"><div class="field"><label>차량 구입가(원)</label><input type="number" id="tcPrice" placeholder="예: 30000000" oninput="calcCartco()"></div><div class="field"><label>보유 기간(년)</label><input type="number" id="tcYears" placeholder="5" oninput="calcCartco()"></div></div>
+      <div class="field"><label>보유 후 잔가율(%) · 중고 예상가</label><input type="number" id="tcResid" placeholder="예: 40" oninput="calcCartco()"></div>
+      <div class="sub-title">연간 비용</div>
+      <div class="grid2"><div class="field"><label>연 주행거리(km)</label><input type="number" id="tcKm" placeholder="예: 12000" oninput="calcCartco()"></div><div class="field"><label>연비(km/L)</label><input type="number" id="tcEff" placeholder="예: 11" oninput="calcCartco()"></div></div>
+      <div class="grid2"><div class="field"><label>유가(원/L)</label><input type="number" id="tcFuel" placeholder="예: 1700" oninput="calcCartco()"></div><div class="field"><label>연 보험료(원)</label><input type="number" id="tcIns" placeholder="예: 800000" oninput="calcCartco()"></div></div>
+      <div class="grid2"><div class="field"><label>연 자동차세(원)</label><input type="number" id="tcTax" placeholder="예: 400000" oninput="calcCartco()"></div><div class="field"><label>연 정비·기타(원)</label><input type="number" id="tcMaint" placeholder="예: 500000" oninput="calcCartco()"></div></div>
+      <div class="result" id="tcRes"></div><p class="hint">총소유비용 = 감가상각(구입가−중고예상가) + (연료+보험+세금+정비)×보유기간. 실제 감가·연비·보험료는 차종·조건마다 달라요.</p></div></section>
+
     <!-- 카페인 반감기 -->
     <section class="view" id="v-caffeine" data-floor="4"><div class="panel">
       <div class="field"><label>음료 빠른 선택</label><select id="cfPreset" onchange="cfFill()"><option value="">직접 입력</option><option value="75">에스프레소 1샷 (75mg)</option><option value="150">아메리카노 톨 (150mg)</option><option value="90">캔커피 (90mg)</option><option value="30">녹차 1잔 (30mg)</option><option value="80">에너지드링크 (80mg)</option></select></div>
@@ -1218,6 +1262,8 @@ const CALCS=[
   {id:'refinance',floor:2,icon:'🔄',name:'대출 갈아타기',desc:'대환 손익',kw:'대환 갈아타기 대출 중도상환수수료 이자 절감'},
   {id:'windmill',floor:2,icon:'🌀',name:'예금 풍차돌리기',desc:'만기 캘린더',kw:'풍차돌리기 예금 적금 만기 분산 캘린더'},
   {id:'reghealthx',floor:2,icon:'🏥',name:'지역건보 정밀',desc:'소득·재산·차',kw:'건강보험 지역가입자 재산 자동차 점수 정밀'},
+  {id:'leaveplan',floor:1,icon:'🏖️',name:'연차 소진 플래너',desc:'휴가 배치',kw:'연차 휴가 소진 징검다리 연휴 플래너'},
+  {id:'cartco',floor:1,icon:'🚗',name:'자동차 총소유비용',desc:'TCO 5년',kw:'자동차 총소유비용 tco 유지비 감가상각 보험'},
   {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
 ];
 const GUIDE={
@@ -1328,6 +1374,8 @@ const GUIDE={
   refinance:'기존 대출을 새 금리로 갈아탈 때 남은 총이자 절감액에서 중도상환수수료를 빼 실제 이득을 계산해요.',
   windmill:'매달 새 예금(적금)에 가입하는 풍차돌리기의 만기 시점과 월별 만기 수령액을 캘린더로 보여줘요.',
   reghealthx:'지역가입자 건강보험료를 소득정률(7.09%)+재산·자동차 점수(점수당 208.4원)로 더 정밀하게 개산해요.',
+  leaveplan:'남은 연차로 만들 수 있는 3~5일 연휴 횟수, 최대 연속 휴가, 마감까지 월별 소진량을 계산해 휴가 배치를 도와줘요.',
+  cartco:'구입가·감가상각·연료·보험·세금·정비를 합쳐 자동차 총소유비용(TCO)과 월평균·km당 비용을 계산해요.',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
 };
 let recents = store.get('cds_recent') || [];
@@ -1473,8 +1521,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -2257,6 +2305,8 @@ const EXAMPLES={
   refinance:{fields:{rfBal:'100000000',rfMonths:'240',rfOld:'5.5',rfNew:'4.0',rfPenalty:'1.2',rfFee:'500000'},run:'calcRefinance'},
   windmill:{fields:{wmAmt:'1000000',wmTerm:'12',wmRate:'3.5',wmCount:'12'},run:'calcWindmill'},
   reghealthx:{fields:{rhxIncome:'30000000',rhxProp:'150000000',rhxCar:'0'},run:'calcReghealthx'},
+  leaveplan:{fields:{lpDays:'10'},run:'calcLeaveplan'},
+  cartco:{fields:{tcPrice:'30000000',tcYears:'5',tcResid:'40',tcKm:'12000',tcEff:'11',tcFuel:'1700',tcIns:'800000',tcTax:'400000',tcMaint:'500000'},run:'calcCartco'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2541,13 +2591,67 @@ function calcRetire(){ const Y=parseFloat(document.getElementById('rtYears').val
   const chart=chartArea(series,labels,rateOk?'var(--f1)':'var(--f4)');
   show('rtRes',`<div class="label">은퇴 시점 예상 자산</div><div class="big" style="color:${rateOk?'var(--f1)':'var(--f3)'}">${fmt(Math.round(projected),0)} 원</div><div class="sub">필요 노후자금 (4% 룰) <b>${fmt(needed,0)}원</b><br>달성률 <b>${fmt(projected/needed*100,0)}%</b> · ${rateOk?'목표 달성 가능 ✓':`부족 ${fmt(gap,0)}원`}<br>월 ${fmt(spend,0)}원 생활 기준 (연 ${fmt(spend*12,0)}원×25)</div><div class="label" style="margin-top:14px">은퇴까지 자산 성장</div>${chart}`); }
 
-/* ===== 결과 공유(URL) · 토스트 ===== */
+/* ===== 결과 공유(URL·QR) · 토스트 ===== */
 function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2000); }
 function shareCalc(id){ const view=document.getElementById('v-'+id); const parts=[];
   view.querySelectorAll('input,select,textarea').forEach(el=>{ if(el.id&&el.type!=='button'){ let v=el.type==='checkbox'?(el.checked?'1':'0'):el.value; if(v!==''&&v!=null)parts.push(el.id+'='+encodeURIComponent(v)); } });
   const data=btoa(parts.join('&')); const url=location.origin+location.pathname+'?c='+id+(data?'&d='+data:'');
-  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('🔗 공유 링크가 복사됐어요')).catch(()=>toast('복사 실패 — 주소창을 확인하세요')); }
-  else{ prompt('공유 링크', url); }
+  showQR(url);
+}
+function copyLink(url){ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('🔗 링크가 복사됐어요')).catch(()=>prompt('공유 링크',url)); } else prompt('공유 링크',url); }
+function showQR(url){ let ov=document.getElementById('qrModal'); if(!ov){ ov=document.createElement('div'); ov.id='qrModal'; ov.className='qr-modal'; ov.onclick=e=>{if(e.target===ov)closeQR();}; document.body.appendChild(ov); }
+  let svg=''; try{ svg=qrSVG(url); }catch(e){ svg='<div class="qr-toolong">링크가 너무 길어 QR을 만들 수 없어요. 아래 링크 복사를 이용하세요.</div>'; }
+  ov.innerHTML=`<div class="qr-box"><button class="qr-x" onclick="closeQR()" aria-label="닫기">✕</button><div class="qr-title">📱 QR로 공유</div><div class="qr-img">${svg}</div><div class="qr-hint">카메라로 스캔하면 이 결과가 그대로 열려요</div><div class="qr-url">${url.length>60?url.slice(0,57)+'…':url}</div><button class="qr-copy" onclick="copyLink('${url.replace(/'/g,"\\'")}')">🔗 링크 복사</button></div>`;
+  ov.classList.add('show');
+}
+function closeQR(){ const ov=document.getElementById('qrModal'); if(ov)ov.classList.remove('show'); }
+function qrSVG(text){ const q=qrEncode(text,0); const n=q.size,pad=4,dim=n+pad*2; let rects='';
+  for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(q.modules[y][x])rects+=`<rect x="${x+pad}" y="${y+pad}" width="1" height="1"/>`;
+  return `<svg viewBox="0 0 ${dim} ${dim}" width="220" height="220" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg"><rect width="${dim}" height="${dim}" fill="#fff"/><g fill="#000">${rects}</g></svg>`; }
+function qrEncode(text,eccLevel){
+  const ECC_PER_BLOCK=[[7,10,13,17],[10,16,22,28],[15,26,18,22],[20,18,26,16],[26,24,18,22],[18,16,24,28],[20,18,18,26],[24,22,22,26],[30,22,20,24],[18,26,24,28],[20,30,28,24],[24,22,26,28],[26,22,24,22],[30,24,20,24],[22,24,30,24],[24,28,24,30],[28,28,28,28],[30,26,28,28],[28,26,26,26],[28,26,30,28],[28,26,28,30],[28,28,30,24],[30,28,30,30],[30,28,30,30],[26,28,30,30],[28,28,28,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30],[30,28,30,30]];
+  const NUM_BLOCKS=[[1,1,1,1],[1,1,1,1],[1,1,2,2],[1,2,2,4],[1,2,4,4],[2,4,4,4],[2,4,6,5],[2,4,6,6],[2,5,8,8],[4,5,8,8],[4,5,8,11],[4,8,10,11],[4,9,12,16],[4,9,16,16],[6,10,12,18],[6,10,17,16],[6,11,16,19],[6,13,18,21],[7,14,21,25],[8,16,20,25],[8,17,23,25],[9,17,23,34],[9,18,25,30],[10,20,27,32],[12,21,29,35],[12,23,34,37],[12,25,34,40],[13,26,35,42],[14,28,38,45],[15,29,40,48],[16,31,43,51],[17,33,45,54],[18,35,48,57],[19,37,51,60],[19,38,53,63],[20,40,56,66],[21,43,59,70],[22,45,62,74],[24,47,65,77],[25,49,68,81]];
+  function numRaw(v){ let r=(16*v+128)*v+64; if(v>=2){ const n=Math.floor(v/7)+2; r-=(25*n-10)*n-55; if(v>=7)r-=36; } return r; }
+  function numData(v,e){ return Math.floor(numRaw(v)/8)-ECC_PER_BLOCK[v-1][e]*NUM_BLOCKS[v-1][e]; }
+  const bytes=[]; const enc=unescape(encodeURIComponent(text)); for(let i=0;i<enc.length;i++)bytes.push(enc.charCodeAt(i));
+  let version=0; for(let v=1;v<=40;v++){ const ccBits=v<=9?8:16; if(Math.ceil((4+ccBits+bytes.length*8)/8)<=numData(v,eccLevel)){ version=v; break; } } if(!version)throw new Error('too long');
+  const cap=numData(version,eccLevel); const bb=[]; const ap=(val,len)=>{ for(let i=len-1;i>=0;i--)bb.push((val>>>i)&1); };
+  ap(4,4); ap(bytes.length,version<=9?8:16); for(const b of bytes)ap(b,8);
+  ap(0,Math.min(4,cap*8-bb.length)); while(bb.length%8)bb.push(0);
+  const dcw=[]; for(let i=0;i<bb.length;i+=8){ let b=0; for(let j=0;j<8;j++)b=(b<<1)|bb[i+j]; dcw.push(b); }
+  for(let pad=0xEC;dcw.length<cap;pad^=0xEC^0x11)dcw.push(pad);
+  const mul=(a,b)=>{ let z=0; for(let i=7;i>=0;i--){ z=(z<<1)^((z>>>7)*0x11D); z^=((b>>>i)&1)*a; z&=0xFF; } return z; };
+  const divisorFn=deg=>{ const r=new Array(deg).fill(0); r[deg-1]=1; let root=1; for(let i=0;i<deg;i++){ for(let j=0;j<deg;j++){ r[j]=mul(r[j],root); if(j+1<deg)r[j]^=r[j+1]; } root=mul(root,2); } return r; };
+  const remFn=(data,div)=>{ const r=new Array(div.length).fill(0); for(const b of data){ const f=b^r.shift(); r.push(0); for(let i=0;i<div.length;i++)r[i]^=mul(div[i],f); } return r; };
+  const nb=NUM_BLOCKS[version-1][eccLevel], ecLen=ECC_PER_BLOCK[version-1][eccLevel], rawCw=Math.floor(numRaw(version)/8);
+  const numShort=nb-(rawCw%nb), shortLen=Math.floor(rawCw/nb), div=divisorFn(ecLen), blocks=[]; let k=0;
+  for(let i=0;i<nb;i++){ const dl=shortLen-ecLen+(i<numShort?0:1); const dat=dcw.slice(k,k+dl); k+=dl; blocks.push({dat,ec:remFn(dat,div)}); }
+  const result=[]; const maxD=Math.max(...blocks.map(b=>b.dat.length));
+  for(let i=0;i<maxD;i++)for(let j=0;j<nb;j++)if(i<blocks[j].dat.length)result.push(blocks[j].dat[i]);
+  for(let i=0;i<ecLen;i++)for(let j=0;j<nb;j++)result.push(blocks[j].ec[i]);
+  const size=version*4+17; const mods=Array.from({length:size},()=>new Array(size).fill(false)), fnc=Array.from({length:size},()=>new Array(size).fill(false));
+  const setF=(x,y,v)=>{ if(x>=0&&x<size&&y>=0&&y<size){ mods[y][x]=v; fnc[y][x]=true; } };
+  const finder=(x,y)=>{ for(let dy=-4;dy<=4;dy++)for(let dx=-4;dx<=4;dx++){ const d=Math.max(Math.abs(dx),Math.abs(dy)),xx=x+dx,yy=y+dy; if(xx>=0&&xx<size&&yy>=0&&yy<size)setF(xx,yy,d!==2&&d!==4); } };
+  for(let i=0;i<size;i++){ setF(6,i,i%2===0); setF(i,6,i%2===0); }
+  finder(3,3); finder(size-4,3); finder(3,size-4);
+  const alignPos=()=>{ if(version===1)return []; const num=Math.floor(version/7)+2; const step=(version===32)?26:Math.ceil((version*4+4)/(num*2-2))*2; const r=[6]; for(let pos=size-7;r.length<num;pos-=step)r.splice(1,0,pos); return r; };
+  const aps=alignPos();
+  for(let i=0;i<aps.length;i++)for(let j=0;j<aps.length;j++){ if((i===0&&j===0)||(i===0&&j===aps.length-1)||(i===aps.length-1&&j===0))continue; const cx=aps[i],cy=aps[j]; for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++)setF(cx+dx,cy+dy,Math.max(Math.abs(dx),Math.abs(dy))!==1); }
+  setF(8,size-8,true);
+  for(let i=0;i<9;i++){ if(i!==6){ setF(8,i,false); setF(i,8,false); } }
+  for(let i=0;i<8;i++){ setF(size-1-i,8,false); setF(8,size-1-i,false); }
+  if(version>=7){ for(let i=0;i<18;i++){ const a=size-11+i%3,b=Math.floor(i/3); setF(a,b,false); setF(b,a,false); } }
+  const place=mask=>{ const m=mods.map(r=>r.slice()); let idx=0,up=true;
+    for(let right=size-1;right>=1;right-=2){ if(right===6)right=5; for(let v=0;v<size;v++)for(let jj=0;jj<2;jj++){ const x=right-jj,y=up?size-1-v:v; if(!fnc[y][x]){ let dark=idx<result.length*8?((result[idx>>>3]>>>(7-(idx&7)))&1)!==0:false; idx++; let inv;
+      switch(mask){case 0:inv=(x+y)%2===0;break;case 1:inv=y%2===0;break;case 2:inv=x%3===0;break;case 3:inv=(x+y)%3===0;break;case 4:inv=(Math.floor(x/3)+Math.floor(y/2))%2===0;break;case 5:inv=(x*y)%2+(x*y)%3===0;break;case 6:inv=((x*y)%2+(x*y)%3)%2===0;break;default:inv=((x+y)%2+(x*y)%3)%2===0;} m[y][x]=dark!==inv; } } up=!up; }
+    return m; };
+  const fmt=(m,mask)=>{ const eF=[1,0,3,2][eccLevel]; const dt=eF<<3|mask; let rem=dt; for(let i=0;i<10;i++)rem=(rem<<1)^(((rem>>>9)&1)*0x537); const bits=((dt<<10|rem)^0x5412)&0x7FFF;
+    for(let i=0;i<=5;i++)m[i][8]=((bits>>>i)&1)!==0; m[7][8]=((bits>>>6)&1)!==0; m[8][8]=((bits>>>7)&1)!==0; m[8][7]=((bits>>>8)&1)!==0; for(let i=9;i<15;i++)m[8][14-i]=((bits>>>i)&1)!==0;
+    for(let i=0;i<8;i++)m[8][size-1-i]=((bits>>>i)&1)!==0; for(let i=8;i<15;i++)m[size-15+i][8]=((bits>>>i)&1)!==0; m[size-8][8]=true;
+    if(version>=7){ let r2=version; for(let i=0;i<12;i++)r2=(r2<<1)^(((r2>>>11)&1)*0x1F25); const vb=version<<12|r2; for(let i=0;i<18;i++){ const bit=((vb>>>i)&1)!==0,a=size-11+i%3,b=Math.floor(i/3); m[b][a]=bit; m[a][b]=bit; } } };
+  const penalty=m=>{ let p=0; for(let y=0;y<size;y++){ let run=1; for(let x=1;x<size;x++){ if(m[y][x]===m[y][x-1]){run++; if(run===5)p+=3; else if(run>5)p++;} else run=1; } } for(let x=0;x<size;x++){ let run=1; for(let y=1;y<size;y++){ if(m[y][x]===m[y-1][x]){run++; if(run===5)p+=3; else if(run>5)p++;} else run=1; } } for(let y=0;y<size-1;y++)for(let x=0;x<size-1;x++)if(m[y][x]===m[y][x+1]&&m[y][x]===m[y+1][x]&&m[y][x]===m[y+1][x+1])p+=3; let dark=0; for(let y=0;y<size;y++)for(let x=0;x<size;x++)if(m[y][x])dark++; p+=Math.floor(Math.abs(dark*100/(size*size)-50)/5)*10; return p; };
+  let best=null,bp=Infinity; for(let mask=0;mask<8;mask++){ const m=place(mask); fmt(m,mask); const p=penalty(m); if(p<bp){bp=p; best=m;} }
+  return {size,modules:best,version};
 }
 function restoreFromURL(){ const p=new URLSearchParams(location.search); const id=p.get('c'); if(!id||!CALCS.find(c=>c.id===id))return; openView(id);
   const d=p.get('d'); if(d){ try{ const pairs=new URLSearchParams(atob(d)); pairs.forEach((v,k)=>{ const el=document.getElementById(k); if(el){ if(el.type==='checkbox')el.checked=v==='1'; else el.value=v; } });
@@ -2596,19 +2700,47 @@ function pwaInstall(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredProm
 function pwaDismiss(){ document.getElementById('installBar').classList.remove('show'); store.set('cds_pwa_dismiss',1); }
 function initPWA(){ if(isStandalone()||store.get('cds_pwa_dismiss'))return; if(isIOS())showInstallBar(true); }
 
+/* ===== 연차 소진 플래너 ===== */
+function calcLeaveplan(){ const D=parseFloat(document.getElementById('lpDays').value); let M=parseFloat(document.getElementById('lpMonths').value); if(isNaN(D)||D<=0){document.getElementById('lpRes').classList.remove('show');return;}
+  if(isNaN(M)||M<=0){ const now=new Date(); M=12-now.getMonth(); }
+  const long3=D, long4=Math.floor(D/2), gold5=Math.floor(D/3); const contiguous=D+2*Math.ceil(D/5); const perMonth=D/M;
+  show('lpRes',`<div class="label">남은 연차 ${fmt(D,0)}일 활용법</div><div class="big" style="color:var(--f1)">최대 ${fmt(contiguous,0)}일 연속 휴가</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">3일 연휴 (연차 1일+주말)</span><span class="vl">최대 ${long3}번</span></div><div class="ri"><span class="nm">4일 연휴 (연차 2일+주말)</span><span class="vl">${long4}번</span></div><div class="ri"><span class="nm">5일 황금연휴 (연차 3일)</span><span class="vl">${gold5}번</span></div><div class="ri"><span class="nm">마감까지 ${fmt(M,0)}개월 균등 소진</span><span class="vl">월 ${fmt(perMonth,1)}일</span></div></div><div class="sub">${perMonth>2?'⚠️ 남은 기간 대비 연차가 많아요. 미리 계획적으로 쓰세요!':'징검다리 연휴로 알차게 쉬어보세요 🏖️'}</div>`); }
+
+/* ===== 자동차 총소유비용 TCO ===== */
+function calcCartco(){ const P=parseFloat(document.getElementById('tcPrice').value); let Y=parseFloat(document.getElementById('tcYears').value); if(isNaN(Y)||Y<=0)Y=5; let resid=parseFloat(document.getElementById('tcResid').value); if(isNaN(resid)||resid<0)resid=40;
+  const km=parseFloat(document.getElementById('tcKm').value),eff=parseFloat(document.getElementById('tcEff').value),fuelP=parseFloat(document.getElementById('tcFuel').value); let ins=parseFloat(document.getElementById('tcIns').value); if(isNaN(ins)||ins<0)ins=0; let tax=parseFloat(document.getElementById('tcTax').value); if(isNaN(tax)||tax<0)tax=0; let maint=parseFloat(document.getElementById('tcMaint').value); if(isNaN(maint)||maint<0)maint=0;
+  if(isNaN(P)||isNaN(km)||isNaN(eff)||isNaN(fuelP)||P<=0||km<0||eff<=0||fuelP<0){document.getElementById('tcRes').classList.remove('show');return;}
+  const residual=P*resid/100; const deprec=P-residual; const fuelYr=km/eff*fuelP;
+  const fuelTot=fuelYr*Y, insTot=ins*Y, taxTot=tax*Y, maintTot=maint*Y; const total=deprec+fuelTot+insTot+taxTot+maintTot;
+  const perMonth=total/(Y*12); const perKm=km>0?total/(km*Y):0;
+  const donut=chartDonut([{label:'감가상각',value:deprec,color:'var(--f4)'},{label:'연료',value:fuelTot,color:'var(--f3)'},{label:'보험',value:insTot,color:'var(--f2)'},{label:'세금',value:taxTot,color:'var(--f5)'},{label:'정비',value:maintTot,color:'var(--f1)'}]);
+  show('tcRes',`<div class="label">${fmt(Y,0)}년 총소유비용 (TCO)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="sub">월 평균 <b>${fmt(Math.round(perMonth),0)}원</b> · km당 <b>${fmt(Math.round(perKm),0)}원</b><br>감가상각 ${fmt(Math.round(deprec),0)}원 (중고 예상가 ${fmt(Math.round(residual),0)}원)<br>연료 ${fmt(Math.round(fuelTot),0)} · 보험 ${fmt(insTot,0)} · 세금 ${fmt(taxTot,0)} · 정비 ${fmt(maintTot,0)}</div>${donut}`); }
+
 /* ===== 초기 ===== */
 renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats(); restoreFromURL(); initPWA();
 function initStats(){
-  const mEl=document.getElementById('statMine'), tEl=document.getElementById('statTotal'), dot=document.querySelector('.stats .live-dot');
-  // 내 방문 (이 기기가 연 횟수)
-  let mine=(store.get('cds_visits')||0)+1; store.set('cds_visits',mine); if(mEl)mEl.textContent=mine.toLocaleString();
-  // 누적 순 방문자 — 기기당 딱 1회만 증가(/hit), 이후엔 읽기전용(/get). 플래그를 먼저 저장해 새로고침 중복 증가를 원천 차단.
+  const tEl=document.getElementById('statTotal'), dot=document.querySelector('.stats .live-dot');
+  // 이 기기 방문 횟수(내부 기록용)
+  store.set('cds_visits',(store.get('cds_visits')||0)+1);
+  // 누적 순 방문자 — 기기당 1회만 증가(/hit), 이후 읽기전용(/get). 플래그를 먼저 저장해 새로고침 중복 차단.
   const cached=store.get('cds_total'); const counted=store.get('cds_counted');
   const KEY='modu_calc_dept_2026'; const base='https://countapi.mileshilliard.com/api/v1/';
   const url=counted?base+'get/'+KEY:base+'hit/'+KEY; if(!counted)store.set('cds_counted',1);
   const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),6000);
   fetch(url,{signal:ctrl.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{ clearTimeout(to); const n=parseInt(d.value,10); if(!isNaN(n)){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); } else throw 0; })
     .catch(()=>{ clearTimeout(to); if(tEl)tEl.textContent=cached?cached.toLocaleString():'—'; if(dot)dot.style.background='var(--muted)'; });
+  initPresence(base);
+}
+/* ===== 실시간 접속자(분 단위 하트비트 버킷 추정) ===== */
+var _lastBeat=null;
+function initPresence(base){
+  const bucket=off=>'modu_calc_dept_on_'+(Math.floor(Date.now()/60000)+(off||0));
+  const beat=()=>{ const k=bucket(0); if(_lastBeat===k)return; _lastBeat=k; fetch(base+'hit/'+k).catch(()=>{}); };
+  const read=()=>{ const kp=bucket(-1),kc=bucket(0); const oEl=document.getElementById('statOnline');
+    Promise.allSettled([fetch(base+'get/'+kp).then(r=>r.json()),fetch(base+'get/'+kc).then(r=>r.json())])
+      .then(rs=>{ const vals=rs.filter(x=>x.status==='fulfilled').map(x=>parseInt(x.value&&x.value.value,10)).filter(n=>!isNaN(n)); let n=vals.length?Math.max(...vals):1; n=Math.max(n,1); if(oEl)oEl.textContent=n.toLocaleString(); })
+      .catch(()=>{ if(oEl)oEl.textContent='1'; }); };
+  beat(); read(); setInterval(beat,40000); setInterval(read,25000);
 }
 </script>
 <div class="install-bar" id="installBar">
