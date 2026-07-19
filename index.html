@@ -114,18 +114,20 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 .search .ico{position:absolute; left:15px; top:50%; transform:translateY(-50%); font-size:17px; opacity:.45;}
 
 /* ---------- 층 안내 (엘리베이터식) ---------- */
-.directory{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
-  padding:12px; margin-bottom:20px; }
-.dir-title{ font-size:11px; letter-spacing:.28em; color:var(--muted); text-align:center; margin:2px 0 12px; text-transform:uppercase; }
+.directory{ background:linear-gradient(180deg,var(--surface),color-mix(in srgb,var(--surface) 92%, var(--gold))); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow);
+  padding:14px 12px; margin-bottom:20px; position:relative; overflow:hidden; }
+.directory::before{ content:""; position:absolute; top:0; left:50%; transform:translateX(-50%); width:70px; height:3px; border-radius:0 0 4px 4px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.dir-title{ font-size:11px; letter-spacing:.28em; color:var(--muted); text-align:center; margin:2px 0 13px; text-transform:uppercase; }
 .floors{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-.fbtn{ flex:1; border:1px solid var(--line-2); background:var(--surface-2); cursor:pointer; border-radius:13px;
-  padding:12px 4px 11px; text-align:center; transition:.15s; font-family:var(--sans); }
-.fbtn .num{ font-family:var(--mono); font-size:19px; font-weight:800; color:var(--ink); line-height:1; }
+.fbtn{ flex:1; border:1px solid var(--line-2); background:linear-gradient(180deg,var(--surface),var(--surface-2)); cursor:pointer; border-radius:14px;
+  padding:13px 4px 12px; text-align:center; transition:transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s, border-color .16s; font-family:var(--sans); position:relative; }
+.fbtn .num{ font-family:var(--mono); font-size:20px; font-weight:800; color:var(--ink); line-height:1; }
 .fbtn .nm{ display:block; font-size:11px; color:var(--muted); margin-top:5px; font-weight:600; }
-.fbtn:hover{ border-color:var(--gold); }
-.fbtn.on{ background:var(--ink); border-color:var(--ink); }
+.fbtn:hover{ border-color:var(--gold); transform:translateY(-2px); box-shadow:0 6px 16px -10px rgba(60,50,20,.5); }
+.fbtn:active{ transform:translateY(0) scale(.97); }
+.fbtn.on{ background:linear-gradient(180deg,var(--accent),color-mix(in srgb,var(--accent) 78%, #000)); border-color:var(--accent); box-shadow:0 6px 20px -8px var(--accent); }
 .fbtn.on .num, .fbtn.on .nm{ color:#fff; }
-.fbtn.on .num{ color:var(--gold-soft); }
+.fbtn.on .nm{ color:rgba(255,255,255,.85); }
 .fav-btn{ }
 .fav-btn.on-star{ color:var(--star); }
 
@@ -173,6 +175,12 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 .view-title small{display:block; font-size:12.5px; color:var(--muted); font-weight:500; margin-top:2px;}
 .view-fav{width:42px; height:42px; border-radius:12px; border:1px solid var(--line-2); cursor:pointer; background:var(--surface); font-size:18px; color:var(--line-2); flex:0 0 auto;}
 .view-fav.on{color:var(--star); border-color:var(--star);}
+.view-share{width:42px; height:42px; border-radius:12px; border:1px solid var(--line-2); cursor:pointer; background:var(--surface); font-size:16px; color:var(--ink); flex:0 0 auto;}
+.view-share:active,.view-fav:active{transform:scale(.92);}
+.toast{position:fixed; left:50%; bottom:34px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--surface);
+  font-family:var(--sans); font-size:14px; font-weight:600; padding:12px 20px; border-radius:12px; box-shadow:0 8px 30px -8px rgba(0,0,0,.5);
+  opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:9999; white-space:nowrap;}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);}
 .guide{ background:var(--surface-2); border:1px solid var(--line-2); border-left:3px solid var(--gold); border-radius:11px;
   padding:12px 14px; margin-bottom:16px; font-size:13px; line-height:1.65; color:var(--muted); }
@@ -235,6 +243,32 @@ select{cursor:pointer;}
 .result .save{position:absolute; top:14px; right:64px; border:1px solid var(--line-2); cursor:pointer; font-family:var(--sans); font-size:12px; font-weight:600; color:var(--muted); background:var(--surface); padding:6px 11px; border-radius:8px;}
 .result .save:active,.result .copy:active{transform:scale(.94);}
 .hist-item{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:13px 15px; margin-bottom:10px; position:relative; }
+/* 기록 요약 */
+.hist-summary{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+.hist-summary .hs-cell{ background:var(--surface); border:1px solid var(--line-2); border-radius:12px; padding:11px 8px; text-align:center; font-size:11.5px; color:var(--muted); box-shadow:var(--shadow); }
+.hist-summary .hs-cell b{ display:block; font-family:var(--mono); font-size:19px; font-weight:800; color:var(--ink); }
+.hist-summary .hs-top{ grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:6px; }
+.hist-summary .hs-top b{ display:inline; font-size:13px; color:var(--gold); }
+/* 타임라인 */
+.timeline{ position:relative; padding-left:22px; }
+.timeline::before{ content:""; position:absolute; left:5px; top:8px; bottom:8px; width:2px; background:linear-gradient(180deg,var(--gold),var(--line-2)); }
+.tl-day{ font-size:12px; font-weight:800; color:var(--gold); margin:14px 0 9px -22px; padding-left:22px; letter-spacing:.02em; }
+.tl-day:first-child{ margin-top:0; }
+.tl-item{ position:relative; margin-bottom:10px; }
+.tl-dot{ position:absolute; left:-22px; top:16px; width:11px; height:11px; border-radius:50%; background:var(--accent,var(--gold)); border:2px solid var(--surface); box-shadow:0 0 0 1px var(--line-2); }
+.tl-card{ background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:12px 15px; position:relative; box-shadow:var(--shadow); }
+.tl-card .ht{ font-size:12px; color:var(--muted); font-weight:600; margin-bottom:4px; }
+.tl-card .hv{ font-size:15px; font-weight:700; color:var(--ink); }
+.tl-card .hx{ position:absolute; top:10px; right:10px; border:0; background:var(--surface-2); color:var(--muted); cursor:pointer; width:24px; height:24px; border-radius:7px; font-size:13px; }
+/* PWA 설치 배너 */
+.install-bar{ position:fixed; left:12px; right:12px; bottom:14px; max-width:636px; margin:0 auto; display:none; align-items:center; gap:12px;
+  background:var(--ink); color:var(--surface); border-radius:16px; padding:13px 15px; box-shadow:0 12px 40px -10px rgba(0,0,0,.5); z-index:9998; }
+.install-bar.show{ display:flex; animation:pop .3s cubic-bezier(.2,.7,.3,1); }
+.install-bar .ib-ic{ font-size:24px; }
+.install-bar .ib-txt{ flex:1; font-size:13px; line-height:1.4; }
+.install-bar .ib-txt b{ font-weight:800; }
+.install-bar .ib-go{ border:0; background:var(--gold); color:#fff; font-family:var(--sans); font-weight:800; font-size:13px; padding:9px 15px; border-radius:10px; cursor:pointer; white-space:nowrap; }
+.install-bar .ib-x{ border:0; background:transparent; color:var(--surface); opacity:.6; cursor:pointer; font-size:18px; padding:0 2px; }
 .hist-item .ht{ font-size:12.5px; color:var(--muted); font-weight:600; margin-bottom:4px; }
 .hist-item .hv{ font-size:15px; font-weight:700; }
 .hist-item .hx{ position:absolute; top:11px; right:11px; border:0; background:var(--surface-2); color:var(--muted); cursor:pointer; width:26px; height:26px; border-radius:7px; font-size:14px; }
@@ -302,17 +336,17 @@ select{cursor:pointer;}
 <div class="app">
   <div class="stats" id="stats">
     <span class="live-dot"></span>
-    <span class="stat"><b id="statTotal">…</b> 누적 방문</span>
+    <span class="stat"><b id="statTotal">…</b> 누적 방문자</span>
     <span class="stat-div">·</span>
     <span class="stat"><b id="statMine">…</b> 내 방문</span>
   </div>
   <div class="topbar">
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="테마 전환">🌙</button>
     <div class="linkbar">
-      <a class="linkchip cafe" href="https://cafe.naver.com/aiprogram1" target="_blank" rel="noopener"><span class="lc-ic">☕</span>네이버 카페</a>
       <a class="linkchip" href="https://shared-research-monitor.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">🔬</span>모두의 리서치</a>
       <a class="linkchip" href="https://ai-app-tech.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">💰</span>부의 로드맵</a>
       <a class="linkchip" href="https://product-sourcing-1.onrender.com/" target="_blank" rel="noopener"><span class="lc-ic">🛒</span>소싱 작업대</a>
+      <a class="linkchip cafe" href="https://cafe.naver.com/aiprogram1" target="_blank" rel="noopener"><span class="lc-ic">☕</span>네이버 카페</a>
     </div>
   </div>
   <div class="plate">
@@ -425,7 +459,7 @@ select{cursor:pointer;}
       <div class="field"><label>원금(원)</label><input type="number" id="cpP" placeholder="예: 1000000"></div>
       <div class="grid2"><div class="field"><label>연이율(%)</label><input type="number" id="cpR" placeholder="예: 5"></div><div class="field"><label>기간(년)</label><input type="number" id="cpY" placeholder="예: 10"></div></div>
       <div class="field"><label>매월 추가 적립액(원) · 선택</label><input type="number" id="cpAdd" placeholder="예: 300000 (없으면 비워두세요)"></div>
-      <div class="field"><label>복리 주기</label><select id="cpM"><option value="1">연 1회</option><option value="2">반기</option><option value="4">분기</option><option value="12" selected>월</option><option value="365">일</option></select></div>
+      <div class="grid2"><div class="field"><label>복리 주기</label><select id="cpM"><option value="1">연 1회</option><option value="2">반기</option><option value="4">분기</option><option value="12" selected>월</option><option value="365">일</option></select></div><div class="field"><label>물가상승률(%) · 선택</label><input type="number" id="cpInf" placeholder="예: 2.5"></div></div>
       <div class="actions"><button class="btn primary" onclick="calcCompound()">계산</button><button class="btn ghost" onclick="reset('v-compound')">초기화</button></div><div class="result" id="cpRes"></div></div></section>
 
     <section class="view" id="v-vat" data-floor="2"><div class="panel">
@@ -858,6 +892,53 @@ select{cursor:pointer;}
       <div class="actions"><button class="btn primary" onclick="calcSubs()">합산</button><button class="btn ghost" onclick="reset('v-subs')">초기화</button></div><div class="result" id="subRes"></div>
       <p class="hint">각 줄 끝에 "연"을 붙이면 연 결제로 보고 월로 환산해요. 월 합계·연 합계와 항목별 비중을 보여줘요.</p></div></section>
 
+    <!-- 인생 자산 로드맵 -->
+    <section class="view" id="v-roadmap" data-floor="2"><div class="panel">
+      <div class="grid2"><div class="field"><label>현재 나이(세)</label><input type="number" id="rmAge" placeholder="예: 32"></div><div class="field"><label>현재 순자산(원)</label><input type="number" id="rmNet" placeholder="예: 50000000"></div></div>
+      <div class="grid2"><div class="field"><label>월 저축액(원)</label><input type="number" id="rmSave" placeholder="예: 1000000"></div><div class="field"><label>연 수익률(%)</label><input type="number" id="rmRate" placeholder="예: 5"></div></div>
+      <div class="sub-title">🏠 내 집 마련 (선택)</div>
+      <div class="grid2"><div class="field"><label>목표 집값(원)</label><input type="number" id="rmHome" placeholder="예: 500000000 (없으면 0)"></div><div class="field"><label>구입 목표 나이</label><input type="number" id="rmHomeAge" placeholder="예: 40"></div></div>
+      <div class="sub-title">🌴 은퇴</div>
+      <div class="grid2"><div class="field"><label>은퇴 나이</label><input type="number" id="rmRetire" placeholder="예: 60"></div><div class="field"><label>은퇴 후 월 생활비(원)</label><input type="number" id="rmSpend" placeholder="예: 2500000"></div></div>
+      <div class="actions"><button class="btn primary" onclick="calcRoadmap()">시뮬레이션</button><button class="btn ghost" onclick="reset('v-roadmap')">초기화</button></div><div class="result" id="rmRes"></div>
+      <p class="hint">나이별로 자산을 굴리며(수익률 반영) 저축을 더하고, 집 구입 시 자산에서 차감, 은퇴 후엔 생활비를 인출해 <b>자산 고갈 시점</b>까지 시뮬레이션해요. 물가상승·세금·연금은 단순화한 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 내 집 마련 -->
+    <section class="view" id="v-homebuy" data-floor="2"><div class="panel">
+      <div class="grid2"><div class="field"><label>목표 집값(원)</label><input type="number" id="hbPrice" placeholder="예: 500000000" oninput="calcHomebuy()"></div><div class="field"><label>자기자본 비율(%)</label><input type="number" id="hbEquity" placeholder="예: 30" oninput="calcHomebuy()"></div></div>
+      <div class="field"><label>현재 모은 돈(원)</label><input type="number" id="hbHave" placeholder="예: 30000000" oninput="calcHomebuy()"></div>
+      <div class="grid2"><div class="field"><label>월 저축액(원)</label><input type="number" id="hbSave" placeholder="예: 1500000" oninput="calcHomebuy()"></div><div class="field"><label>연 수익률(%)</label><input type="number" id="hbRate" placeholder="예: 4" oninput="calcHomebuy()"></div></div>
+      <div class="result" id="hbRes"></div><p class="hint">필요 자기자본 = 집값 × 자기자본 비율. 현재 돈을 굴리며(월복리) 월 저축을 더해 목표 자기자본에 도달하는 시점을 계산하고, 나머지는 대출로 봐요. <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 은퇴 준비 -->
+    <section class="view" id="v-retire" data-floor="2"><div class="panel">
+      <div class="grid2"><div class="field"><label>은퇴까지 남은 기간(년)</label><input type="number" id="rtYears" placeholder="예: 25" oninput="calcRetire()"></div><div class="field"><label>현재 자산(원)</label><input type="number" id="rtHave" placeholder="예: 50000000" oninput="calcRetire()"></div></div>
+      <div class="grid2"><div class="field"><label>월 저축액(원)</label><input type="number" id="rtSave" placeholder="예: 1000000" oninput="calcRetire()"></div><div class="field"><label>연 수익률(%)</label><input type="number" id="rtRate" placeholder="예: 5" oninput="calcRetire()"></div></div>
+      <div class="field"><label>은퇴 후 월 생활비(원)</label><input type="number" id="rtSpend" placeholder="예: 2500000" oninput="calcRetire()"></div>
+      <div class="result" id="rtRes"></div><p class="hint">은퇴 시점 예상 자산과, 4% 룰(연 생활비×25)로 계산한 필요 노후자금을 비교해 달성률을 보여줘요. 물가·세금·연금은 미반영한 <b>참고용</b>이에요.</p></div></section>
+
+    <!-- 대출 갈아타기(대환) -->
+    <section class="view" id="v-refinance" data-floor="2"><div class="panel">
+      <div class="field"><label>대출 잔액(원)</label><input type="number" id="rfBal" placeholder="예: 100000000" oninput="calcRefinance()"></div>
+      <div class="field"><label>남은 기간(개월)</label><input type="number" id="rfMonths" placeholder="예: 240" oninput="calcRefinance()"></div>
+      <div class="grid2"><div class="field"><label>기존 금리(%)</label><input type="number" id="rfOld" placeholder="예: 5.5" oninput="calcRefinance()"></div><div class="field"><label>신규 금리(%)</label><input type="number" id="rfNew" placeholder="예: 4.0" oninput="calcRefinance()"></div></div>
+      <div class="grid2"><div class="field"><label>중도상환수수료(%)</label><input type="number" id="rfPenalty" placeholder="예: 1.2" oninput="calcRefinance()"></div><div class="field"><label>기타 비용(원)</label><input type="number" id="rfFee" placeholder="예: 500000" oninput="calcRefinance()"></div></div>
+      <div class="result" id="rfRes"></div><p class="hint">원리금균등 기준, 남은 기간의 총이자를 기존·신규 금리로 각각 계산해 <b>이자 절감액 − (중도상환수수료 + 기타비용)</b>으로 순이득을 구해요. 중도수수료는 보통 대출 3년 내에만 부과돼요.</p></div></section>
+
+    <!-- 예금 풍차돌리기 -->
+    <section class="view" id="v-windmill" data-floor="2"><div class="panel">
+      <div class="field"><label>매달 새로 넣을 예금액(원)</label><input type="number" id="wmAmt" placeholder="예: 1000000" oninput="calcWindmill()"></div>
+      <div class="grid2"><div class="field"><label>예금 기간(개월)</label><input type="number" id="wmTerm" placeholder="예: 12" oninput="calcWindmill()"></div><div class="field"><label>연 이율(%)</label><input type="number" id="wmRate" placeholder="예: 3.5" oninput="calcWindmill()"></div></div>
+      <div class="field"><label>돌리는 개월 수(가입 회차)</label><input type="number" id="wmCount" placeholder="예: 12" oninput="calcWindmill()"></div>
+      <div class="result" id="wmRes"></div><p class="hint">매달 하나씩 정기예금(단리)에 가입하는 방식이에요. 첫 만기부터는 매달 만기금이 나와 재예치·생활비로 쓸 수 있어요. 이자는 15.4% 과세 후예요.</p></div></section>
+
+    <!-- 지역건보 정밀 -->
+    <section class="view" id="v-reghealthx" data-floor="2"><div class="panel">
+      <div class="field"><label>연 소득(사업·근로·기타 합계, 원)</label><input type="number" id="rhxIncome" placeholder="예: 30000000" oninput="calcReghealthx()"></div>
+      <div class="field"><label>재산세 과세표준 합계(원)</label><input type="number" id="rhxProp" placeholder="예: 150000000" oninput="calcReghealthx()"></div>
+      <div class="field"><label>자동차 차량가액(원) · 4천만↑만 부과</label><input type="number" id="rhxCar" placeholder="예: 0 (없으면 0)" oninput="calcReghealthx()"></div>
+      <div class="result" id="rhxRes"></div><p class="hint">소득분(7.09%)에 재산·자동차 <b>부과점수 × 208.4원</b>(2024)을 더한 개산이에요. 실제 점수표는 60등급으로 세분화돼 있어 <b>참고용</b>이며, 정확한 금액은 건보공단 모의계산을 권장해요.</p></div></section>
+
     <!-- 카페인 반감기 -->
     <section class="view" id="v-caffeine" data-floor="4"><div class="panel">
       <div class="field"><label>음료 빠른 선택</label><select id="cfPreset" onchange="cfFill()"><option value="">직접 입력</option><option value="75">에스프레소 1샷 (75mg)</option><option value="150">아메리카노 톨 (150mg)</option><option value="90">캔커피 (90mg)</option><option value="30">녹차 1잔 (30mg)</option><option value="80">에너지드링크 (80mg)</option></select></div>
@@ -1132,6 +1213,12 @@ const CALCS=[
   {id:'reghealth',floor:2,icon:'🏥',name:'건강보험(지역)',desc:'지역가입자 개산',kw:'건강보험 지역가입자 보험료 소득 장기요양'},
   {id:'worktime',floor:1,icon:'⏳',name:'노동시간 환산',desc:'이거 몇 시간?',kw:'노동시간 시급 환산 가격 며칠'},
   {id:'subs',floor:1,icon:'💳',name:'구독료 합산',desc:'월·연 구독비',kw:'구독 구독료 넷플릭스 정기결제 합산'},
+  {id:'homebuy',floor:2,icon:'🏠',name:'내 집 마련',desc:'목표까지 로드맵',kw:'내집마련 주택 저축 목표 자기자본 시뮬레이터'},
+  {id:'retire',floor:2,icon:'🌴',name:'은퇴 준비',desc:'노후자금 진단',kw:'은퇴 노후 연금 4%룰 시뮬레이터 자금'},
+  {id:'refinance',floor:2,icon:'🔄',name:'대출 갈아타기',desc:'대환 손익',kw:'대환 갈아타기 대출 중도상환수수료 이자 절감'},
+  {id:'windmill',floor:2,icon:'🌀',name:'예금 풍차돌리기',desc:'만기 캘린더',kw:'풍차돌리기 예금 적금 만기 분산 캘린더'},
+  {id:'reghealthx',floor:2,icon:'🏥',name:'지역건보 정밀',desc:'소득·재산·차',kw:'건강보험 지역가입자 재산 자동차 점수 정밀'},
+  {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
 ];
 const GUIDE={
   basic:'숫자와 연산 버튼으로 계산해요. 키보드 입력도 되고 <b>%</b>는 백분율, <b>⌫</b>는 한 글자 지우기예요.',
@@ -1235,7 +1322,13 @@ const GUIDE={
   parcel:'상자 크기(가로·세로·높이)로 부피무게와 청구무게(실무게와 비교)를 계산해요.',
   reghealth:'연소득으로 지역가입자 건강보험료(소득분)와 장기요양보험료를 개산해요. 재산·자동차분은 별도예요.',
   worktime:'사고 싶은 물건 가격이 내 시급 기준 몇 시간·며칠치 일인지 환산해 소비의 진짜 무게를 보여줘요.',
-  subs:'여러 구독 서비스의 월·연 결제액을 합산해요. 연 결제는 월로 환산해 총 지출을 알려줘요.'
+  subs:'여러 구독 서비스의 월·연 결제액을 합산해요. 연 결제는 월로 환산해 총 지출을 알려줘요.',
+  homebuy:'목표 집값·자기자본 비율·현재 저축·월 저축·수익률로 내 집 마련까지 걸리는 기간과 대출 필요액을 로드맵으로 보여줘요.',
+  retire:'은퇴까지 기간·현재 자산·월 저축·수익률로 은퇴 시점 예상 자산을 계산하고, 4% 룰 기준 필요 노후자금과 비교해요.',
+  refinance:'기존 대출을 새 금리로 갈아탈 때 남은 총이자 절감액에서 중도상환수수료를 빼 실제 이득을 계산해요.',
+  windmill:'매달 새 예금(적금)에 가입하는 풍차돌리기의 만기 시점과 월별 만기 수령액을 캘린더로 보여줘요.',
+  reghealthx:'지역가입자 건강보험료를 소득정률(7.09%)+재산·자동차 점수(점수당 208.4원)로 더 정밀하게 개산해요.',
+  roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
 };
 let recents = store.get('cds_recent') || [];
 let history = store.get('cds_history') || [];
@@ -1259,9 +1352,13 @@ function renderShop(){
     head.innerHTML=`<span class="fnum">🧾</span><span class="fname">계산 기록</span><span class="fcount">${history.length}개</span>`;
     if(!history.length){ grid.innerHTML='<div class="empty" style="grid-column:1/-1">저장된 계산이 없어요.<br>계산 결과의 <b>저장</b> 버튼을 누르면 여기 모여요.</div>'; return; }
     grid.style.display='block';
-    grid.innerHTML=history.map((h,i)=>`<div class="hist-item"><button class="hx" onclick="delHist(${i})">✕</button><div class="ht">${h.name} · ${h.time}</div><div class="hv">${h.val}</div>${h.sub?`<div class="ht" style="margin-top:5px;margin-bottom:0">${h.sub}</div>`:''}</div>`).join('')
-      +`<button class="hist-clear" onclick="clearHist()">기록 전체 삭제</button>`;
-    return;
+    const cnt={}; history.forEach(h=>cnt[h.name]=(cnt[h.name]||0)+1); const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0]; const days=new Set(history.map(h=>h.day||'')).size;
+    let out=`<div class="hist-summary"><div class="hs-cell"><b>${history.length}</b>건 계산</div><div class="hs-cell"><b>${Object.keys(cnt).length}</b>종 사용</div><div class="hs-cell"><b>${days}</b>일 기록</div><div class="hs-cell hs-top">최다 · ${top[0]} <b>${top[1]}회</b></div></div>`;
+    let lastDay=null; out+='<div class="timeline">';
+    history.forEach((h,i)=>{ const d=h.day||(h.time||'').split(' ')[0]||''; if(d!==lastDay){ out+=`<div class="tl-day">${d}</div>`; lastDay=d; }
+      out+=`<div class="tl-item"><div class="tl-dot"></div><div class="tl-card"><button class="hx" onclick="delHist(${i})">✕</button><div class="ht">${h.name} · ${h.hm||(h.time||'').split(' ')[1]||''}</div><div class="hv">${h.val}</div>${h.sub?`<div class="ht" style="margin-top:5px;margin-bottom:0">${h.sub}</div>`:''}</div></div>`; });
+    out+='</div><button class="hist-clear" onclick="clearHist()">기록 전체 삭제</button>';
+    grid.innerHTML=out; return;
   }
   grid.style.display='';
   if(recentView){
@@ -1306,7 +1403,7 @@ function openView(id){
   const view=document.getElementById('v-'+id);
   if(!view.querySelector('.view-head')){
     const head=document.createElement('div'); head.className='view-head';
-    head.innerHTML=`<button class="back" onclick="goHome()">←</button><div class="view-title"><h2>${name(calc)}</h2><small>${calc.floor}F ${floorName(calc.floor)} · ${desc(calc)}</small></div><button class="view-fav ${favs.includes(id)?'on':''}" onclick="toggleFav(event,'${id}')">★</button>`;
+    head.innerHTML=`<button class="back" onclick="goHome()">←</button><div class="view-title"><h2>${name(calc)}</h2><small>${calc.floor}F ${floorName(calc.floor)} · ${desc(calc)}</small></div><button class="view-share" onclick="shareCalc('${id}')" title="공유" aria-label="공유">🔗</button><button class="view-fav ${favs.includes(id)?'on':''}" onclick="toggleFav(event,'${id}')">★</button>`;
     view.prepend(head);
     if(GUIDE[id]){ const g=document.createElement('div'); g.className='guide';
       g.innerHTML=`<span class="gtxt">💡 ${GUIDE[id]}</span>`+(EXAMPLES[id]?`<button class="ex-btn" onclick="fillExample('${id}')">${T('example')}</button>`:'');
@@ -1340,8 +1437,12 @@ function toggleFav(e,id){ e.stopPropagation(); if(favs.includes(id))favs=favs.fi
 function reset(v){ document.querySelectorAll('#'+v+' input').forEach(i=>i.value=''); const r=document.querySelector('#'+v+' .result'); if(r){r.classList.remove('show');r.innerHTML='';} }
 
 function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); document.getElementById('themeBtn').textContent=t==='dark'?'☀️':'🌙'; }
-function toggleTheme(){ const c=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'; applyTheme(c); store.set('cds_theme',c); }
-applyTheme(store.get('cds_theme')||'light');
+function toggleTheme(){ const c=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark'; applyTheme(c); store.set('cds_theme',c); store.set('cds_theme_manual',1); }
+(function(){ const saved=store.get('cds_theme'); const manual=store.get('cds_theme_manual');
+  const mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');
+  if(manual&&saved){ applyTheme(saved); } else { applyTheme(mq&&mq.matches?'dark':'light'); }
+  if(mq&&mq.addEventListener){ mq.addEventListener('change',e=>{ if(!store.get('cds_theme_manual'))applyTheme(e.matches?'dark':'light'); }); }
+})();
 
 /* ===== 접근성: 글자 크기 ===== */
 let fontLevel=store.get('cds_font')||0;
@@ -1372,8 +1473,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -1411,8 +1512,8 @@ function imgRes(btn){ const box=btn.parentElement; const c=box.cloneNode(true); 
 function saveRes(btn){ const box=btn.parentElement; const c=box.cloneNode(true); c.querySelectorAll('.copy,.save,.img,.blank').forEach(x=>x.remove());
   const big=c.querySelector('.big'); const val = big? big.innerText.trim() : c.innerText.trim().split('\n')[0];
   const subEl=c.querySelector('.sub'); const sub = subEl? subEl.innerText.trim().replace(/\n+/g,' · ') : '';
-  const now=new Date(); const time=`${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  history.unshift({name:box.dataset.calc||curCalcName||'계산', val, sub, time}); history=history.slice(0,50); store.set('cds_history',history);
+  const now=new Date(); const day=`${now.getMonth()+1}/${now.getDate()}`; const time=`${day} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`; const hm=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  history.unshift({name:box.dataset.calc||curCalcName||'계산', val, sub, time, day, hm}); history=history.slice(0,50); store.set('cds_history',history);
   const o=btn.textContent; btn.textContent='저장됨'; setTimeout(()=>btn.textContent=o,1200); }
 function delHist(i){ history.splice(i,1); store.set('cds_history',history); renderShop(); }
 function clearHist(){ history=[]; store.set('cds_history',history); renderShop(); }
@@ -1530,7 +1631,8 @@ function calcCompound(){ const P=parseFloat(document.getElementById('cpP').value
   const fvP=P*Math.pow(1+R/100/m,m*Y); const im=R/100/12,months=Y*12; const fvAdd=add>0?(im===0?add*months:add*((Math.pow(1+im,months)-1)/im)):0; const fv=fvP+fvAdd; const paid=P+add*months;
   const yrs=Math.min(Math.max(Math.round(Y),1),40); const series=[],labels=[]; for(let t=0;t<=yrs;t++){ const bp=P*Math.pow(1+R/100/m,m*t); const ba=add>0?(im===0?add*(12*t):add*((Math.pow(1+im,12*t)-1)/im)):0; series.push(bp+ba); labels.push(t+'년'); }
   const chart=chartArea(series,labels,'var(--f2)'); const donut=chartDonut([{label:'원금',value:paid,color:'var(--f2)'},{label:'이자·수익',value:Math.max(fv-paid,0),color:'var(--star)'}]);
-  show('cpRes',`<div class="label">${Y}년 후 미래가치</div><div class="big" style="color:var(--f2)">${fmt(fv,0)} 원</div><div class="sub">투입 원금 ${fmt(paid,0)}원${add>0?` (초기 ${fmt(P,0)} + 월 ${fmt(add,0)}×${months})`:''}<br>이자·수익 <b>${fmt(fv-paid,0)}원</b> (원금 대비 ${(fv/Math.max(paid,1)*100-100).toFixed(1)}%)</div>${chart}${donut}`); }
+  const inf=parseFloat(document.getElementById('cpInf').value); const realHtml=(!isNaN(inf)&&inf>0)?`<hr><div class="label">물가 ${fmt(inf,1)}% 반영 실질가치 (오늘 구매력 기준)</div><div class="big" style="color:var(--f3)">${fmt(fv/Math.pow(1+inf/100,Y),0)} 원</div><div class="sub">명목 ${fmt(fv,0)}원의 ${Y}년 뒤 <b>실제 구매력</b>이에요.</div>`:'';
+  show('cpRes',`<div class="label">${Y}년 후 미래가치</div><div class="big" style="color:var(--f2)">${fmt(fv,0)} 원</div><div class="sub">투입 원금 ${fmt(paid,0)}원${add>0?` (초기 ${fmt(P,0)} + 월 ${fmt(add,0)}×${months})`:''}<br>이자·수익 <b>${fmt(fv-paid,0)}원</b> (원금 대비 ${(fv/Math.max(paid,1)*100-100).toFixed(1)}%)</div>${chart}${donut}${realHtml}`); }
 
 /* ===== 부가세 ===== */
 let vatCur='add';
@@ -2149,6 +2251,12 @@ const EXAMPLES={
   reghealth:{fields:{rhIncome:'30000000'},run:'calcReghealth'},
   worktime:{fields:{wtPrice:'1500000',wtHourly:'12000'},run:'calcWorktime'},
   subs:{fields:{subList:'넷플릭스 13500\n유튜브 14900\n쿠팡 58000 연\n클로드 20000'},run:'calcSubs'},
+  roadmap:{fields:{rmAge:'32',rmNet:'50000000',rmSave:'1000000',rmRate:'5',rmHome:'500000000',rmHomeAge:'40',rmRetire:'60',rmSpend:'2500000'},run:'calcRoadmap'},
+  homebuy:{fields:{hbPrice:'500000000',hbEquity:'30',hbHave:'30000000',hbSave:'1500000',hbRate:'4'},run:'calcHomebuy'},
+  retire:{fields:{rtYears:'25',rtHave:'50000000',rtSave:'1000000',rtRate:'5',rtSpend:'2500000'},run:'calcRetire'},
+  refinance:{fields:{rfBal:'100000000',rfMonths:'240',rfOld:'5.5',rfNew:'4.0',rfPenalty:'1.2',rfFee:'500000'},run:'calcRefinance'},
+  windmill:{fields:{wmAmt:'1000000',wmTerm:'12',wmRate:'3.5',wmCount:'12'},run:'calcWindmill'},
+  reghealthx:{fields:{rhxIncome:'30000000',rhxProp:'150000000',rhxCar:'0'},run:'calcReghealthx'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2358,7 +2466,8 @@ function calcParking(){ const min=parseFloat(document.getElementById('pkMin').va
 /* ===== 유지비 비교 ===== */
 function calcFuelcost(){ const km=parseFloat(document.getElementById('fcKm').value),eff=parseFloat(document.getElementById('fcEff').value),fuel=parseFloat(document.getElementById('fcFuel').value),kwh=parseFloat(document.getElementById('fcKwh').value),rate=parseFloat(document.getElementById('fcRate').value); if(isNaN(km)||isNaN(eff)||isNaN(fuel)||isNaN(kwh)||isNaN(rate)||km<=0||eff<=0||kwh<=0){document.getElementById('fcRes').classList.remove('show');return;}
   const gas=km/eff*fuel; const ev=km/kwh*rate; const save=gas-ev;
-  show('fcRes',`<div class="label">월 연료비 비교</div><div class="big" style="color:var(--f1)">전기차가 월 ${fmt(Math.round(Math.abs(save)),0)}원 ${save>=0?'절약':'더 듦'}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">내연기관 (${eff}km/L)</span><span class="vl">${fmt(Math.round(gas),0)}원/월</span></div><div class="ri"><span class="nm">전기차 (${kwh}km/kWh)</span><span class="vl">${fmt(Math.round(ev),0)}원/월</span></div><div class="ri"><span class="nm">연간 차이</span><span class="vl">${fmt(Math.round(Math.abs(save)*12),0)}원</span></div></div>`); }
+  const bars=chartBars([{label:'내연기관',value:gas*12,color:'var(--f4)'},{label:'전기차',value:ev*12,color:'var(--f1)'}]);
+  show('fcRes',`<div class="label">월 연료비 비교</div><div class="big" style="color:var(--f1)">전기차가 월 ${fmt(Math.round(Math.abs(save)),0)}원 ${save>=0?'절약':'더 듦'}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">내연기관 (${eff}km/L)</span><span class="vl">${fmt(Math.round(gas),0)}원/월</span></div><div class="ri"><span class="nm">전기차 (${kwh}km/kWh)</span><span class="vl">${fmt(Math.round(ev),0)}원/월</span></div><div class="ri"><span class="nm">연간 차이</span><span class="vl">${fmt(Math.round(Math.abs(save)*12),0)}원</span></div><div class="ri"><span class="nm">5년 누적 차이</span><span class="vl">${fmt(Math.round(Math.abs(save)*60),0)}원</span></div></div><div class="label" style="margin-top:14px">연간 연료비</div>${bars}`); }
 
 /* ===== 택배 부피무게 ===== */
 function calcParcel(){ const w=parseFloat(document.getElementById('pcW').value),d=parseFloat(document.getElementById('pcD').value),h=parseFloat(document.getElementById('pcHh').value); if(isNaN(w)||isNaN(d)||isNaN(h)||w<=0||d<=0||h<=0){document.getElementById('pcRes2').classList.remove('show');return;}
@@ -2390,20 +2499,123 @@ function calcSubs(){ const lines=document.getElementById('subList').value.split(
   const rows=items.map(([n,mo,yr,orig])=>`<div class="ri"><span class="nm">${n}${yr?' <span style="font-size:11px;color:var(--muted)">(연)</span>':''}</span><span class="vl">${fmt(Math.round(mo),0)}원/월 · ${fmt(Math.round(mo/monthlyTotal*100),0)}%</span></div>`).join('');
   show('subRes',`<div class="label">월 구독료 합계 (${items.length}개)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyTotal),0)} 원</div><div class="sub">연간 <b>${fmt(Math.round(yearlyTotal),0)}원</b> 지출</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
+/* ===== 인생 자산 로드맵 ===== */
+function calcRoadmap(){
+  const age=parseFloat(document.getElementById('rmAge').value), net=parseFloat(document.getElementById('rmNet').value), save=parseFloat(document.getElementById('rmSave').value), rate=parseFloat(document.getElementById('rmRate').value);
+  const retire=parseFloat(document.getElementById('rmRetire').value), spend=parseFloat(document.getElementById('rmSpend').value);
+  let home=parseFloat(document.getElementById('rmHome').value); if(isNaN(home)||home<0)home=0; let homeAge=parseFloat(document.getElementById('rmHomeAge').value);
+  if(isNaN(age)||isNaN(net)||isNaN(save)||isNaN(rate)||isNaN(retire)||isNaN(spend)||age<=0||net<0||save<0||retire<=age||spend<0) return show('rmRes','<div class="big">현재 나이·자산·저축·수익률·은퇴 나이·생활비를 입력하세요</div>',true);
+  const END=95, i=rate/100; let asset=net; const series=[asset], labels=[age+'세'];
+  let homeStatus=null, retireAsset=null, depleteAge=null;
+  for(let y=age+1; y<=END; y++){
+    if(y-1<retire) asset=asset*(1+i)+save*12; else asset=asset*(1+i)-spend*12;
+    if(home>0 && !isNaN(homeAge) && y===Math.round(homeAge)){ if(asset>=home){ homeStatus={ok:true,at:y,left:asset-home}; asset-=home; } else { homeStatus={ok:false,at:y,short:home-asset}; asset=0; } }
+    if(y===Math.round(retire)) retireAsset=asset;
+    if(asset<0 && depleteAge===null && y>Math.round(retire)) depleteAge=y;
+    series.push(asset<0?0:asset); labels.push(y+'세');
+  }
+  if(retireAsset===null) retireAsset=asset;
+  const safe=Math.max(retireAsset,0)*0.04/12;
+  let homeLine=''; if(home>0 && !isNaN(homeAge) && homeStatus){ homeLine = homeStatus.ok ? `🏠 <b>${homeStatus.at}세</b>에 자가 마련 가능 (구입 후 여유 ${fmt(Math.round(homeStatus.left),0)}원)` : `🏠 ${homeStatus.at}세 목표엔 <b>${fmt(Math.round(homeStatus.short),0)}원 부족</b> → 대출·시기 조정 필요`; }
+  const retireLine = depleteAge ? `🌴 은퇴 자산으로 생활비 인출 시 <b>${depleteAge}세</b>에 소진` : `🌴 은퇴 자산으로 <b>${END}세 이후까지</b> 생활비 유지 가능 ✓`;
+  const chart=chartArea(series,labels,'var(--f2)');
+  show('rmRes',`<div class="label">은퇴(${Math.round(retire)}세) 예상 금융자산</div><div class="big" style="color:var(--f2)">${fmt(Math.round(retireAsset),0)} 원</div><div class="sub">${homeLine?homeLine+'<br>':''}${retireLine}<br>4% 안전인출 시 월 <b>${fmt(Math.round(safe),0)}원</b> 사용 가능</div><div class="label" style="margin-top:14px">나이별 자산 추이</div>${chart}`);
+}
+
+/* ===== 내 집 마련 ===== */
+function calcHomebuy(){ const price=parseFloat(document.getElementById('hbPrice').value); let eq=parseFloat(document.getElementById('hbEquity').value); if(isNaN(eq)||eq<=0)eq=100; let have=parseFloat(document.getElementById('hbHave').value); if(isNaN(have)||have<0)have=0; const save=parseFloat(document.getElementById('hbSave').value); const rate=parseFloat(document.getElementById('hbRate').value);
+  if(isNaN(price)||isNaN(save)||isNaN(rate)||price<=0||save<0||rate<0){document.getElementById('hbRes').classList.remove('show');return;}
+  const target=price*eq/100; const i=rate/100/12; let bal=have,months=0; const cap=600; const series=[bal],labels=['0년'];
+  while(bal<target&&months<cap){ bal=bal*(1+i)+save; months++; if(months%12===0){series.push(bal);labels.push(months/12+'년');} }
+  const reached=bal>=target; const loan=price-target;
+  if(!reached){ return show('hbRes',`<div class="label">목표 자기자본 ${fmt(target,0)}원</div><div class="big" style="color:var(--f3)">50년 내 도달 어려워요</div><div class="sub">월 저축을 늘리거나 목표·비율을 조정해 보세요.</div>${chartArea(series,labels,'var(--f2)')}`); }
+  const yrs=Math.floor(months/12),mo=months%12; const chart=chartArea(series,labels,'var(--f2)');
+  show('hbRes',`<div class="label">자기자본 ${fmt(target,0)}원 마련까지</div><div class="big" style="color:var(--f2)">${yrs>0?yrs+'년 ':''}${mo}개월</div><div class="sub">약 ${months}개월 뒤 목표 달성 (예상 자산 ${fmt(Math.round(bal),0)}원)<br>필요 대출 <b>${fmt(loan,0)}원</b> (집값의 ${fmt(100-eq,0)}%)<br>총 저축 투입 ${fmt(save*months,0)}원</div><div class="label" style="margin-top:14px">자산 성장</div>${chart}`); }
+
+/* ===== 은퇴 준비 ===== */
+function calcRetire(){ const Y=parseFloat(document.getElementById('rtYears').value); let have=parseFloat(document.getElementById('rtHave').value); if(isNaN(have)||have<0)have=0; const save=parseFloat(document.getElementById('rtSave').value),rate=parseFloat(document.getElementById('rtRate').value),spend=parseFloat(document.getElementById('rtSpend').value);
+  if(isNaN(Y)||isNaN(save)||isNaN(rate)||isNaN(spend)||Y<=0||save<0||rate<0||spend<=0){document.getElementById('rtRes').classList.remove('show');return;}
+  const i=rate/100/12,n=Y*12; const projected=have*Math.pow(1+i,n)+(i===0?save*n:save*((Math.pow(1+i,n)-1)/i));
+  const needed=spend*12*25; const rateOk=projected>=needed; const gap=needed-projected;
+  const series=[],labels=[]; const yy=Math.min(Math.round(Y),40); for(let t=0;t<=yy;t++){ const v=have*Math.pow(1+i,12*t)+(i===0?save*12*t:save*((Math.pow(1+i,12*t)-1)/i)); series.push(v); labels.push(t+'년'); }
+  const chart=chartArea(series,labels,rateOk?'var(--f1)':'var(--f4)');
+  show('rtRes',`<div class="label">은퇴 시점 예상 자산</div><div class="big" style="color:${rateOk?'var(--f1)':'var(--f3)'}">${fmt(Math.round(projected),0)} 원</div><div class="sub">필요 노후자금 (4% 룰) <b>${fmt(needed,0)}원</b><br>달성률 <b>${fmt(projected/needed*100,0)}%</b> · ${rateOk?'목표 달성 가능 ✓':`부족 ${fmt(gap,0)}원`}<br>월 ${fmt(spend,0)}원 생활 기준 (연 ${fmt(spend*12,0)}원×25)</div><div class="label" style="margin-top:14px">은퇴까지 자산 성장</div>${chart}`); }
+
+/* ===== 결과 공유(URL) · 토스트 ===== */
+function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('show'); clearTimeout(window._tt); window._tt=setTimeout(()=>t.classList.remove('show'),2000); }
+function shareCalc(id){ const view=document.getElementById('v-'+id); const parts=[];
+  view.querySelectorAll('input,select,textarea').forEach(el=>{ if(el.id&&el.type!=='button'){ let v=el.type==='checkbox'?(el.checked?'1':'0'):el.value; if(v!==''&&v!=null)parts.push(el.id+'='+encodeURIComponent(v)); } });
+  const data=btoa(parts.join('&')); const url=location.origin+location.pathname+'?c='+id+(data?'&d='+data:'');
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(()=>toast('🔗 공유 링크가 복사됐어요')).catch(()=>toast('복사 실패 — 주소창을 확인하세요')); }
+  else{ prompt('공유 링크', url); }
+}
+function restoreFromURL(){ const p=new URLSearchParams(location.search); const id=p.get('c'); if(!id||!CALCS.find(c=>c.id===id))return; openView(id);
+  const d=p.get('d'); if(d){ try{ const pairs=new URLSearchParams(atob(d)); pairs.forEach((v,k)=>{ const el=document.getElementById(k); if(el){ if(el.type==='checkbox')el.checked=v==='1'; else el.value=v; } });
+    const view=document.getElementById('v-'+id); view.querySelectorAll('input,select,textarea').forEach(el=>el.dispatchEvent(new Event('input',{bubbles:true}))); view.querySelectorAll('select').forEach(el=>el.dispatchEvent(new Event('change',{bubbles:true}))); const btn=view.querySelector('.btn.primary'); if(btn)btn.click();
+  }catch(e){} } }
+
+/* ===== 대출 갈아타기(대환) ===== */
+function _loanInterest(P,r,n){ const i=r/100/12; if(i===0)return 0; const A=P*i/(1-Math.pow(1+i,-n)); return A*n-P; }
+function calcRefinance(){ const P=parseFloat(document.getElementById('rfBal').value),n=parseInt(document.getElementById('rfMonths').value,10),oldR=parseFloat(document.getElementById('rfOld').value),newR=parseFloat(document.getElementById('rfNew').value); let pen=parseFloat(document.getElementById('rfPenalty').value); if(isNaN(pen)||pen<0)pen=0; let fee=parseFloat(document.getElementById('rfFee').value); if(isNaN(fee)||fee<0)fee=0;
+  if(isNaN(P)||isNaN(n)||isNaN(oldR)||isNaN(newR)||P<=0||n<=0||oldR<0||newR<0){document.getElementById('rfRes').classList.remove('show');return;}
+  const oldInt=_loanInterest(P,oldR,n),newInt=_loanInterest(P,newR,n); const saving=oldInt-newInt; const cost=P*pen/100+fee; const net=saving-cost;
+  const good=net>0; const chart=chartBars([{label:'기존 총이자',value:oldInt,color:'var(--f4)'},{label:'신규 총이자',value:newInt,color:'var(--f1)'}]);
+  show('rfRes',`<div class="label">대환 순이득 (이자절감 − 비용)</div><div class="big" style="color:${good?'var(--f1)':'var(--f3)'}">${good?'+':''}${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">이자 절감액</span><span class="vl">${fmt(Math.round(saving),0)}원</span></div><div class="ri"><span class="nm">중도상환수수료 (${fmt(pen,1)}%)</span><span class="vl">−${fmt(Math.round(P*pen/100),0)}원</span></div><div class="ri"><span class="nm">기타 비용</span><span class="vl">−${fmt(fee,0)}원</span></div></div><div class="sub">${good?'갈아타면 이득이에요 ✓':'지금은 비용이 더 커요. 수수료 면제 시점(보통 3년 후)을 노려보세요.'}</div>${chart}`); }
+
+/* ===== 예금 풍차돌리기 ===== */
+function calcWindmill(){ const amt=parseFloat(document.getElementById('wmAmt').value),term=parseInt(document.getElementById('wmTerm').value,10),rate=parseFloat(document.getElementById('wmRate').value),count=parseInt(document.getElementById('wmCount').value,10);
+  if(isNaN(amt)||isNaN(term)||isNaN(rate)||isNaN(count)||amt<=0||term<=0||rate<0||count<=0){document.getElementById('wmRes').classList.remove('show');return;}
+  const grossInt=amt*(rate/100)*(term/12); const afterTax=grossInt*(1-0.154); const perMaturity=amt+afterTax;
+  const totalInvest=amt*count; const totalInt=afterTax*count; const firstM=term,lastM=count-1+term;
+  const rows=[]; for(let k=1;k<=Math.min(count,6);k++){ rows.push(`<div class="ri"><span class="nm">${k}회차 → ${k-1+term}개월째 만기</span><span class="vl">${fmt(Math.round(perMaturity),0)}원</span></div>`); } if(count>6)rows.push(`<div class="ri"><span class="nm">…</span><span class="vl">이후 매달 반복</span></div>`);
+  show('wmRes',`<div class="label">정착 후 매달 받는 만기금</div><div class="big" style="color:var(--f2)">${fmt(Math.round(perMaturity),0)} 원</div><div class="sub">${firstM}개월째 첫 만기부터 매달 수령 (${count}회차, ${lastM}개월째 종료)<br>총 투입 ${fmt(totalInvest,0)}원 · 총 세후이자 <b>${fmt(Math.round(totalInt),0)}원</b><br>회차당 세후이자 ${fmt(Math.round(afterTax),0)}원 (단리 15.4% 과세)</div><div class="label" style="margin-top:14px">만기 캘린더</div><div class="rowlist">${rows.join('')}</div>`); }
+
+/* ===== 지역건보 정밀(소득·재산·자동차) ===== */
+function _propScore(p){ const t=[[4.5e6,22],[9e6,68],[13.5e6,121],[22.5e6,172],[45e6,275],[67.5e6,391],[90e6,476],[112.5e6,545],[135e6,620],[202.5e6,706],[270e6,731],[405e6,757],[675e6,785],[900e6,812],[1.2e9,841],[1.5e9,881]]; for(const[cap,pt]of t){ if(p<=cap)return pt; } return 1200; }
+function calcReghealthx(){ const income=parseFloat(document.getElementById('rhxIncome').value); let prop=parseFloat(document.getElementById('rhxProp').value); if(isNaN(prop)||prop<0)prop=0; let car=parseFloat(document.getElementById('rhxCar').value); if(isNaN(car)||car<0)car=0;
+  if(isNaN(income)||income<0){document.getElementById('rhxRes').classList.remove('show');return;}
+  const PPS=208.4; const incHealth=(income/12)*0.0709; const propScore=prop>0?_propScore(prop):0; const carScore=car>=4e7?113:0; const assetHealth=(propScore+carScore)*PPS;
+  const health=incHealth+assetHealth; const care=health*0.1295; const total=health+care;
+  show('rhxRes',`<div class="label">지역가입자 건강보험료 (월, 개산)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">소득분 (7.09%)</span><span class="vl">${fmt(Math.round(incHealth),0)}원</span></div><div class="ri"><span class="nm">재산분 (${propScore}점)</span><span class="vl">${fmt(Math.round(propScore*PPS),0)}원</span></div><div class="ri"><span class="nm">자동차분 (${carScore}점)</span><span class="vl">${fmt(Math.round(carScore*PPS),0)}원</span></div><div class="ri"><span class="nm">장기요양 (12.95%)</span><span class="vl">${fmt(Math.round(care),0)}원</span></div></div><div class="sub">부과점수 208.4원 기준 · 자동차는 4천만원↑만 부과</div>`); }
+
+/* ===== PWA 설치 ===== */
+(function(){ try{
+  const ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Crect width='180' height='180' rx='40' fill='%23B08D3A'/%3E%3Ctext x='90' y='120' font-size='96' text-anchor='middle' fill='white'%3E%F0%9F%A7%AE%3C/text%3E%3C/svg%3E";
+  const manifest={name:"모두의 계산기 백화점",short_name:"계산기백화점",start_url:".",scope:".",display:"standalone",background_color:"#F8F3E9",theme_color:"#B08D3A",icons:[{src:ICON,sizes:"180x180",type:"image/svg+xml",purpose:"any maskable"}]};
+  const blob=new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'}); const l=document.createElement('link'); l.rel='manifest'; l.href=URL.createObjectURL(blob); document.head.appendChild(l);
+}catch(e){} })();
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferredPrompt=e; showInstallBar(false); });
+window.addEventListener('appinstalled',()=>{ const b=document.getElementById('installBar'); if(b)b.classList.remove('show'); store.set('cds_pwa_dismiss',1); });
+function isStandalone(){ return window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true; }
+function isIOS(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream; }
+function showInstallBar(ios){ if(store.get('cds_pwa_dismiss')||isStandalone())return; const bar=document.getElementById('installBar'); if(!bar)return;
+  if(ios){ document.getElementById('ibTxt').innerHTML='공유 <b>⎘</b> → <b>홈 화면에 추가</b>로 앱처럼 오프라인 사용!'; document.getElementById('ibGo').style.display='none'; }
+  setTimeout(()=>bar.classList.add('show'),1200); }
+function pwaInstall(){ if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; document.getElementById('installBar').classList.remove('show'); }); } }
+function pwaDismiss(){ document.getElementById('installBar').classList.remove('show'); store.set('cds_pwa_dismiss',1); }
+function initPWA(){ if(isStandalone()||store.get('cds_pwa_dismiss'))return; if(isIOS())showInstallBar(true); }
+
 /* ===== 초기 ===== */
-renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats();
+renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats(); restoreFromURL(); initPWA();
 function initStats(){
-  // 내 방문 (이 기기, 로컬)
-  let mine=store.get('cds_visits')||0; mine+=1; store.set('cds_visits',mine);
-  const mEl=document.getElementById('statMine'); if(mEl)mEl.textContent=mine.toLocaleString();
-  // 누적 방문 (전체, counterapi.dev · 실패 시 폴백)
-  const tEl=document.getElementById('statTotal'); const dot=document.querySelector('.stats .live-dot');
-  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),5000);
-  fetch('https://api.counterapi.dev/v1/modu-calc-dept/visits/up',{signal:ctrl.signal})
-    .then(r=>r.ok?r.json():Promise.reject())
-    .then(d=>{ clearTimeout(to); const n=d.count??d.value??(d.data&&(d.data.count??d.data.up_count??d.data.value)); if(typeof n==='number'){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); } else throw 0; })
-    .catch(()=>{ clearTimeout(to); const cached=store.get('cds_total'); if(tEl)tEl.textContent=cached?cached.toLocaleString()+'+':'—'; if(dot)dot.style.background='var(--muted)'; });
+  const mEl=document.getElementById('statMine'), tEl=document.getElementById('statTotal'), dot=document.querySelector('.stats .live-dot');
+  // 내 방문 (이 기기가 연 횟수)
+  let mine=(store.get('cds_visits')||0)+1; store.set('cds_visits',mine); if(mEl)mEl.textContent=mine.toLocaleString();
+  // 누적 순 방문자 — 기기당 딱 1회만 증가(/hit), 이후엔 읽기전용(/get). 플래그를 먼저 저장해 새로고침 중복 증가를 원천 차단.
+  const cached=store.get('cds_total'); const counted=store.get('cds_counted');
+  const KEY='modu_calc_dept_2026'; const base='https://countapi.mileshilliard.com/api/v1/';
+  const url=counted?base+'get/'+KEY:base+'hit/'+KEY; if(!counted)store.set('cds_counted',1);
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),6000);
+  fetch(url,{signal:ctrl.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{ clearTimeout(to); const n=parseInt(d.value,10); if(!isNaN(n)){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); } else throw 0; })
+    .catch(()=>{ clearTimeout(to); if(tEl)tEl.textContent=cached?cached.toLocaleString():'—'; if(dot)dot.style.background='var(--muted)'; });
 }
 </script>
+<div class="install-bar" id="installBar">
+  <span class="ib-ic">📲</span>
+  <div class="ib-txt" id="ibTxt"><b>홈 화면에 추가</b>하고 앱처럼 오프라인으로 쓰세요.</div>
+  <button class="ib-go" id="ibGo" onclick="pwaInstall()">설치</button>
+  <button class="ib-x" onclick="pwaDismiss()" aria-label="닫기">✕</button>
+</div>
 </body>
 </html>
