@@ -45,6 +45,10 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
 /* 상단 금빛 어닝 + 스캘럽 밸런스 + 샹들리에 글로우 */
 body::before{ content:""; position:fixed; left:0; right:0; top:0; height:150px; z-index:-1; pointer-events:none;
   background:
+    radial-gradient(70px 60px at 50% 74px, rgba(255,244,206,.55), transparent 72%),
+    radial-gradient(3px 3px at 50% 96px, rgba(255,240,200,.95), transparent 70%),
+    radial-gradient(2px 2px at 42% 88px, rgba(255,240,200,.8), transparent 70%),
+    radial-gradient(2px 2px at 58% 88px, rgba(255,240,200,.8), transparent 70%),
     radial-gradient(220px 90px at 50% 4px, rgba(255,246,214,.9), transparent 70%),
     radial-gradient(circle at 20px 30px, rgba(160,122,44,.95) 0 13px, transparent 14px) 0 30px/40px 26px repeat-x,
     linear-gradient(180deg, rgba(255,240,198,.55) 0 2px, transparent 2px),
@@ -64,6 +68,24 @@ body::before{ content:""; position:fixed; left:0; right:0; top:0; height:150px; 
     linear-gradient(180deg, rgba(216,182,94,.35) 0 2px, transparent 2px),
     repeating-linear-gradient(90deg, #9C7A34 0 20px, #6E521F 20px 40px) 0 0/100% 30px no-repeat;
   filter:drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
+/* 대리석 기둥 + 바닥 반사 + 아치형 입구 조명 */
+body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(340px 380px at 50% 40px, rgba(255,248,224,.30), transparent 72%),
+    linear-gradient(90deg, rgba(120,96,44,.16) 0, rgba(120,96,44,.03) 30px, transparent 56px) left/56px 100% no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 6px, rgba(150,124,72,.06) 6px 7px, transparent 7px 13px) left/50px 100% no-repeat,
+    linear-gradient(270deg, rgba(120,96,44,.16) 0, rgba(120,96,44,.03) 30px, transparent 56px) right/56px 100% no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 6px, rgba(150,124,72,.06) 6px 7px, transparent 7px 13px) right/50px 100% no-repeat,
+    linear-gradient(0deg, rgba(214,201,172,.55), rgba(214,201,172,.12) 90px, transparent 170px) bottom/100% 170px no-repeat,
+    radial-gradient(60% 120px at 50% 100%, rgba(255,255,255,.30), transparent 70%) bottom/100% 120px no-repeat; }
+[data-theme=dark] body::after{ background:
+    radial-gradient(340px 380px at 50% 40px, rgba(216,182,94,.14), transparent 72%),
+    linear-gradient(90deg, rgba(0,0,0,.3) 0, rgba(0,0,0,.08) 30px, transparent 56px) left/56px 100% no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 6px, rgba(216,182,94,.05) 6px 7px, transparent 7px 13px) left/50px 100% no-repeat,
+    linear-gradient(270deg, rgba(0,0,0,.3) 0, rgba(0,0,0,.08) 30px, transparent 56px) right/56px 100% no-repeat,
+    repeating-linear-gradient(90deg, transparent 0 6px, rgba(216,182,94,.05) 6px 7px, transparent 7px 13px) right/50px 100% no-repeat,
+    linear-gradient(0deg, rgba(0,0,0,.35), transparent 170px) bottom/100% 170px no-repeat,
+    radial-gradient(60% 120px at 50% 100%, rgba(216,182,94,.10), transparent 70%) bottom/100% 120px no-repeat; }
 .app{max-width:660px; margin:0 auto; padding:22px 16px 70px; position:relative; z-index:1;}
 
 /* ---------- 상단 유틸바 ---------- */
@@ -671,7 +693,9 @@ select{cursor:pointer;}
       <div class="seg" style="margin-top:-6px"><button onclick="fxQuick('USD','KRW')">USD→원</button><button onclick="fxQuick('JPY','KRW')">엔→원</button><button onclick="fxQuick('EUR','KRW')">유로→원</button><button onclick="fxQuick('CNY','KRW')">위안→원</button></div>
       <div class="field"><label>직접 환율 지정 · 선택 (1 A = ? B)</label><input type="number" id="fxCustom" placeholder="비우면 내장 기준환율 사용" oninput="calcFx()"></div>
       <div class="field"><label>적용 기준</label><select id="fxSpread" onchange="calcFx()"><option value="0">매매기준율 (스프레드 없음)</option><option value="1.75">현찰 살 때 (+1.75%)</option><option value="-1.75">현찰 팔 때 (−1.75%)</option><option value="1.0">송금 보낼 때 (+1.0%)</option><option value="-1.0">송금 받을 때 (−1.0%)</option></select></div>
-      <div class="result" id="fxRes"></div><p class="hint">스프레드는 은행 평균 근사치예요. 우대환율·통화별로 다르며, 정확히 하려면 위에 오늘 고시환율을 직접 넣으세요.</p></div></section>
+      <button class="tb-btn wide" style="width:100%;margin-bottom:8px" onclick="refreshFx(true)">🔄 실시간 환율 새로고침</button>
+      <div id="fxStatus" style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:6px">내장 기준환율 사용 중</div>
+      <div class="result" id="fxRes"></div><p class="hint">실시간 환율은 유럽중앙은행(ECB) 기준 매매기준율이에요(영업일 1회 갱신). 일부 통화(동·대만달러)는 미지원이라 내장값을 써요. 스프레드는 은행 평균 근사치예요.</p></div></section>
 
     <section class="view" id="v-roman" data-floor="5"><div class="panel">
       <div class="seg"><button class="on" data-ro="toRoman" onclick="romanMode('toRoman')">숫자 → 로마</button><button data-ro="toNum" onclick="romanMode('toNum')">로마 → 숫자</button></div>
@@ -983,6 +1007,33 @@ select{cursor:pointer;}
       <div class="grid2"><div class="field"><label>연 자동차세(원)</label><input type="number" id="tcTax" placeholder="예: 400000" oninput="calcCartco()"></div><div class="field"><label>연 정비·기타(원)</label><input type="number" id="tcMaint" placeholder="예: 500000" oninput="calcCartco()"></div></div>
       <div class="result" id="tcRes"></div><p class="hint">총소유비용 = 감가상각(구입가−중고예상가) + (연료+보험+세금+정비)×보유기간. 실제 감가·연비·보험료는 차종·조건마다 달라요.</p></div></section>
 
+    <!-- 연금저축·IRP 세액공제 -->
+    <section class="view" id="v-pensiontax" data-floor="3"><div class="panel">
+      <div class="field"><label>연금저축 연 납입액(원)</label><input type="number" id="ptaxPension" placeholder="예: 6000000" oninput="calcPensiontax()"></div>
+      <div class="field"><label>IRP 연 납입액(원) · 선택</label><input type="number" id="ptaxIrp" placeholder="예: 3000000" oninput="calcPensiontax()"></div>
+      <div class="field"><label>소득 구간</label><select id="ptaxIncome" onchange="calcPensiontax()"><option value="16.5">총급여 5,500만원 이하 (16.5%)</option><option value="13.2">총급여 5,500만원 초과 (13.2%)</option></select></div>
+      <div class="result" id="ptaxRes"></div><p class="hint">공제한도: 연금저축 최대 600만원, IRP 포함 합산 최대 900만원. 세액공제율은 총급여 5,500만(종합소득 4,500만) 기준 16.5%/13.2%. 만 50세 이상 한시상향은 종료됐어요(2024~ 통합).</p></div></section>
+
+    <!-- 연말정산 종합 -->
+    <section class="view" id="v-yearendfull" data-floor="3"><div class="panel">
+      <div class="grid2"><div class="field"><label>총급여(원)</label><input type="number" id="yfSal" placeholder="예: 50000000" oninput="calcYearendfull()"></div><div class="field"><label>부양가족(본인 포함)</label><input type="number" id="yfFam" placeholder="1" oninput="calcYearendfull()"></div></div>
+      <div class="grid2"><div class="field"><label>신용카드 사용액(원)</label><input type="number" id="yfCredit" placeholder="예: 15000000" oninput="calcYearendfull()"></div><div class="field"><label>체크·현금영수증(원)</label><input type="number" id="yfCheck" placeholder="예: 5000000" oninput="calcYearendfull()"></div></div>
+      <div class="grid2"><div class="field"><label>의료비(원)</label><input type="number" id="yfMed" placeholder="예: 1000000" oninput="calcYearendfull()"></div><div class="field"><label>기부금(원)</label><input type="number" id="yfDonate" placeholder="예: 500000" oninput="calcYearendfull()"></div></div>
+      <div class="grid2"><div class="field"><label>연금저축+IRP(원)</label><input type="number" id="yfPension" placeholder="예: 6000000" oninput="calcYearendfull()"></div><div class="field"><label>기납부세액(원)·선택</label><input type="number" id="yfPaid" placeholder="원천징수 합계" oninput="calcYearendfull()"></div></div>
+      <div class="result" id="yfRes"></div><p class="hint">근로소득공제·인적공제·카드소득공제·의료비·기부금·연금저축 세액공제를 반영한 <b>개산</b>이에요. 실제는 주택·교육·보험료 등 항목이 더 많아 국세청 홈택스 연말정산 미리보기를 권장해요.</p></div></section>
+
+    <!-- ISA 절세 -->
+    <section class="view" id="v-isa" data-floor="3"><div class="panel">
+      <div class="field"><label>ISA 만기까지 누적 수익(이자·배당, 원)</label><input type="number" id="isaProfit" placeholder="예: 3000000" oninput="calcIsa()"></div>
+      <div class="field"><label>계좌 유형</label><select id="isaType" onchange="calcIsa()"><option value="2000000">일반형 (비과세 200만)</option><option value="4000000">서민형·농어민 (비과세 400만)</option></select></div>
+      <div class="result" id="isaRes"></div><p class="hint">ISA는 순이익 중 비과세 한도까지 세금이 없고, 초과분만 9.9%로 분리과세돼요(일반 계좌는 15.4%). 의무가입 3년 이상 유지해야 세제혜택을 받아요.</p></div></section>
+
+    <!-- 월세 세액공제 -->
+    <section class="view" id="v-rentcredit" data-floor="3"><div class="panel">
+      <div class="field"><label>총급여(원)</label><input type="number" id="rcSal" placeholder="예: 45000000" oninput="calcRentcredit()"></div>
+      <div class="field"><label>월 월세(원)</label><input type="number" id="rcRent" placeholder="예: 500000" oninput="calcRentcredit()"></div>
+      <div class="result" id="rcRes"></div><p class="hint">무주택 세대주, 총급여 8,000만원 이하, 국민주택규모(또는 기준시가 4억 이하) 주택 조건이에요. 공제율 총급여 5,500만 이하 17%·8,000만 이하 15%, 연 월세 <b>1,000만원 한도</b>.</p></div></section>
+
     <!-- 카페인 반감기 -->
     <section class="view" id="v-caffeine" data-floor="4"><div class="panel">
       <div class="field"><label>음료 빠른 선택</label><select id="cfPreset" onchange="cfFill()"><option value="">직접 입력</option><option value="75">에스프레소 1샷 (75mg)</option><option value="150">아메리카노 톨 (150mg)</option><option value="90">캔커피 (90mg)</option><option value="30">녹차 1잔 (30mg)</option><option value="80">에너지드링크 (80mg)</option></select></div>
@@ -1264,6 +1315,10 @@ const CALCS=[
   {id:'reghealthx',floor:2,icon:'🏥',name:'지역건보 정밀',desc:'소득·재산·차',kw:'건강보험 지역가입자 재산 자동차 점수 정밀'},
   {id:'leaveplan',floor:1,icon:'🏖️',name:'연차 소진 플래너',desc:'휴가 배치',kw:'연차 휴가 소진 징검다리 연휴 플래너'},
   {id:'cartco',floor:1,icon:'🚗',name:'자동차 총소유비용',desc:'TCO 5년',kw:'자동차 총소유비용 tco 유지비 감가상각 보험'},
+  {id:'pensiontax',floor:3,icon:'🎁',name:'연금저축 세액공제',desc:'연말정산 환급',kw:'연금저축 irp 세액공제 환급 연말정산 노후'},
+  {id:'yearendfull',floor:3,icon:'🧾',name:'연말정산 종합',desc:'카드·의료·기부',kw:'연말정산 종합 신용카드 의료비 기부금 환급 시뮬레이터'},
+  {id:'isa',floor:3,icon:'🏦',name:'ISA 절세',desc:'비과세·분리과세',kw:'isa 절세 비과세 분리과세 계좌 서민형'},
+  {id:'rentcredit',floor:3,icon:'💸',name:'월세 세액공제',desc:'환급액',kw:'월세 세액공제 환급 총급여 무주택'},
   {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
 ];
 const GUIDE={
@@ -1376,6 +1431,10 @@ const GUIDE={
   reghealthx:'지역가입자 건강보험료를 소득정률(7.09%)+재산·자동차 점수(점수당 208.4원)로 더 정밀하게 개산해요.',
   leaveplan:'남은 연차로 만들 수 있는 3~5일 연휴 횟수, 최대 연속 휴가, 마감까지 월별 소진량을 계산해 휴가 배치를 도와줘요.',
   cartco:'구입가·감가상각·연료·보험·세금·정비를 합쳐 자동차 총소유비용(TCO)과 월평균·km당 비용을 계산해요.',
+  pensiontax:'연금저축·IRP 납입액으로 연말정산 세액공제 환급액을 계산해요. 소득에 따라 13.2% 또는 16.5%를 적용해요.',
+  yearendfull:'총급여·부양가족·신용카드·의료비·기부금·연금저축을 한 번에 넣어 연말정산 결정세액과 예상 환급액을 개산해요.',
+  isa:'ISA 계좌의 비과세 한도(일반 200만·서민형 400만)와 초과분 9.9% 분리과세를 반영해 일반 계좌 대비 절세액을 계산해요.',
+  rentcredit:'총급여와 월세액으로 월세 세액공제 환급액을 계산해요. 총급여 5,500만 이하 17%, 8,000만 이하 15%(한도 연 1,000만원).',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
 };
 let recents = store.get('cds_recent') || [];
@@ -1446,6 +1505,7 @@ document.getElementById('searchInput').addEventListener('input',e=>{
 /* ===== 화면 전환 ===== */
 function openView(id){
   const calc=CALCS.find(c=>c.id===id), info=FLOORS[calc.floor];
+  if(id==='fx')refreshFx();
   document.querySelector('.home').classList.add('hide'); document.getElementById('directory').classList.add('hide');
   document.getElementById('shopHead').classList.add('hide'); document.querySelector('.search').style.display='none'; hideQuick(true);
   const view=document.getElementById('v-'+id);
@@ -1521,8 +1581,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -1906,6 +1966,17 @@ const FXRATES={ KRW:['🇰🇷 원 KRW',1], USD:['🇺🇸 달러 USD',1385], EU
   CHF:['🇨🇭 스위스프랑 CHF',1560], SGD:['🇸🇬 싱가포르달러 SGD',1025], THB:['🇹🇭 바트 THB',39.5], VND:['🇻🇳 동 VND(1000동)',56], TWD:['🇹🇼 대만달러 TWD',43] };
 // KRW로 환산 시 1단위당 원화 (JPY는 100엔 기준, VND는 1000동 기준)
 function fxUnit(c){ return c==='JPY'?FXRATES[c][1]/100 : c==='VND'?FXRATES[c][1]/1000 : FXRATES[c][1]; }
+let _fxLoaded=false;
+function refreshFx(force){ if(_fxLoaded&&!force)return; const st=document.getElementById('fxStatus'); if(st)st.textContent='실시간 환율 불러오는 중…';
+  const syms=['EUR','JPY','CNY','GBP','AUD','CAD','HKD','CHF','SGD','THB'];
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),6000);
+  fetch('https://api.frankfurter.dev/v1/latest?base=USD&symbols=KRW,'+syms.join(','),{signal:ctrl.signal})
+    .then(r=>r.ok?r.json():Promise.reject()).then(d=>{ clearTimeout(to); const kr=d.rates&&d.rates.KRW; if(!kr)throw 0;
+      FXRATES.USD[1]=Math.round(kr);
+      syms.forEach(c=>{ if(d.rates[c]){ let krw=kr/d.rates[c]; if(c==='JPY')krw*=100; FXRATES[c][1]=Math.round(krw*100)/100; } });
+      _fxLoaded=true; const st2=document.getElementById('fxStatus'); if(st2)st2.textContent='🟢 실시간 환율 · '+d.date+' ECB 기준'; calcFx();
+    }).catch(()=>{ clearTimeout(to); const st2=document.getElementById('fxStatus'); if(st2)st2.textContent='⚠️ 실시간 환율을 불러오지 못해 내장 기준환율을 사용해요.'; });
+}
 function fillFx(){ const f=document.getElementById('fxFrom'),t=document.getElementById('fxTo'); Object.entries(FXRATES).forEach(([k,v])=>{f.add(new Option(v[0],k));t.add(new Option(v[0],k));}); f.value='USD'; t.value='KRW'; calcFx(); }
 function swapFx(){ const f=document.getElementById('fxFrom'),t=document.getElementById('fxTo'); [f.value,t.value]=[t.value,f.value]; calcFx(); }
 function calcFx(){ const a=parseFloat(document.getElementById('fxAmt').value); if(isNaN(a)){document.getElementById('fxRes').classList.remove('show');return;}
@@ -2307,6 +2378,10 @@ const EXAMPLES={
   reghealthx:{fields:{rhxIncome:'30000000',rhxProp:'150000000',rhxCar:'0'},run:'calcReghealthx'},
   leaveplan:{fields:{lpDays:'10'},run:'calcLeaveplan'},
   cartco:{fields:{tcPrice:'30000000',tcYears:'5',tcResid:'40',tcKm:'12000',tcEff:'11',tcFuel:'1700',tcIns:'800000',tcTax:'400000',tcMaint:'500000'},run:'calcCartco'},
+  pensiontax:{fields:{ptaxPension:'6000000',ptaxIrp:'3000000'},run:'calcPensiontax'},
+  yearendfull:{fields:{yfSal:'50000000',yfFam:'1',yfCredit:'15000000',yfCheck:'5000000',yfMed:'1000000',yfDonate:'500000',yfPension:'6000000'},run:'calcYearendfull'},
+  isa:{fields:{isaProfit:'3000000'},run:'calcIsa'},
+  rentcredit:{fields:{rcSal:'45000000',rcRent:'500000'},run:'calcRentcredit'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2391,8 +2466,8 @@ function calcCartax(){ const type=document.getElementById('ctxType').value; docu
   let baseTax;
   if(type==='ev'){ baseTax=100000; }
   else{ const cc=parseFloat(document.getElementById('ctxCc').value); if(isNaN(cc)||cc<=0){document.getElementById('ctxRes').classList.remove('show');return;} const rate=cc<=1000?80:cc<=1600?140:200; baseTax=cc*rate; }
-  const afterDisc=baseTax*(1-disc); const edu=afterDisc*0.3; const total=afterDisc+edu;
-  show('ctxRes',`<div class="label">연간 자동차세 (지방교육세 포함)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="sub">${type==='ev'?'전기차 정액':'배기량 기준'} 본세 ${fmt(baseTax,0)}원${disc>0?`<br>차령 ${age}년 경감 −${fmt(disc*100,0)}% → ${fmt(afterDisc,0)}원`:''}<br>지방교육세(30%) ${fmt(edu,0)}원<hr>2회 분납 시 회당 약 ${fmt(Math.round(total/2/10)*10,0)}원</div>`); }
+  const afterDisc=baseTax*(1-disc); const edu=afterDisc*0.3; const total=afterDisc+edu; const yearPay=afterDisc*0.97+edu;
+  show('ctxRes',`<div class="label">연간 자동차세 (지방교육세 포함)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="sub">${type==='ev'?'전기차 정액':'배기량 기준'} 본세 ${fmt(baseTax,0)}원${disc>0?`<br>차령 ${age}년 경감 −${fmt(disc*100,0)}% → ${fmt(afterDisc,0)}원`:''}<br>지방교육세(30%) ${fmt(edu,0)}원<hr>💡 1월 연납 시 약 <b>${fmt(Math.round(yearPay/10)*10,0)}원</b> (본세 3% 할인, 2025년~)<br>2회 분납 시 회당 약 ${fmt(Math.round(total/2/10)*10,0)}원</div>`); }
 
 /* ===== 재산세(주택) ===== */
 function calcProptax(){ const price=parseFloat(document.getElementById('ptxPrice').value),ratio=parseFloat(document.getElementById('ptxRatio').value); if(isNaN(price)||price<=0){document.getElementById('ptxRes').classList.remove('show');return;}
@@ -2715,6 +2790,43 @@ function calcCartco(){ const P=parseFloat(document.getElementById('tcPrice').val
   const perMonth=total/(Y*12); const perKm=km>0?total/(km*Y):0;
   const donut=chartDonut([{label:'감가상각',value:deprec,color:'var(--f4)'},{label:'연료',value:fuelTot,color:'var(--f3)'},{label:'보험',value:insTot,color:'var(--f2)'},{label:'세금',value:taxTot,color:'var(--f5)'},{label:'정비',value:maintTot,color:'var(--f1)'}]);
   show('tcRes',`<div class="label">${fmt(Y,0)}년 총소유비용 (TCO)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="sub">월 평균 <b>${fmt(Math.round(perMonth),0)}원</b> · km당 <b>${fmt(Math.round(perKm),0)}원</b><br>감가상각 ${fmt(Math.round(deprec),0)}원 (중고 예상가 ${fmt(Math.round(residual),0)}원)<br>연료 ${fmt(Math.round(fuelTot),0)} · 보험 ${fmt(insTot,0)} · 세금 ${fmt(taxTot,0)} · 정비 ${fmt(maintTot,0)}</div>${donut}`); }
+
+/* ===== 연금저축·IRP 세액공제 ===== */
+function calcPensiontax(){ let pen=parseFloat(document.getElementById('ptaxPension').value); if(isNaN(pen)||pen<0)pen=0; let irp=parseFloat(document.getElementById('ptaxIrp').value); if(isNaN(irp)||irp<0)irp=0; const rate=parseFloat(document.getElementById('ptaxIncome').value)/100;
+  if(pen<=0&&irp<=0){document.getElementById('ptaxRes').classList.remove('show');return;}
+  const penElig=Math.min(pen,6000000); const totalElig=Math.min(penElig+irp,9000000); const credit=totalElig*rate;
+  const overPen=pen>6000000?pen-6000000:0; const overTot=(penElig+irp)>9000000?(penElig+irp)-9000000:0;
+  show('ptaxRes',`<div class="label">예상 세액공제 환급액</div><div class="big" style="color:var(--f2)">${fmt(Math.round(credit),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">연금저축 인정액 (한도 600만)</span><span class="vl">${fmt(penElig,0)}원</span></div><div class="ri"><span class="nm">IRP 포함 총 인정액 (한도 900만)</span><span class="vl">${fmt(totalElig,0)}원</span></div><div class="ri"><span class="nm">공제율</span><span class="vl">${fmt(rate*100,1)}%</span></div></div><div class="sub">${overPen>0||overTot>0?`⚠️ 한도 초과분 ${fmt(Math.max(overPen,overTot),0)}원은 공제 대상이 아니에요.<br>`:''}납입액의 <b>${fmt(rate*100,1)}%</b>를 연말정산 때 세금에서 돌려받아요.</div>`); }
+
+/* ===== 연말정산 종합 ===== */
+function calcYearendfull(){ const sal=parseFloat(document.getElementById('yfSal').value); let fam=parseInt(document.getElementById('yfFam').value,10); if(isNaN(fam)||fam<1)fam=1; const g=id=>{let v=parseFloat(document.getElementById(id).value);return isNaN(v)||v<0?0:v;};
+  if(isNaN(sal)||sal<=0){document.getElementById('yfRes').classList.remove('show');return;}
+  const credit=g('yfCredit'),check=g('yfCheck'),med=g('yfMed'),donate=g('yfDonate'),pension=g('yfPension'),paid=g('yfPaid');
+  // 카드 소득공제
+  const threshold=sal*0.25; const totalUse=credit+check; let cardDed=0;
+  if(totalUse>threshold){ const creditForDed=Math.max(credit-threshold,0); const remain=Math.max(threshold-credit,0); const checkForDed=Math.max(check-remain,0); cardDed=creditForDed*0.15+checkForDed*0.30; }
+  const cardCap=sal<=70000000?3000000:sal<=120000000?2500000:2000000; cardDed=Math.min(cardDed,cardCap);
+  // 과세표준
+  const base=Math.max(sal-laborDeduction(sal)-1500000*fam-cardDed,0); const gross=incomeTax(base);
+  // 세액공제
+  const laborCredit=Math.min(gross*0.55,715000);
+  const medCredit=Math.max(med-sal*0.03,0)*0.15;
+  const donateCredit=donate<=10000000?donate*0.15:10000000*0.15+(donate-10000000)*0.30;
+  const penRate=sal<=55000000?0.165:0.132; const penCredit=Math.min(pension,9000000)*penRate;
+  let det=Math.max(gross-laborCredit-medCredit-donateCredit-penCredit,0); const local=det*0.1; const total=det+local;
+  const settle=paid>0?paid-total:0;
+  show('yfRes',`<div class="label">예상 결정세액 (지방세 포함)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">과세표준</span><span class="vl">${fmt(Math.round(base),0)}원</span></div><div class="ri"><span class="nm">산출세액</span><span class="vl">${fmt(Math.round(gross),0)}원</span></div><div class="ri"><span class="nm">카드 소득공제</span><span class="vl">${fmt(Math.round(cardDed),0)}원</span></div><div class="ri"><span class="nm">의료비+기부+연금 세액공제</span><span class="vl">−${fmt(Math.round(medCredit+donateCredit+penCredit),0)}원</span></div></div>${paid>0?`<div class="sub" style="margin-top:10px;font-size:15px;color:${settle>=0?'var(--f1)':'var(--f3)'}"><b>${settle>=0?'환급 예상 '+fmt(Math.round(settle),0)+'원 😊':'추가납부 예상 '+fmt(Math.round(-settle),0)+'원'}</b></div>`:'<div class="sub">기납부세액을 넣으면 환급/추가납부를 알려드려요.</div>'}`); }
+
+/* ===== ISA 절세 ===== */
+function calcIsa(){ const profit=parseFloat(document.getElementById('isaProfit').value); const limit=parseFloat(document.getElementById('isaType').value); if(isNaN(profit)||profit<=0){document.getElementById('isaRes').classList.remove('show');return;}
+  const taxable=Math.max(profit-limit,0); const isaTax=taxable*0.099; const normalTax=profit*0.154; const save=normalTax-isaTax;
+  show('isaRes',`<div class="label">일반 계좌 대비 절세액</div><div class="big" style="color:var(--f2)">${fmt(Math.round(save),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">비과세 한도</span><span class="vl">${fmt(limit,0)}원</span></div><div class="ri"><span class="nm">과세 대상(초과분)</span><span class="vl">${fmt(taxable,0)}원</span></div><div class="ri"><span class="nm">ISA 세금 (9.9% 분리)</span><span class="vl">${fmt(Math.round(isaTax),0)}원</span></div><div class="ri"><span class="nm">일반 계좌 세금 (15.4%)</span><span class="vl">${fmt(Math.round(normalTax),0)}원</span></div></div><div class="sub">순이익 ${fmt(profit,0)}원 기준 · 세후 수령 <b>${fmt(Math.round(profit-isaTax),0)}원</b></div>`); }
+
+/* ===== 월세 세액공제 ===== */
+function calcRentcredit(){ const sal=parseFloat(document.getElementById('rcSal').value),rent=parseFloat(document.getElementById('rcRent').value); if(isNaN(sal)||isNaN(rent)||sal<=0||rent<=0){document.getElementById('rcRes').classList.remove('show');return;}
+  if(sal>80000000)return show('rcRes',`<div class="label">공제 대상 아님</div><div class="big" style="color:var(--f3)">0 원</div><div class="sub">총급여 8,000만원 초과는 월세 세액공제 대상이 아니에요.</div>`);
+  const rate=sal<=55000000?0.17:0.15; const yearRent=Math.min(rent*12,10000000); const credit=yearRent*rate;
+  show('rcRes',`<div class="label">예상 월세 세액공제 (환급)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(credit),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">연 월세액 (한도 1,000만)</span><span class="vl">${fmt(yearRent,0)}원</span></div><div class="ri"><span class="nm">공제율</span><span class="vl">${fmt(rate*100,0)}%</span></div></div><div class="sub">월 ${fmt(rent,0)}원 × 12 = ${fmt(rent*12,0)}원${rent*12>10000000?' (한도 초과분 제외)':''}<br>무주택 세대주·요건 충족 시 연말정산에서 환급돼요.</div>`); }
 
 /* ===== 초기 ===== */
 renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats(); restoreFromURL(); initPWA();
