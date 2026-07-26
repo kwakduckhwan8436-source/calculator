@@ -31,61 +31,44 @@
 html,body{margin:0;padding:0;}
 body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font-smoothing:antialiased; font-size:16px; line-height:1.5; position:relative;
   background:
-    radial-gradient(1300px 620px at 50% -280px, rgba(255,253,246,.98), transparent 72%),
-    radial-gradient(720px 480px at 6% 4%, rgba(216,182,94,.15), transparent 60%),
-    radial-gradient(720px 480px at 94% 6%, rgba(216,182,94,.15), transparent 60%),
-    linear-gradient(90deg, rgba(120,96,44,.10) 0, transparent 8%, transparent 92%, rgba(120,96,44,.10) 100%),
-    radial-gradient(1000px 700px at 50% 118%, rgba(46,125,107,.06), transparent 60%),
-    repeating-linear-gradient(26deg, rgba(150,124,72,.045) 0 1px, transparent 1px 5px, transparent 5px 46px),
-    repeating-linear-gradient(-22deg, rgba(150,124,72,.03) 0 1px, transparent 1px 7px, transparent 7px 60px),
-    radial-gradient(1100px 820px at 28% 16%, rgba(255,255,255,.55), transparent 56%),
-    radial-gradient(950px 720px at 80% 74%, rgba(226,216,192,.42), transparent 55%),
-    linear-gradient(180deg,#FBF6ED 0%, #F2ECDE 44%, #E6DECC 100%);
+    radial-gradient(1300px 620px at 50% -300px, rgba(255,252,244,.9), transparent 74%),
+    radial-gradient(760px 520px at 8% 2%, rgba(216,182,94,.09), transparent 62%),
+    radial-gradient(760px 520px at 92% 4%, rgba(216,182,94,.09), transparent 62%),
+    radial-gradient(1000px 760px at 50% 116%, rgba(46,125,107,.04), transparent 62%),
+    repeating-linear-gradient(24deg, rgba(150,124,72,.022) 0 1px, transparent 1px 64px),
+    radial-gradient(1100px 820px at 30% 18%, rgba(255,255,255,.4), transparent 58%),
+    linear-gradient(180deg,#FBF7EF 0%, #F4EEE1 46%, #ECE4D4 100%);
   background-attachment:fixed; transition:color .25s; }
-/* 상단 금빛 어닝 + 스캘럽 밸런스 + 샹들리에 글로우 */
-body::before{ content:""; position:fixed; left:0; right:0; top:0; height:150px; z-index:-1; pointer-events:none;
+/* 상단 어닝 (차분하게) */
+body::before{ content:""; position:fixed; left:0; right:0; top:0; height:120px; z-index:-1; pointer-events:none;
   background:
-    radial-gradient(70px 60px at 50% 74px, rgba(255,244,206,.55), transparent 72%),
-    radial-gradient(3px 3px at 50% 96px, rgba(255,240,200,.95), transparent 70%),
-    radial-gradient(2px 2px at 42% 88px, rgba(255,240,200,.8), transparent 70%),
-    radial-gradient(2px 2px at 58% 88px, rgba(255,240,200,.8), transparent 70%),
-    radial-gradient(220px 90px at 50% 4px, rgba(255,246,214,.9), transparent 70%),
-    radial-gradient(circle at 20px 30px, rgba(160,122,44,.95) 0 13px, transparent 14px) 0 30px/40px 26px repeat-x,
-    linear-gradient(180deg, rgba(255,240,198,.55) 0 2px, transparent 2px),
-    repeating-linear-gradient(90deg, #C9A24E 0 20px, #A67C2E 20px 40px) 0 0/100% 30px no-repeat;
-  filter:drop-shadow(0 4px 8px rgba(120,90,30,.28)); }
+    radial-gradient(240px 70px at 50% 2px, rgba(255,246,220,.6), transparent 72%),
+    linear-gradient(180deg, rgba(255,242,206,.4) 0 2px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(201,162,78,.85) 0 22px, rgba(166,124,46,.85) 22px 44px) 0 0/100% 22px no-repeat,
+    radial-gradient(circle at 22px 24px, rgba(176,138,60,.7) 0 11px, transparent 12px) 0 22px/44px 20px repeat-x;
+  filter:drop-shadow(0 3px 7px rgba(120,90,30,.16)); }
 [data-theme=dark] body{ background:
-    radial-gradient(1300px 620px at 50% -280px, rgba(216,182,94,.10), transparent 72%),
-    radial-gradient(720px 480px at 6% 4%, rgba(216,182,94,.08), transparent 60%),
-    radial-gradient(720px 480px at 94% 6%, rgba(216,182,94,.08), transparent 60%),
-    linear-gradient(90deg, rgba(0,0,0,.25) 0, transparent 8%, transparent 92%, rgba(0,0,0,.25) 100%),
-    radial-gradient(1100px 820px at 28% 16%, rgba(255,255,255,.045), transparent 56%),
-    repeating-linear-gradient(26deg, rgba(216,182,94,.03) 0 1px, transparent 1px 5px, transparent 5px 46px),
-    linear-gradient(180deg,#1C1E24 0%, #16171C 60%, #111216 100%); }
+    radial-gradient(1300px 620px at 50% -300px, rgba(216,182,94,.08), transparent 74%),
+    radial-gradient(760px 520px at 8% 2%, rgba(216,182,94,.05), transparent 62%),
+    radial-gradient(760px 520px at 92% 4%, rgba(216,182,94,.05), transparent 62%),
+    radial-gradient(1100px 820px at 30% 18%, rgba(255,255,255,.03), transparent 58%),
+    linear-gradient(180deg,#1C1E24 0%, #17181D 60%, #131418 100%); }
 [data-theme=dark] body::before{ background:
-    radial-gradient(220px 90px at 50% 4px, rgba(216,182,94,.35), transparent 70%),
-    radial-gradient(circle at 20px 30px, rgba(140,104,40,.9) 0 13px, transparent 14px) 0 30px/40px 26px repeat-x,
-    linear-gradient(180deg, rgba(216,182,94,.35) 0 2px, transparent 2px),
-    repeating-linear-gradient(90deg, #9C7A34 0 20px, #6E521F 20px 40px) 0 0/100% 30px no-repeat;
-  filter:drop-shadow(0 4px 10px rgba(0,0,0,.4)); }
-/* 대리석 기둥 + 바닥 반사 + 아치형 입구 조명 */
+    radial-gradient(240px 70px at 50% 2px, rgba(216,182,94,.22), transparent 72%),
+    linear-gradient(180deg, rgba(216,182,94,.25) 0 2px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(156,122,52,.8) 0 22px, rgba(110,82,31,.8) 22px 44px) 0 0/100% 22px no-repeat,
+    radial-gradient(circle at 22px 24px, rgba(150,116,44,.6) 0 11px, transparent 12px) 0 22px/44px 20px repeat-x;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.3)); }
+/* 대리석 기둥 + 바닥 반사 (은은하게) */
 body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
   background:
-    radial-gradient(340px 380px at 50% 40px, rgba(255,248,224,.30), transparent 72%),
-    linear-gradient(90deg, rgba(120,96,44,.16) 0, rgba(120,96,44,.03) 30px, transparent 56px) left/56px 100% no-repeat,
-    repeating-linear-gradient(90deg, transparent 0 6px, rgba(150,124,72,.06) 6px 7px, transparent 7px 13px) left/50px 100% no-repeat,
-    linear-gradient(270deg, rgba(120,96,44,.16) 0, rgba(120,96,44,.03) 30px, transparent 56px) right/56px 100% no-repeat,
-    repeating-linear-gradient(90deg, transparent 0 6px, rgba(150,124,72,.06) 6px 7px, transparent 7px 13px) right/50px 100% no-repeat,
-    linear-gradient(0deg, rgba(214,201,172,.55), rgba(214,201,172,.12) 90px, transparent 170px) bottom/100% 170px no-repeat,
-    radial-gradient(60% 120px at 50% 100%, rgba(255,255,255,.30), transparent 70%) bottom/100% 120px no-repeat; }
+    linear-gradient(90deg, rgba(120,96,44,.09) 0, transparent 44px) left/44px 100% no-repeat,
+    linear-gradient(270deg, rgba(120,96,44,.09) 0, transparent 44px) right/44px 100% no-repeat,
+    linear-gradient(0deg, rgba(214,201,172,.4), transparent 150px) bottom/100% 150px no-repeat; }
 [data-theme=dark] body::after{ background:
-    radial-gradient(340px 380px at 50% 40px, rgba(216,182,94,.14), transparent 72%),
-    linear-gradient(90deg, rgba(0,0,0,.3) 0, rgba(0,0,0,.08) 30px, transparent 56px) left/56px 100% no-repeat,
-    repeating-linear-gradient(90deg, transparent 0 6px, rgba(216,182,94,.05) 6px 7px, transparent 7px 13px) left/50px 100% no-repeat,
-    linear-gradient(270deg, rgba(0,0,0,.3) 0, rgba(0,0,0,.08) 30px, transparent 56px) right/56px 100% no-repeat,
-    repeating-linear-gradient(90deg, transparent 0 6px, rgba(216,182,94,.05) 6px 7px, transparent 7px 13px) right/50px 100% no-repeat,
-    linear-gradient(0deg, rgba(0,0,0,.35), transparent 170px) bottom/100% 170px no-repeat,
-    radial-gradient(60% 120px at 50% 100%, rgba(216,182,94,.10), transparent 70%) bottom/100% 120px no-repeat; }
+    linear-gradient(90deg, rgba(0,0,0,.22) 0, transparent 44px) left/44px 100% no-repeat,
+    linear-gradient(270deg, rgba(0,0,0,.22) 0, transparent 44px) right/44px 100% no-repeat,
+    linear-gradient(0deg, rgba(0,0,0,.28), transparent 150px) bottom/100% 150px no-repeat; }
 .app{max-width:660px; margin:0 auto; padding:22px 16px 70px; position:relative; z-index:1;}
 
 /* ---------- 상단 유틸바 ---------- */
@@ -141,7 +124,31 @@ body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:non
 [data-contrast=high][data-theme=dark] body{ background:#000000 !important; }
 [data-contrast=high] .card,[data-contrast=high] .result,[data-contrast=high] .guide,[data-contrast=high] .panel,[data-contrast=high] .directory,[data-contrast=high] .hist-item{ border-width:2px; }
 [data-contrast=high] .card .cdesc,[data-contrast=high] .result .label{ color:var(--ink); }
-@media (max-width:480px){ .linkchip{ font-size:11px; padding:8px 10px; } .plate h1{ font-size:23px; } .theme-btn{ width:38px; height:38px; } }
+@media (max-width:480px){
+  .app{ padding:16px 12px 64px; }
+  .linkchip{ font-size:11px; padding:8px 10px; }
+  .plate h1{ font-size:22px; }
+  .theme-btn{ width:38px; height:38px; }
+  .grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:9px; }
+  .card{ min-height:104px; padding:13px; }
+  .card .cname{ font-size:14px; }
+  .stats{ font-size:11px; padding:6px 12px; gap:7px; }
+  .result{ padding:16px 14px; }
+  .result .big{ font-size:23px; }
+  .fbtn .num{ font-size:18px; }
+  .fbtn .nm{ font-size:10px; }
+  .toolbar{ gap:6px; }
+  .qr-box{ padding:22px 18px; }
+  .install-bar{ left:8px; right:8px; padding:11px 13px; }
+}
+@media (max-width:360px){
+  .grid{ grid-template-columns:1fr 1fr; gap:8px; }
+  .card{ min-height:98px; }
+  .result .big{ font-size:21px; }
+  .grid3{ gap:7px; }
+  .grid3 input{ padding:12px 8px; font-size:15px; }
+  .stats{ flex-wrap:wrap; justify-content:center; }
+}
 
 /* ---------- 검색 ---------- */
 .search{position:relative; margin-bottom:16px;}
@@ -1034,6 +1041,38 @@ select{cursor:pointer;}
       <div class="field"><label>월 월세(원)</label><input type="number" id="rcRent" placeholder="예: 500000" oninput="calcRentcredit()"></div>
       <div class="result" id="rcRes"></div><p class="hint">무주택 세대주, 총급여 8,000만원 이하, 국민주택규모(또는 기준시가 4억 이하) 주택 조건이에요. 공제율 총급여 5,500만 이하 17%·8,000만 이하 15%, 연 월세 <b>1,000만원 한도</b>.</p></div></section>
 
+    <!-- 전월세 전환 -->
+    <section class="view" id="v-jeonserent" data-floor="2"><div class="panel">
+      <div class="seg"><button class="on" data-jr="toRent" onclick="jrMode('toRent')">전세→월세</button><button data-jr="toDep" onclick="jrMode('toDep')">월세→전세</button></div>
+      <div id="jrToRent"><div class="field"><label>월세로 돌릴 보증금(원)</label><input type="number" id="jrAmt" placeholder="예: 100000000" oninput="calcJeonserent()"></div></div>
+      <div id="jrToDep" style="display:none"><div class="field"><label>전세로 돌릴 월세(원)</label><input type="number" id="jrRent" placeholder="예: 500000" oninput="calcJeonserent()"></div></div>
+      <div class="field"><label>전환율(%)</label><input type="number" id="jrRate" placeholder="예: 5.5" oninput="calcJeonserent()"></div>
+      <div class="result" id="jrRes"></div><p class="hint">법정 전환율 상한 = 기준금리 + 2%p(2024년 기준 약 5.5%). 실제 계약은 협의이며 지역·시기마다 달라요.</p></div></section>
+
+    <!-- 목표 매도가 -->
+    <section class="view" id="v-selltarget" data-floor="2"><div class="panel">
+      <div class="field"><label>매입 단가(원)</label><input type="number" id="stgPrice" placeholder="예: 50000" oninput="calcSelltarget()"></div>
+      <div class="field"><label>목표 수익률(%)</label><input type="number" id="stgTarget" placeholder="예: 10" oninput="calcSelltarget()"></div>
+      <div class="grid2"><div class="field"><label>매매 수수료(%)·편도</label><input type="number" id="stgFee" placeholder="0.015" oninput="calcSelltarget()"></div><div class="field"><label>보유 수량·선택</label><input type="number" id="stgQty" placeholder="1" oninput="calcSelltarget()"></div></div>
+      <div class="result" id="stgRes"></div><p class="hint">매도 시 증권거래세 0.18%와 매수·매도 수수료를 반영해 목표 수익률 달성에 필요한 매도가를 계산해요.</p></div></section>
+
+    <!-- 손익분기점 -->
+    <section class="view" id="v-breakeven" data-floor="2"><div class="panel">
+      <div class="field"><label>월 고정비(원)</label><input type="number" id="beFixed" placeholder="예: 3000000" oninput="calcBreakeven()"></div>
+      <div class="grid2"><div class="field"><label>판매 단가(원)</label><input type="number" id="bePrice" placeholder="예: 10000" oninput="calcBreakeven()"></div><div class="field"><label>개당 변동비(원)</label><input type="number" id="beVar" placeholder="예: 4000" oninput="calcBreakeven()"></div></div>
+      <div class="result" id="beRes"></div><p class="hint">공헌이익 = 판매단가 − 변동비. 손익분기 수량 = 고정비 ÷ 공헌이익. 이 수량을 넘겨야 이익이 나요.</p></div></section>
+
+    <!-- 학점 GPA -->
+    <section class="view" id="v-gpa" data-floor="5"><div class="panel">
+      <div class="field"><label>과목 목록 (한 줄에 "학점 등급")</label><textarea id="gpaList" placeholder="3 A+&#10;3 B0&#10;2 A0&#10;3 B+" style="min-height:120px"></textarea></div>
+      <div class="actions"><button class="btn primary" onclick="calcGpa()">계산</button><button class="btn ghost" onclick="reset('v-gpa')">초기화</button></div><div class="result" id="gpaRes"></div>
+      <p class="hint">4.5 만점 기준(A+ 4.5·A0 4.0·B+ 3.5·B0 3.0·C+ 2.5·C0 2.0·D+ 1.5·D0 1.0·F 0). 학점(이수단위)으로 가중평균해요.</p></div></section>
+
+    <!-- 기념일 계산 -->
+    <section class="view" id="v-anniv" data-floor="1"><div class="panel">
+      <div class="field"><label>시작한 날 (사귄 날 등)</label><input type="date" id="anvDate" oninput="calcAnniv()"></div>
+      <div class="result" id="anvRes"></div><p class="hint">시작일을 1일째로 계산해요(만난 날 = 1일). 다가오는 100일 단위·주년 기념일을 알려줘요.</p></div></section>
+
     <!-- 카페인 반감기 -->
     <section class="view" id="v-caffeine" data-floor="4"><div class="panel">
       <div class="field"><label>음료 빠른 선택</label><select id="cfPreset" onchange="cfFill()"><option value="">직접 입력</option><option value="75">에스프레소 1샷 (75mg)</option><option value="150">아메리카노 톨 (150mg)</option><option value="90">캔커피 (90mg)</option><option value="30">녹차 1잔 (30mg)</option><option value="80">에너지드링크 (80mg)</option></select></div>
@@ -1319,6 +1358,11 @@ const CALCS=[
   {id:'yearendfull',floor:3,icon:'🧾',name:'연말정산 종합',desc:'카드·의료·기부',kw:'연말정산 종합 신용카드 의료비 기부금 환급 시뮬레이터'},
   {id:'isa',floor:3,icon:'🏦',name:'ISA 절세',desc:'비과세·분리과세',kw:'isa 절세 비과세 분리과세 계좌 서민형'},
   {id:'rentcredit',floor:3,icon:'💸',name:'월세 세액공제',desc:'환급액',kw:'월세 세액공제 환급 총급여 무주택'},
+  {id:'jeonserent',floor:2,icon:'🔑',name:'전월세 전환',desc:'보증금↔월세',kw:'전월세 전환율 보증금 월세 전세 반전세'},
+  {id:'selltarget',floor:2,icon:'🎯',name:'목표 매도가',desc:'수익률→매도가',kw:'주식 목표 매도가 수익률 손절 익절 세금'},
+  {id:'breakeven',floor:2,icon:'⚖️',name:'손익분기점',desc:'BEP 수량·매출',kw:'손익분기점 bep 고정비 변동비 창업 사업'},
+  {id:'gpa',floor:5,icon:'🎓',name:'학점 평균(GPA)',desc:'4.5 만점',kw:'학점 gpa 평량평균 성적 대학 평점'},
+  {id:'anniv',floor:1,icon:'💕',name:'기념일 계산',desc:'100일·1주년',kw:'기념일 100일 연애 커플 디데이 만난날'},
   {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
 ];
 const GUIDE={
@@ -1435,6 +1479,11 @@ const GUIDE={
   yearendfull:'총급여·부양가족·신용카드·의료비·기부금·연금저축을 한 번에 넣어 연말정산 결정세액과 예상 환급액을 개산해요.',
   isa:'ISA 계좌의 비과세 한도(일반 200만·서민형 400만)와 초과분 9.9% 분리과세를 반영해 일반 계좌 대비 절세액을 계산해요.',
   rentcredit:'총급여와 월세액으로 월세 세액공제 환급액을 계산해요. 총급여 5,500만 이하 17%, 8,000만 이하 15%(한도 연 1,000만원).',
+  jeonserent:'전월세 전환율로 전세 보증금과 월세를 서로 환산해요. 법정 전환율 상한(기준금리+2%)도 안내해요.',
+  selltarget:'매입가와 목표 수익률로 필요한 매도가를 계산해요. 매도 수수료와 증권거래세(0.18%)를 반영해요.',
+  breakeven:'고정비·판매단가·개당 변동비로 손익분기점(BEP) 수량과 매출을 계산해요.',
+  gpa:'과목별 학점과 등급으로 평량평균(GPA)을 4.5 만점 기준으로 계산해요.',
+  anniv:'사귀기 시작한 날(또는 특정일) 기준으로 100일·200일·1주년 등 다가오는 기념일을 알려줘요.',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
 };
 let recents = store.get('cds_recent') || [];
@@ -1581,8 +1630,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -2382,6 +2431,10 @@ const EXAMPLES={
   yearendfull:{fields:{yfSal:'50000000',yfFam:'1',yfCredit:'15000000',yfCheck:'5000000',yfMed:'1000000',yfDonate:'500000',yfPension:'6000000'},run:'calcYearendfull'},
   isa:{fields:{isaProfit:'3000000'},run:'calcIsa'},
   rentcredit:{fields:{rcSal:'45000000',rcRent:'500000'},run:'calcRentcredit'},
+  jeonserent:{fields:{jrAmt:'100000000',jrRate:'5.5'},run:'calcJeonserent'},
+  selltarget:{fields:{stgPrice:'50000',stgTarget:'10',stgFee:'0.015',stgQty:'10'},run:'calcSelltarget'},
+  breakeven:{fields:{beFixed:'3000000',bePrice:'10000',beVar:'4000'},run:'calcBreakeven'},
+  gpa:{fields:{gpaList:'3 A+\n3 B0\n2 A0\n3 B+'},run:'calcGpa'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2827,6 +2880,45 @@ function calcRentcredit(){ const sal=parseFloat(document.getElementById('rcSal')
   if(sal>80000000)return show('rcRes',`<div class="label">공제 대상 아님</div><div class="big" style="color:var(--f3)">0 원</div><div class="sub">총급여 8,000만원 초과는 월세 세액공제 대상이 아니에요.</div>`);
   const rate=sal<=55000000?0.17:0.15; const yearRent=Math.min(rent*12,10000000); const credit=yearRent*rate;
   show('rcRes',`<div class="label">예상 월세 세액공제 (환급)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(credit),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">연 월세액 (한도 1,000만)</span><span class="vl">${fmt(yearRent,0)}원</span></div><div class="ri"><span class="nm">공제율</span><span class="vl">${fmt(rate*100,0)}%</span></div></div><div class="sub">월 ${fmt(rent,0)}원 × 12 = ${fmt(rent*12,0)}원${rent*12>10000000?' (한도 초과분 제외)':''}<br>무주택 세대주·요건 충족 시 연말정산에서 환급돼요.</div>`); }
+
+/* ===== 전월세 전환 ===== */
+let jrCur='toRent';
+function jrMode(m){ jrCur=m; document.querySelectorAll('#v-jeonserent .seg button').forEach(b=>b.classList.toggle('on',b.dataset.jr===m)); document.getElementById('jrToRent').style.display=m==='toRent'?'':'none'; document.getElementById('jrToDep').style.display=m==='toDep'?'':'none'; calcJeonserent(); }
+function calcJeonserent(){ let rate=parseFloat(document.getElementById('jrRate').value); if(isNaN(rate)||rate<=0)rate=5.5;
+  if(jrCur==='toRent'){ const amt=parseFloat(document.getElementById('jrAmt').value); if(isNaN(amt)||amt<=0){document.getElementById('jrRes').classList.remove('show');return;} const monthly=amt*(rate/100)/12;
+    show('jrRes',`<div class="label">환산 월세</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthly),0)} 원</div><div class="sub">보증금 ${fmt(amt,0)}원을 전환율 ${fmt(rate,1)}%로 월세 전환<br>연 ${fmt(Math.round(monthly*12),0)}원${rate>5.5?'<br>⚠️ 법정 상한(약 5.5%)을 초과했어요.':''}</div>`);
+  }else{ const r=parseFloat(document.getElementById('jrRent').value); if(isNaN(r)||r<=0){document.getElementById('jrRes').classList.remove('show');return;} const dep=r*12/(rate/100);
+    show('jrRes',`<div class="label">환산 전세 보증금</div><div class="big" style="color:var(--f2)">${fmt(Math.round(dep),0)} 원</div><div class="sub">월세 ${fmt(r,0)}원을 전환율 ${fmt(rate,1)}%로 보증금 전환<br>연 월세 ${fmt(r*12,0)}원 ÷ ${fmt(rate,1)}%${rate>5.5?'<br>⚠️ 법정 상한(약 5.5%)을 초과했어요.':''}</div>`); } }
+
+/* ===== 목표 매도가 ===== */
+function calcSelltarget(){ const P=parseFloat(document.getElementById('stgPrice').value),T=parseFloat(document.getElementById('stgTarget').value); let fee=parseFloat(document.getElementById('stgFee').value); if(isNaN(fee)||fee<0)fee=0.015; let qty=parseFloat(document.getElementById('stgQty').value); if(isNaN(qty)||qty<=0)qty=1;
+  if(isNaN(P)||isNaN(T)||P<=0){document.getElementById('stgRes').classList.remove('show');return;} const f=fee/100,tax=0.0018;
+  const sell=P*(1+f)*(1+T/100)/(1-f-tax); const buyCost=P*(1+f)*qty; const netSell=sell*(1-f-tax)*qty; const profit=netSell-buyCost;
+  show('stgRes',`<div class="label">필요 매도가 (수수료·세금 반영)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(sell),0)} 원</div><div class="sub">매입 ${fmt(P,0)}원 → 목표 수익률 ${fmt(T,1)}% 달성<br>수량 ${fmt(qty,0)}주 기준 예상 순수익 <b>${fmt(Math.round(profit),0)}원</b><br>매도수수료 ${fmt(fee,3)}% + 증권거래세 0.18% 반영</div>`); }
+
+/* ===== 손익분기점 ===== */
+function calcBreakeven(){ const F=parseFloat(document.getElementById('beFixed').value),P=parseFloat(document.getElementById('bePrice').value),V=parseFloat(document.getElementById('beVar').value); if(isNaN(F)||isNaN(P)||isNaN(V)||F<0||P<=0||V<0){document.getElementById('beRes').classList.remove('show');return;}
+  const cm=P-V; if(cm<=0)return show('beRes',`<div class="label">손익분기 불가</div><div class="big" style="color:var(--f3)">이익 발생 불가</div><div class="sub">판매단가(${fmt(P,0)})가 변동비(${fmt(V,0)}) 이하라 팔수록 손해예요.</div>`);
+  const qty=F/cm; const sales=qty*P;
+  show('beRes',`<div class="label">손익분기점 (BEP)</div><div class="big" style="color:var(--f2)">${fmt(Math.ceil(qty),0)} 개</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">개당 공헌이익</span><span class="vl">${fmt(cm,0)}원</span></div><div class="ri"><span class="nm">손익분기 매출</span><span class="vl">${fmt(Math.round(sales),0)}원</span></div><div class="ri"><span class="nm">공헌이익률</span><span class="vl">${fmt(cm/P*100,1)}%</span></div></div><div class="sub">월 ${fmt(Math.ceil(qty),0)}개를 팔면 고정비를 회수해요. 이후부터 개당 ${fmt(cm,0)}원씩 이익.</div>`); }
+
+/* ===== 학점 GPA ===== */
+function calcGpa(){ const GP={'A+':4.5,'A0':4.0,'A':4.0,'B+':3.5,'B0':3.0,'B':3.0,'C+':2.5,'C0':2.0,'C':2.0,'D+':1.5,'D0':1.0,'D':1.0,'F':0};
+  const lines=document.getElementById('gpaList').value.split(/\n+/).map(s=>s.trim()).filter(Boolean); let totCr=0,totPt=0,n=0;
+  for(const ln of lines){ const m=ln.match(/^([0-9.]+)\s+([A-Fa-f][+0]?)$/); if(m){ const cr=parseFloat(m[1]); const g=m[2].toUpperCase(); if(g in GP&&!isNaN(cr)){ totCr+=cr; totPt+=cr*GP[g]; n++; } } }
+  if(!n)return show('gpaRes','<div class="big">"학점 등급" 형식으로 입력하세요<br><span style="font-size:13px">예: 3 A+</span></div>',true);
+  const gpa=totPt/totCr; const pct=gpa/4.5*100;
+  show('gpaRes',`<div class="label">평량평균 (GPA)</div><div class="big" style="color:var(--f5)">${fmt(gpa,2)} / 4.5</div><div class="sub">총 ${n}과목 · ${fmt(totCr,0)}학점<br>백분율 환산 약 <b>${fmt(pct,1)}%</b> · 4.3 만점 환산 ${fmt(gpa/4.5*4.3,2)}</div>`); }
+
+/* ===== 기념일 계산 ===== */
+function calcAnniv(){ const v=document.getElementById('anvDate').value; if(!v){document.getElementById('anvRes').classList.remove('show');return;} const start=new Date(v+'T00:00:00'); const today=new Date(); today.setHours(0,0,0,0);
+  if(isNaN(start)||start>today)return show('anvRes','<div class="big">오늘 또는 과거 날짜를 선택하세요</div>',true);
+  const dayMs=86400000; const daysSince=Math.floor((today-start)/dayMs)+1; // 시작일=1일째
+  const list=[]; for(let d=100;d<=2000;d+=100){ const target=new Date(start.getTime()+(d-1)*dayMs); if(target>=today){ const left=Math.round((target-today)/dayMs); list.push([d+'일',target,left]); if(list.length>=3)break; } }
+  for(let y=1;y<=30;y++){ const target=new Date(start.getFullYear()+y,start.getMonth(),start.getDate()); if(target>=today){ const left=Math.round((target-today)/dayMs); list.push([y+'주년',target,left]); break; } }
+  list.sort((a,b)=>a[2]-b[2]);
+  const rows=list.slice(0,4).map(([label,dt,left])=>`<div class="ri"><span class="nm">${label} (${dt.getMonth()+1}/${dt.getDate()})</span><span class="vl">${left===0?'오늘! 🎉':'D-'+left}</span></div>`).join('');
+  show('anvRes',`<div class="label">함께한 지</div><div class="big" style="color:var(--f1)">${fmt(daysSince,0)}일째</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
 /* ===== 초기 ===== */
 renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats(); restoreFromURL(); initPWA();
