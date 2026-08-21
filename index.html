@@ -40,7 +40,7 @@ body{ font-family:var(--sans); color:var(--ink); min-height:100dvh; -webkit-font
     linear-gradient(180deg,#FBF7EF 0%, #F4EEE1 46%, #ECE4D4 100%);
   background-attachment:fixed; transition:color .25s; }
 /* 상단 어닝 (차분하게) */
-body::before{ content:""; position:fixed; left:0; right:0; top:0; height:120px; z-index:-1; pointer-events:none;
+body::before{ content:""; position:fixed; left:0; right:0; top:0; height:84px; z-index:-1; pointer-events:none;
   background:
     radial-gradient(240px 70px at 50% 2px, rgba(255,246,220,.6), transparent 72%),
     linear-gradient(180deg, rgba(255,242,206,.4) 0 2px, transparent 2px),
@@ -69,10 +69,10 @@ body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:non
     linear-gradient(90deg, rgba(0,0,0,.22) 0, transparent 44px) left/44px 100% no-repeat,
     linear-gradient(270deg, rgba(0,0,0,.22) 0, transparent 44px) right/44px 100% no-repeat,
     linear-gradient(0deg, rgba(0,0,0,.28), transparent 150px) bottom/100% 150px no-repeat; }
-.app{max-width:660px; margin:0 auto; padding:22px 16px 70px; position:relative; z-index:1;}
+.app{max-width:660px; margin:0 auto; padding:calc(env(safe-area-inset-top,0px) + 52px) 16px 70px; position:relative; z-index:1;}
 
 /* ---------- 상단 유틸바 ---------- */
-.topbar{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+.topbar{ display:flex; align-items:center; gap:8px; margin-bottom:16px; position:relative; z-index:2; }
 .theme-btn{ flex:0 0 auto; width:42px; height:42px; border-radius:13px; border:1px solid var(--line-2);
   cursor:pointer; background:var(--surface); font-size:18px; color:var(--ink); box-shadow:var(--shadow); transition:transform .12s; }
 .theme-btn:active{ transform:scale(.92) rotate(-8deg); }
@@ -125,8 +125,10 @@ body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:non
 [data-contrast=high] .card,[data-contrast=high] .result,[data-contrast=high] .guide,[data-contrast=high] .panel,[data-contrast=high] .directory,[data-contrast=high] .hist-item{ border-width:2px; }
 [data-contrast=high] .card .cdesc,[data-contrast=high] .result .label{ color:var(--ink); }
 @media (max-width:480px){
-  .app{ padding:16px 12px 64px; }
-  .linkchip{ font-size:11px; padding:8px 10px; }
+  .app{ padding:calc(env(safe-area-inset-top,0px) + 20px) 12px 64px; }
+  .topbar{ flex-wrap:wrap; }
+  .linkbar{ flex-wrap:wrap; overflow-x:visible; justify-content:flex-start; width:100%; flex-basis:100%; }
+  .linkchip{ font-size:11px; padding:8px 10px; flex:0 0 auto; }
   .plate h1{ font-size:22px; }
   .theme-btn{ width:38px; height:38px; }
   .grid{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:9px; }
@@ -492,9 +494,9 @@ select{cursor:pointer;}
       <div class="field"><label>유가(원/L) · 선택</label><input type="number" id="fuPrice" placeholder="예: 1700" oninput="calcFuel()"></div><div class="result" id="fuRes"></div></div></section>
 
     <section class="view" id="v-random" data-floor="1"><div class="panel">
-      <div class="seg"><button class="on" data-rm="num" onclick="randMode('num')">랜덤 숫자</button><button data-rm="lotto" onclick="randMode('lotto')">로또 번호</button></div>
-      <div id="rNum"><div class="grid2"><div class="field"><label>최소</label><input type="number" id="rnMin" placeholder="1"></div><div class="field"><label>최대</label><input type="number" id="rnMax" placeholder="100"></div></div></div>
-      <div class="actions"><button class="btn primary" onclick="calcRandom()">뽑기</button></div><div class="result" id="rnRes"></div></div></section>
+      <div class="grid2"><div class="field"><label>최소</label><input type="number" id="rnMin" placeholder="1"></div><div class="field"><label>최대</label><input type="number" id="rnMax" placeholder="100"></div></div>
+      <div class="actions"><button class="btn primary" onclick="calcRandom()">뽑기</button></div><div class="result" id="rnRes"></div>
+      <p class="hint">지정한 범위에서 랜덤 숫자를 하나 뽑아요. 로또 번호는 데이터 기반 <b>🍀 로또 번호 생성</b>(7F)을 이용하세요.</p></div></section>
 
     <!-- ========== 2F 금융 ========== -->
     <section class="view" id="v-loan" data-floor="2"><div class="panel">
@@ -1075,20 +1077,23 @@ select{cursor:pointer;}
 
     <!-- 로또 번호 생성 -->
     <section class="view" id="v-lotto" data-floor="7"><div class="panel">
-      <div class="field"><label>생성 전략</label><select id="ltStrategy"><option value="balance">빈도 균형 (추천·당첨패턴 반영)</option><option value="hot">핫 넘버 (자주 나온 번호 우대)</option><option value="cold">콜드 넘버 (안 나온 번호 우대)</option><option value="random">완전 랜덤</option></select></div>
+      <div class="field"><label>생성 전략</label><select id="ltStrategy"><option value="balance">빈도 균형 (추천·당첨패턴 반영)</option><option value="hot">핫 넘버 (자주 나온 번호 우대)</option><option value="cold">콜드 넘버 (안 나온 번호 우대)</option></select></div>
       <div class="field"><label>게임 수</label><select id="ltGames"><option value="5" selected>5게임 (A~E)</option><option value="1">1게임</option><option value="3">3게임</option><option value="10">10게임</option></select></div>
       <div class="actions"><button class="btn primary" onclick="calcLotto()">🍀 번호 생성</button><button class="btn ghost" onclick="calcLotto()">다시 뽑기</button></div>
       <div class="result" id="ltRes"></div>
-      <p class="hint">1~1235회(2026.8.1) 번호별 실제 출현 횟수를 내장해 전략별로 추천해요. <b>단, 로또는 매 회차 독립 확률(1등 1/8,145,060)이라 과거 데이터가 미래 당첨을 보장하지 않아요.</b> 재미와 참고용으로만!</p></div></section>
+      <p class="hint">1~1237회(2026.8.15) 번호별 실제 출현 횟수를 내장해 전략별로 추천해요. <b>단, 로또는 매 회차 독립 확률(1등 1/8,145,060)이라 과거 데이터가 미래 당첨을 보장하지 않아요.</b> 재미와 참고용으로만!</p></div></section>
 
     <!-- 위탁·매입 마진 -->
     <section class="view" id="v-margin" data-floor="3"><div class="panel">
       <div class="seg"><button class="on" data-mg="buy" onclick="mgMode('buy')">매입(사입)</button><button data-mg="consign" onclick="mgMode('consign')">위탁(드랍쉬핑)</button></div>
       <div class="field"><label>판매가 (소비자가·VAT 포함, 원)</label><input type="number" id="mgPrice" placeholder="예: 30000" oninput="calcMargin()"></div>
       <div class="field"><label id="mgCostLabel">매입 원가 (VAT 포함, 원)</label><input type="number" id="mgCost" placeholder="예: 12000" oninput="calcMargin()"></div>
+      <div class="field"><label>플랫폼 (수수료 자동 입력)</label><select id="mgPlatform" onchange="mgPreset()"><option value="">직접 입력</option><option value="2,3.63">네이버 스마트스토어 (연동2%+결제3.63%)</option><option value="10.8,0">쿠팡 (마켓플레이스 10.8%)</option><option value="7,3.4">11번가 (7%+결제)</option><option value="12,0">G마켓·옥션 (12%)</option><option value="0,3.4">자사몰·카페24 (결제 3.4%만)</option></select></div>
       <div class="grid2"><div class="field"><label>판매 수수료(%)</label><input type="number" id="mgFee" placeholder="예: 10" oninput="calcMargin()"></div><div class="field"><label>결제(PG) 수수료(%)</label><input type="number" id="mgPg" placeholder="예: 3.3" oninput="calcMargin()"></div></div>
       <div class="grid2"><div class="field"><label>광고비 (개당, 원)</label><input type="number" id="mgAd" placeholder="예: 2000" oninput="calcMargin()"></div><div class="field"><label>출고 택배비 (개당, 원)</label><input type="number" id="mgShip" placeholder="예: 3000" oninput="calcMargin()"></div></div>
       <div class="grid2" id="mgBuyOnly"><div class="field"><label>포장·부자재 (개당, 원)</label><input type="number" id="mgPack" placeholder="예: 500" oninput="calcMargin()"></div><div class="field"><label>반품률(%)</label><input type="number" id="mgReturn" placeholder="예: 3" oninput="calcMargin()"></div></div>
+      <div class="field" id="mgDutyWrap"><label>수입 관세율(%) · 해외 매입 시</label><input type="number" id="mgDuty" placeholder="예: 8 (국내 매입은 0)" oninput="calcMargin()"></div>
+      <div class="field" id="mgDutyWrap"><label>수입 관세율(%) · 해외 사입 시</label><input type="number" id="mgDuty" placeholder="예: 8 (국내 사입은 0)" oninput="calcMargin()"></div>
       <div class="field"><label>부가세 처리</label><select id="mgVat" onchange="calcMargin()"><option value="1">일반과세 (매출 10%, 매입 공제)</option><option value="0">간이·면세 (부가세 없음)</option></select></div>
       <div class="field"><label>월 목표 순이익 (원) · 선택</label><input type="number" id="mgGoal" placeholder="필요 판매량 계산" oninput="calcMargin()"></div>
       <div class="result" id="mgRes"></div><p class="hint">매입은 재고를 직접 사입, 위탁은 주문 시 공급사가 발송(포장·재고 없음). 부가세는 매출세액(판매가×10/110)에서 매입세액을 공제한 <b>납부액</b>만 차감해요. 실제 수수료·정산주기는 플랫폼마다 달라요.</p></div></section>
@@ -1272,7 +1277,7 @@ const CALCS=[
   {id:'time',floor:1,icon:'⏰',name:'시간 계산',desc:'시각 차이·더하기',kw:'시분'},
   {id:'work',floor:1,icon:'💼',name:'근무·급여',desc:'출퇴근·시급',kw:'알바 근무'},
   {id:'fuel',floor:1,icon:'⛽',name:'연비',desc:'km/L·연료비',kw:'주유 기름'},
-  {id:'random',floor:1,icon:'🎲',name:'랜덤·로또',desc:'추첨·로또번호',kw:'랜덤 추첨 로또'},
+  {id:'random',floor:1,icon:'🎲',name:'랜덤 숫자',desc:'범위 추첨',kw:'랜덤 추첨 숫자 뽑기 난수'},
   {id:'loan',floor:2,icon:'🏦',name:'대출 상환',desc:'원리금·원금균등',kw:'이자 대출'},
   {id:'saving',floor:2,icon:'💰',name:'예·적금',desc:'단리·복리 세후',kw:'적금 예금'},
   {id:'compound',floor:2,icon:'🌱',name:'복리 성장',desc:'미래가치',kw:'복리 투자 성장'},
@@ -1395,7 +1400,7 @@ const GUIDE={
   time:'두 시각의 차이, 또는 특정 시각에 시간을 더한 결과를 구해요. 자정을 넘겨도 자동 계산돼요.',
   work:'출퇴근 시각과 휴게시간으로 실근무 시간을 구하고, 시급을 넣으면 급여까지 계산해요.',
   fuel:'주행거리와 주유량으로 연비를 구해요. 유가를 넣으면 연료비·1km당 비용도 나와요.',
-  random:'지정 범위의 랜덤 숫자, 또는 로또 6개 번호를 뽑아요.',
+  random:'지정한 범위에서 랜덤 숫자를 하나 뽑아요. 로또는 데이터 기반 로또 번호 생성을 이용하세요.',
   worldclock:'기준 도시와 시각을 넣으면 세계 주요 도시의 현재 시각을 보여줘요. 서머타임은 빠진 참고용이에요.',
   loan:'원금·연이율·기간을 넣으면 매월 상환금과 총이자가 나와요. <b>원리금균등/원금균등</b>을 고를 수 있어요.',
   saving:'예금/적금·단리/복리를 골라 만기 수령액을 구해요. 이자소득세 15.4%를 뗀 세후 금액도 함께 나와요.',
@@ -1506,7 +1511,7 @@ const GUIDE={
   breakeven:'고정비·판매단가·개당 변동비로 손익분기점(BEP) 수량과 매출을 계산해요.',
   gpa:'과목별 학점과 등급으로 평량평균(GPA)을 4.5 만점 기준으로 계산해요.',
   anniv:'사귀기 시작한 날(또는 특정일) 기준으로 100일·200일·1주년 등 다가오는 기념일을 알려줘요.',
-  lotto:'1회부터 최신 회차까지 번호별 실제 출현 횟수를 담아, 빈도·핫·콜드 전략과 당첨 패턴(합계·홀짝·구간 분산)을 반영해 번호를 추천해요.',
+  lotto:'1회부터 1237회(2026.8.15)까지 번호별 실제 출현 횟수를 담아, 빈도·핫·콜드 전략과 당첨 패턴(합계·홀짝·구간 분산)을 반영해 번호를 추천해요.',
   margin:'위탁(드랍쉬핑)·매입(사입) 방식별로 판매수수료·결제·광고·배송·부가세·반품까지 반영해 셀러의 개당 순이익과 마진율을 정밀 계산해요.',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
 };
@@ -1654,8 +1659,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random·Lotto',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',margin:'Seller Margin'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'draw·lotto',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',margin:'net profit'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random Number',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',margin:'Seller Margin'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'in range',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',margin:'net profit'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -1781,12 +1786,8 @@ function calcFuel(){ const km=parseFloat(document.getElementById('fuKm').value),
   let html=`<div class="label">연비</div><div class="big" style="color:var(--f1)">${fmt(eff,1)} km/L</div>`; if(!isNaN(p))html+=`<div class="sub">총 연료비 <b>${fmt(L*p,0)}원</b> · 1km당 <b>${fmt(p/eff,1)}원</b></div>`; show('fuRes',html); }
 
 /* ===== 랜덤·로또 ===== */
-let randCur='num';
-function randMode(m){ randCur=m; document.querySelectorAll('#v-random .seg button').forEach(b=>b.classList.toggle('on',b.dataset.rm===m)); document.getElementById('rNum').style.display=m==='num'?'':'none'; document.getElementById('rnRes').classList.remove('show'); }
-function calcRandom(){ if(randCur==='num'){ let lo=parseInt(document.getElementById('rnMin').value),hi=parseInt(document.getElementById('rnMax').value); if(isNaN(lo))lo=1; if(isNaN(hi))hi=100; if(lo>hi)[lo,hi]=[hi,lo]; const n=Math.floor(Math.random()*(hi-lo+1))+lo;
-    show('rnRes',`<div class="label">${lo} ~ ${hi} 중 랜덤</div><div class="big" style="color:var(--f1)">${n}</div>`);
-  }else{ const s=new Set(); while(s.size<6)s.add(Math.floor(Math.random()*45)+1); const arr=[...s].sort((a,b)=>a-b);
-    show('rnRes',`<div class="label">로또 번호 (1~45 중 6개)</div><div class="big" style="color:var(--f1)">${arr.join('  ')}</div>`); } }
+function calcRandom(){ let lo=parseInt(document.getElementById('rnMin').value),hi=parseInt(document.getElementById('rnMax').value); if(isNaN(lo))lo=1; if(isNaN(hi))hi=100; if(lo>hi)[lo,hi]=[hi,lo]; const n=Math.floor(Math.random()*(hi-lo+1))+lo;
+  show('rnRes',`<div class="label">${lo} ~ ${hi} 중 랜덤</div><div class="big" style="color:var(--f1)">${n}</div>`); }
 
 /* ===== 대출 ===== */
 let loanCur='equal';
@@ -2946,7 +2947,7 @@ function calcAnniv(){ const v=document.getElementById('anvDate').value; if(!v){d
   show('anvRes',`<div class="label">함께한 지</div><div class="big" style="color:var(--f1)">${fmt(daysSince,0)}일째</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
 /* ===== 로또 번호 생성 (1~1235회 실제 출현 횟수 내장, 보너스 포함) ===== */
-const LOTTO_FREQ=[203,191,204,197,178,200,202,182,162,189,192,206,207,195,196,198,204,195,192,200,191,165,168,199,176,197,213,183,173,190,201,178,206,208,193,188,199,200,193,195,169,182,200,188,197];
+const LOTTO_FREQ=[203,191,204,197,178,200,202,182,162,191,192,207,207,195,196,198,204,196,192,201,192,165,169,199,176,197,213,183,174,190,201,178,206,210,193,189,200,201,193,196,169,182,200,188,197];
 function ltBallColor(n){ return n<=10?'#FBC400':n<=20?'#69C8F2':n<=30?'#FF7272':n<=40?'#AAAAAA':'#B0D840'; }
 function ltWeights(strategy){ const mx=Math.max(...LOTTO_FREQ),mn=Math.min(...LOTTO_FREQ); return LOTTO_FREQ.map(f=>{ if(strategy==='random')return 1; if(strategy==='hot')return Math.pow(f-mn+5,2.4); if(strategy==='cold')return Math.pow(mx-f+5,2.4); return f; }); }
 function ltPick(weights){ const avail=Array.from({length:45},(_,i)=>i); const chosen=[]; let w=weights.slice();
@@ -2959,48 +2960,56 @@ function calcLotto(){ const strat=document.getElementById('ltStrategy').value; c
     return `<div style="display:flex;align-items:center;gap:8px;margin:9px 0;flex-wrap:wrap"><span style="font-weight:800;color:var(--muted);width:18px">${labels[i]}</span>${s.map(n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:14px;box-shadow:0 2px 5px rgba(0,0,0,.15)">${n}</span>`).join('')}<span style="font-size:11px;color:var(--muted);margin-left:2px">합 ${sum}·홀${odd}</span></div>`; }).join('');
   const order=LOTTO_FREQ.map((f,i)=>[i+1,f]); const hot=order.slice().sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]); const cold=order.slice().sort((a,b)=>a[1]-b[1]).slice(0,5).map(x=>x[0]);
   const stratName={balance:'빈도 균형',hot:'핫 넘버',cold:'콜드 넘버',random:'완전 랜덤'}[strat];
-  show('ltRes',`<div class="label">${stratName} · ${games}게임</div>${rows}<div class="sub" style="margin-top:12px">🔥 최다 출현 TOP5: <b>${hot.join(', ')}</b><br>❄️ 최소 출현 BOTTOM5: <b>${cold.join(', ')}</b><br><span style="font-size:11px">1~1235회 누적 · 공은 실제 로또 색상(구간별)이에요</span></div>`); }
+  show('ltRes',`<div class="label">${stratName} · ${games}게임</div>${rows}<div class="sub" style="margin-top:12px">🔥 최다 출현 TOP5: <b>${hot.join(', ')}</b><br>❄️ 최소 출현 BOTTOM5: <b>${cold.join(', ')}</b><br><span style="font-size:11px">1~1237회 누적 · 공은 실제 로또 색상(구간별)이에요</span></div>`); }
 
 /* ===== 위탁·매입 마진 ===== */
 let mgCur='buy';
-function mgMode(m){ mgCur=m; document.querySelectorAll('#v-margin .seg button').forEach(b=>b.classList.toggle('on',b.dataset.mg===m)); document.getElementById('mgCostLabel').textContent=m==='buy'?'매입 원가 (VAT 포함, 원)':'공급가 (위탁 매입가, 원)'; document.getElementById('mgBuyOnly').style.display=m==='buy'?'':'none'; calcMargin(); }
+function mgPreset(){ const v=document.getElementById('mgPlatform').value; if(!v)return; const[fee,pg]=v.split(','); document.getElementById('mgFee').value=fee; document.getElementById('mgPg').value=pg; calcMargin(); }
+function mgMode(m){ mgCur=m; document.querySelectorAll('#v-margin .seg button').forEach(b=>b.classList.toggle('on',b.dataset.mg===m)); document.getElementById('mgCostLabel').textContent=m==='buy'?'매입 원가 (VAT 포함, 원)':'공급가 (위탁 매입가, 원)'; document.getElementById('mgBuyOnly').style.display=m==='buy'?'':'none'; document.getElementById('mgDutyWrap').style.display=m==='buy'?'':'none'; calcMargin(); }
 function calcMargin(){ const g=id=>{let v=parseFloat(document.getElementById(id).value);return isNaN(v)||v<0?0:v;};
-  const price=g('mgPrice'),cost=g('mgCost'); if(price<=0||cost<=0){document.getElementById('mgRes').classList.remove('show');return;}
-  const fee=g('mgFee'),pg=g('mgPg'),ad=g('mgAd'),ship=g('mgShip'),pack=mgCur==='buy'?g('mgPack'):0,ret=mgCur==='buy'?g('mgReturn'):0; const vatOn=document.getElementById('mgVat').value==='1';
+  const price=g('mgPrice'),cost0=g('mgCost'); if(price<=0||cost0<=0){document.getElementById('mgRes').classList.remove('show');return;}
+  const fee=g('mgFee'),pg=g('mgPg'),ad=g('mgAd'),ship=g('mgShip'),pack=mgCur==='buy'?g('mgPack'):0,ret=mgCur==='buy'?g('mgReturn'):0,dutyRate=mgCur==='buy'?g('mgDuty'):0; const vatOn=document.getElementById('mgVat').value==='1';
+  const duty=cost0*dutyRate/100; const cost=cost0+duty;
   const commission=price*(fee+pg)/100;
   const vatOut=vatOn?price*10/110:0; const vatIn=vatOn?cost*10/110:0; const vatPay=Math.max(vatOut-vatIn,0);
   const totalCost=cost+commission+ad+ship+pack+vatPay;
   const net=price-totalCost; const returnLoss=ret/100*(ship*2+pack); const realNet=net-returnLoss;
   const marginRate=net/price*100; const roi=net/cost*100;
   const goal=g('mgGoal'); const needQty=goal>0&&realNet>0?Math.ceil(goal/realNet):0;
-  const donut=chartDonut([{label:mgCur==='buy'?'매입원가':'공급가',value:cost,color:'var(--f4)'},{label:'수수료',value:commission,color:'var(--f3)'},{label:'광고',value:ad,color:'var(--f2)'},{label:'배송·포장',value:ship+pack,color:'var(--f5)'},{label:'부가세',value:vatPay,color:'var(--f6)'},{label:'순이익',value:Math.max(net,0),color:'var(--f1)'}]);
-  show('mgRes',`<div class="label">개당 순이익 (${mgCur==='buy'?'매입':'위탁'})</div><div class="big" style="color:${net>=0?'var(--f1)':'var(--f3)'}">${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">마진율 (판매가 대비)</span><span class="vl">${fmt(marginRate,1)}%</span></div><div class="ri"><span class="nm">원가 대비 수익률</span><span class="vl">${fmt(roi,1)}%</span></div><div class="ri"><span class="nm">수수료 합계</span><span class="vl">${fmt(Math.round(commission),0)}원</span></div><div class="ri"><span class="nm">납부 부가세</span><span class="vl">${fmt(Math.round(vatPay),0)}원</span></div>${ret>0?`<div class="ri"><span class="nm">반품 반영 실질이익</span><span class="vl">${fmt(Math.round(realNet),0)}원</span></div>`:''}${needQty>0?`<div class="ri"><span class="nm">월 목표 달성 필요량</span><span class="vl">${fmt(needQty,0)}개</span></div>`:''}</div>${donut}${net<0?'<div class="sub">⚠️ 이 조건에선 팔수록 손해예요. 판매가·원가·수수료를 조정하세요.</div>':''}`); }
+  const donut=chartDonut([{label:mgCur==='buy'?'매입원가':'공급가',value:cost0,color:'var(--f4)'},{label:'관세',value:duty,color:'var(--f7)'},{label:'수수료',value:commission,color:'var(--f3)'},{label:'광고',value:ad,color:'var(--f2)'},{label:'배송·포장',value:ship+pack,color:'var(--f5)'},{label:'부가세',value:vatPay,color:'var(--f6)'},{label:'순이익',value:Math.max(net,0),color:'var(--f1)'}]);
+  show('mgRes',`<div class="label">개당 순이익 (${mgCur==='buy'?'매입':'위탁'})</div><div class="big" style="color:${net>=0?'var(--f1)':'var(--f3)'}">${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">마진율 (판매가 대비)</span><span class="vl">${fmt(marginRate,1)}%</span></div><div class="ri"><span class="nm">원가 대비 수익률</span><span class="vl">${fmt(roi,1)}%</span></div>${duty>0?`<div class="ri"><span class="nm">관세 (${fmt(dutyRate,1)}%)</span><span class="vl">${fmt(Math.round(duty),0)}원</span></div>`:''}<div class="ri"><span class="nm">수수료 합계</span><span class="vl">${fmt(Math.round(commission),0)}원</span></div><div class="ri"><span class="nm">납부 부가세</span><span class="vl">${fmt(Math.round(vatPay),0)}원</span></div>${ret>0?`<div class="ri"><span class="nm">반품 반영 실질이익</span><span class="vl">${fmt(Math.round(realNet),0)}원</span></div>`:''}${needQty>0?`<div class="ri"><span class="nm">월 목표 달성 필요량</span><span class="vl">${fmt(needQty,0)}개</span></div>`:''}</div>${donut}${net<0?'<div class="sub">⚠️ 이 조건에선 팔수록 손해예요. 판매가·원가·수수료를 조정하세요.</div>':''}`); }
 
 /* ===== 초기 ===== */
 renderFloors(); renderShop(); fillUnits(); fillFx(); fillWorld(); fillCook(); colorFromPick(); timerTab('sw'); setAccent(FLOORS[1].color); applyLang(); renderQuick(); initStats(); restoreFromURL(); initPWA();
 function initStats(){
   const tEl=document.getElementById('statTotal'), dot=document.querySelector('.stats .live-dot');
-  // 이 기기 방문 횟수(내부 기록용)
   store.set('cds_visits',(store.get('cds_visits')||0)+1);
-  // 누적 순 방문자 — 기기당 1회만 증가(/hit), 이후 읽기전용(/get). 플래그를 먼저 저장해 새로고침 중복 차단.
+  // 누적 순 방문자 — 기기당 딱 1회만 집계. 정확도 향상:
+  //  · 이미 집계된 기기(cds_counted) → 읽기전용(/get)
+  //  · 첫 방문 → /hit 하되, 성공해야 플래그 저장(네트워크 실패 시 다음 방문에 재시도)
+  //  · 같은 세션 새로고침은 sessionStorage 가드로 중복 증가 차단
   const cached=store.get('cds_total'); const counted=store.get('cds_counted');
   const KEY='modu_calc_dept_2026'; const base='https://countapi.mileshilliard.com/api/v1/';
-  const url=counted?base+'get/'+KEY:base+'hit/'+KEY; if(!counted)store.set('cds_counted',1);
-  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),6000);
-  fetch(url,{signal:ctrl.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{ clearTimeout(to); const n=parseInt(d.value,10); if(!isNaN(n)){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); } else throw 0; })
+  let sessionHit=false; try{ sessionHit=sessionStorage.getItem('cds_hit')==='1'; }catch(e){}
+  const readOnly = counted || sessionHit;
+  const url=readOnly?base+'get/'+KEY:base+'hit/'+KEY;
+  if(!readOnly){ try{ sessionStorage.setItem('cds_hit','1'); }catch(e){} }
+  const ctrl=new AbortController(); const to=setTimeout(()=>ctrl.abort(),7000);
+  fetch(url,{signal:ctrl.signal}).then(r=>r.ok?r.json():Promise.reject()).then(d=>{ clearTimeout(to); const n=parseInt(d.value,10); if(!isNaN(n)){ if(tEl)tEl.textContent=n.toLocaleString(); store.set('cds_total',n); if(!readOnly)store.set('cds_counted',1); } else throw 0; })
     .catch(()=>{ clearTimeout(to); if(tEl)tEl.textContent=cached?cached.toLocaleString():'—'; if(dot)dot.style.background='var(--muted)'; });
   initPresence(base);
 }
-/* ===== 실시간 접속자(분 단위 하트비트 버킷 추정) ===== */
+/* ===== 실시간 접속자(분 단위 하트비트 버킷) ===== */
 var _lastBeat=null;
 function initPresence(base){
   const bucket=off=>'modu_calc_dept_on_'+(Math.floor(Date.now()/60000)+(off||0));
   const beat=()=>{ const k=bucket(0); if(_lastBeat===k)return; _lastBeat=k; fetch(base+'hit/'+k).catch(()=>{}); };
   const read=()=>{ const kp=bucket(-1),kc=bucket(0); const oEl=document.getElementById('statOnline');
+    // 직전 '완료된 분' 값을 우선 사용(더 안정적), 현재 분과 비교해 큰 값
     Promise.allSettled([fetch(base+'get/'+kp).then(r=>r.json()),fetch(base+'get/'+kc).then(r=>r.json())])
-      .then(rs=>{ const vals=rs.filter(x=>x.status==='fulfilled').map(x=>parseInt(x.value&&x.value.value,10)).filter(n=>!isNaN(n)); let n=vals.length?Math.max(...vals):1; n=Math.max(n,1); if(oEl)oEl.textContent=n.toLocaleString(); })
+      .then(rs=>{ const vals=rs.filter(x=>x.status==='fulfilled').map(x=>parseInt(x.value&&x.value.value,10)).filter(n=>!isNaN(n)&&n>0); let n=vals.length?Math.max(...vals):1; n=Math.max(n,1); if(oEl)oEl.textContent=n.toLocaleString(); })
       .catch(()=>{ if(oEl)oEl.textContent='1'; }); };
-  beat(); read(); setInterval(beat,40000); setInterval(read,25000);
+  beat(); setTimeout(read,600); setInterval(beat,40000); setInterval(read,25000);
 }
 </script>
 <div class="install-bar" id="installBar">
