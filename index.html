@@ -1152,7 +1152,7 @@ select{cursor:pointer;}
         <div class="field"><label>제외수 · 선택 (뽑지 않을 번호)</label><input type="text" id="ltExclude" placeholder="예: 1, 45"></div>
         <div class="actions"><button class="btn primary" onclick="calcLotto()">🍀 번호 생성</button><button class="btn ghost" onclick="calcLotto()">다시 뽑기</button></div>
         <div class="result" id="ltRes"></div>
-        <p class="hint">1~1242회(2026.9.19) 전체 빈도 + <b>최근 20회(1223~1242) 트렌드</b>를 내장하고, 후보를 대량 생성해 <b>당첨 패턴 점수(합계·홀짝·고저·AC값·구간분산)</b>가 높은 조합만 골라줘요. <b>고정수·제외수</b> 지정과 <b>진단 탭</b> 연동도 돼요. <b>단, 로또는 매 회차 독립 확률(1등 1/8,145,060)이라 어떤 방법도 실제 당첨 확률 자체를 높이지는 못해요.</b></p>
+        <p class="hint">1~1243회(2026.9.26) 전체 빈도 + <b>최근 20회(1224~1243) 트렌드</b>를 내장하고, 후보를 대량 생성해 <b>당첨 패턴 점수</b>가 높은 조합만 골라줘요. <b>고정수·제외수</b> 지정과 <b>진단 탭</b> 연동도 돼요. <b>단, 로또는 매 회차 독립 확률(1등 1/8,145,060)이라 어떤 방법도 실제 당첨 확률 자체를 높이지는 못해요.</b></p>
       </div>
       <div id="ltCheck" style="display:none">
         <div class="field"><label>내 번호 6개 (1~45, 쉼표/공백 구분)</label><input type="text" id="lcNums" placeholder="예: 5, 12, 18, 27, 33, 44" oninput="calcLottocheck()"></div>
@@ -1185,6 +1185,20 @@ select{cursor:pointer;}
       <div class="field"><label>기부 금액 (원)</label><input type="number" id="fsAmount" placeholder="예: 100000" oninput="calcFurusato()"></div>
       <div class="seg" style="margin-top:-4px"><button class="on" data-fs="100000" onclick="fsQuick(100000)">10만원</button><button data-fs="200000" onclick="fsQuick(200000)">20만원</button><button data-fs="300000" onclick="fsQuick(300000)">30만원</button><button data-fs="500000" onclick="fsQuick(500000)">50만원</button></div>
       <div class="result" id="fsRes"></div><p class="hint">2025년부터 연 기부한도가 <b>500만원 → 2,000만원</b>으로 확대됐어요. 세액공제는 <b>10만원 이하 전액</b>(지방소득세 포함), <b>10만원 초과분 16.5%</b>, 답례품은 기부금의 <b>30%</b>예요. <b>10만원 기부 시 세액공제 10만원 + 답례품 3만원 = 13만원</b>으로 가장 효율적이에요.</p></div></section>
+
+    <!-- 청약 가점 -->
+    <section class="view" id="v-subscore" data-floor="2"><div class="panel">
+      <div class="field"><label>무주택 기간 (년) · 최대 32점</label><input type="number" id="ssNoHouse" placeholder="예: 15" oninput="calcSubscore()"></div>
+      <div class="field"><label>부양가족 수 (명, 본인 제외) · 최대 35점</label><input type="number" id="ssFamily" placeholder="예: 3" oninput="calcSubscore()"></div>
+      <div class="field"><label>청약통장 가입기간 (년) · 최대 17점</label><input type="number" id="ssAccount" placeholder="예: 10" oninput="calcSubscore()"></div>
+      <div class="result" id="ssRes"></div><p class="hint">주택공급규칙 별표1 기준. 무주택기간: 1년미만 2점~15년↑ 32점(1년당 2점). 부양가족: 0명 5점~6명↑ 35점(1명당 5점). 통장: 6개월미만 1점~15년↑ 17점. 무주택기간은 만 30세(또는 혼인일)부터 산정해요.</p></div></section>
+
+    <!-- 건보 피부양자 -->
+    <section class="view" id="v-healthdep" data-floor="3"><div class="panel">
+      <div class="field"><label>연간 합산소득 (근로·연금·이자·배당 등, 원)</label><input type="number" id="hdIncome" placeholder="예: 15000000" oninput="calcHealthdep()"></div>
+      <div class="field"><label>재산세 과세표준 합계 (원)</label><input type="number" id="hdProperty" placeholder="예: 300000000" oninput="calcHealthdep()"></div>
+      <div class="field"><label><input type="checkbox" id="hdBiz" onchange="calcHealthdep()" style="width:auto;margin-right:6px;transform:scale(1.2)">사업자등록이 있고 사업소득이 발생함</label></div>
+      <div class="result" id="hdRes"></div><p class="hint">피부양자 자격: 연 합산소득 <b>2,000만원 이하</b>, 재산 과표 <b>5.4억 이하</b>(무조건)·<b>5.4~9억은 소득 1,000만원 이하</b>·<b>9억 초과 탈락</b>, 사업자등록+사업소득 있으면 탈락. 개산이며 실제 판정은 공단 기준을 따라요.</p></div></section>
 
     <!-- 영업일 D-day -->
     <section class="view" id="v-bizdays" data-floor="1"><div class="panel">
@@ -1508,6 +1522,8 @@ const CALCS=[
   {id:'retirepension',floor:2,icon:'🏦',name:'퇴직연금 예상',desc:'DC·DB 수령액',kw:'퇴직연금 dc db 예상 수령액 irp 은퇴'},
   {id:'deposit',floor:2,icon:'🛡️',name:'예금자보호 한도',desc:'1억·분산예치',kw:'예금자보호 한도 1억 분산 예치 은행 저축은행 파산'},
   {id:'furusato',floor:3,icon:'🎁',name:'고향사랑기부',desc:'세액공제+답례품',kw:'고향사랑기부제 세액공제 답례품 기부 환급'},
+  {id:'subscore',floor:2,icon:'🏠',name:'청약 가점',desc:'84점 만점',kw:'청약 가점 무주택 부양가족 통장 점수 아파트 분양'},
+  {id:'healthdep',floor:3,icon:'🩺',name:'건보 피부양자',desc:'자격 판정',kw:'건강보험 피부양자 자격 소득 재산 판정 지역가입자'},
   {id:'bizdays',floor:1,icon:'📆',name:'영업일 D-day',desc:'주말 제외',kw:'영업일 근무일 d-day 주말 제외 날짜 계산'},
   {id:'margin',floor:3,icon:'🛒',name:'위탁·매입 마진',desc:'셀러 순이익',kw:'마진 위탁 매입 사입 드랍쉬핑 순이익 수수료 셀러 커머스'},
   {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
@@ -1633,10 +1649,12 @@ const GUIDE={
   breakeven:'고정비·판매단가·개당 변동비로 손익분기점(BEP) 수량과 매출을 계산해요.',
   gpa:'과목별 학점과 등급으로 평량평균(GPA)을 4.5 만점 기준으로 계산해요.',
   anniv:'사귀기 시작한 날(또는 특정일) 기준으로 100일·200일·1주년 등 다가오는 기념일을 알려줘요.',
-  lotto:'1회부터 1242회(2026.9.19)까지 번호별 실제 출현 횟수를 담아, 빈도·핫·콜드 전략과 당첨 패턴(합계·홀짝·구간 분산)을 반영해 번호를 추천해요.',
+  lotto:'1회부터 1243회(2026.9.26)까지 번호별 실제 출현 횟수를 담아, 빈도·핫·콜드 전략과 당첨 패턴(합계·홀짝·구간 분산)을 반영해 번호를 추천해요.',
   retirepension:'퇴직연금을 DC형(운용수익률 기준 적립)과 DB형(퇴직 전 평균임금×근속연수)으로 예상 수령액을 계산해요.',
   deposit:'예금자보호 한도(2025.9.1부터 원금+이자 합산 1억원)를 기준으로 안전 예치 금액과 초과분, 필요한 분산 은행 수를 계산해요.',
   furusato:'고향사랑기부제 기부금으로 세액공제(10만원 이하 전액·초과분 16.5%)와 답례품(30%)을 합친 실질 혜택을 계산해요.',
+  subscore:'주택청약 가점(무주택기간 32점·부양가족 35점·통장 가입기간 17점, 총 84점)을 항목별로 계산해요.',
+  healthdep:'건강보험 피부양자 자격을 소득(연 2,000만원)·재산(과표 5.4억/9억)·사업자등록 요건으로 판정해요.',
   bizdays:'시작일부터 목표일까지 주말(토·일)을 제외한 영업일수를 세거나, 오늘부터 N영업일 뒤 날짜를 계산해요.',
   margin:'위탁(드랍쉬핑)·매입(사입) 방식별로 판매수수료·결제·광고·배송·부가세·반품까지 반영해 셀러의 개당 순이익과 마진율을 정밀 계산해요.',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
@@ -1787,8 +1805,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random Number',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',stockavg:'Avg Buy Price',travelbudget:'Travel Budget',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',retirepension:'Retire Pension',deposit:'Deposit Protection',furusato:'Hometown Donation',bizdays:'Business Days',margin:'Seller Margin'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'in range',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',stockavg:'averaging',travelbudget:'per day',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',retirepension:'DC·DB',deposit:'1억 limit',furusato:'tax+gift',bizdays:'excl. weekends',margin:'net profit'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random Number',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',stockavg:'Avg Buy Price',travelbudget:'Travel Budget',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',retirepension:'Retire Pension',deposit:'Deposit Protection',furusato:'Hometown Donation',subscore:'Housing Subscription',healthdep:'Insurance Dependent',bizdays:'Business Days',margin:'Seller Margin'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'in range',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',stockavg:'averaging',travelbudget:'per day',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',retirepension:'DC·DB',deposit:'1억 limit',furusato:'tax+gift',subscore:'84 points',healthdep:'eligibility',bizdays:'excl. weekends',margin:'net profit'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -2594,6 +2612,8 @@ const EXAMPLES={
   retirepension:{fields:{rpAnnual:'48000000',rpYearsDc:'20',rpReturn:'4',rpRaise:'3'},run:'calcRetirepension'},
   deposit:{fields:{dpAmount:'250000000'},run:'calcDeposit'},
   furusato:{fields:{fsAmount:'100000'},run:'calcFurusato'},
+  subscore:{fields:{ssNoHouse:'15',ssFamily:'3',ssAccount:'10'},run:'calcSubscore'},
+  healthdep:{fields:{hdIncome:'15000000',hdProperty:'300000000'},run:'calcHealthdep'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -3080,16 +3100,15 @@ function calcAnniv(){ const v=document.getElementById('anvDate').value; if(!v){d
   show('anvRes',`<div class="label">함께한 지</div><div class="big" style="color:var(--f1)">${fmt(daysSince,0)}일째</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
 /* ===== 로또 번호 생성 (1~1235회 실제 출현 횟수 내장, 보너스 포함) ===== */
-const LOTTO_FREQ=[203,193,204,198,178,200,203,183,164,192,194,207,211,195,196,200,204,197,193,202,192,167,170,200,176,197,214,183,174,190,203,180,207,210,193,190,200,202,193,196,170,183,201,189,197];
-const LOTTO_R20=[0,3,1,3,0,2,3,2,3,2,5,3,7,2,3,4,1,6,4,4,2,3,2,3,2,1,1,2,3,1,4,3,2,4,2,2,3,3,2,2,3,4,3,4,1];const LOTTO_R20_RANGE="1223~1242";
+const LOTTO_FREQ=[203,193,204,198,178,200,203,183,165,192,194,207,211,195,196,200,204,198,193,202,192,167,170,201,176,197,214,183,174,190,203,180,207,210,194,190,200,203,193,196,170,183,202,190,197];
+const LOTTO_R20=[0,3,1,3,0,2,3,2,4,2,5,3,7,2,3,3,1,6,4,3,2,3,2,4,2,1,1,2,3,1,4,2,1,4,2,2,3,4,1,2,3,4,4,5,1];const LOTTO_R20_RANGE="1224~1243";
 function ltBallColor(n){ return n<=10?'#FBC400':n<=20?'#69C8F2':n<=30?'#FF7272':n<=40?'#AAAAAA':'#B0D840'; }
 function ltWeights(strategy){ const mx=Math.max(...LOTTO_FREQ),mn=Math.min(...LOTTO_FREQ);
-  if(strategy==='trend'){ const rmx=Math.max(...LOTTO_R20); return LOTTO_R20.map(f=>Math.pow(f+1,2.2)); }
+  if(strategy==='trend'){ return LOTTO_R20.map(f=>Math.pow(f+1,2.2)); }
   if(strategy==='trendcold'){ const rmx=Math.max(...LOTTO_R20); return LOTTO_R20.map(f=>Math.pow(rmx-f+1,2.2)); }
   return LOTTO_FREQ.map(f=>{ if(strategy==='random')return 1; if(strategy==='hot')return Math.pow(f-mn+5,2.4); if(strategy==='cold')return Math.pow(mx-f+5,2.4); return f; }); }
 function ltPick(weights,include,exclude){ include=include||[]; exclude=exclude||[];
-  let avail=Array.from({length:45},(_,i)=>i).filter(i=>!exclude.includes(i+1)&&!include.includes(i+1));
-  const chosen=include.slice(0,6); let w=weights.slice();
+  let avail=Array.from({length:45},(_,i)=>i).filter(i=>!exclude.includes(i+1)&&!include.includes(i+1)); const chosen=include.slice(0,6); let w=weights.slice();
   for(let k=chosen.length;k<6&&avail.length;k++){ let total=0; for(const i of avail)total+=w[i]; let r=Math.random()*total,pick=avail[0]; for(const i of avail){ r-=w[i]; if(r<=0){pick=i;break;} } chosen.push(pick+1); avail.splice(avail.indexOf(pick),1); }
   return chosen.sort((a,b)=>a-b); }
 function ltValid(nums){ const sum=nums.reduce((a,b)=>a+b,0); if(sum<90||sum>185)return false; const odd=nums.filter(n=>n%2).length; if(odd<1||odd>5)return false; let run=1,mx=1; for(let i=1;i<6;i++){ if(nums[i]===nums[i-1]+1){run++;mx=Math.max(mx,run);}else run=1; } if(mx>2)return false; const dec=new Set(nums.map(n=>Math.floor((n-1)/10))); if(dec.size<3)return false; if(ltAC([...nums].sort((a,b)=>a-b))<7)return false; return true; }
@@ -3114,12 +3133,12 @@ let _lastGen=null;
 function ltMode(m){ document.querySelectorAll('#v-lotto .lt-seg button').forEach(b=>b.classList.toggle('on',b.dataset.lt===m)); document.getElementById('ltGen').style.display=m==='gen'?'':'none'; document.getElementById('ltCheck').style.display=m==='check'?'':'none'; }
 function ltFillFromGen(){ if(!_lastGen){ toast('먼저 번호를 추천받아 주세요'); ltMode('gen'); return; } document.getElementById('lcNums').value=_lastGen.join(', '); calcLottocheck(); }
 /* 로또 회차 자동 안내 (매주 토 20:35 추첨) */
-function lottoRound(){ const anchorRound=1242; const anchorDraw=new Date('2026-09-19T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
+function lottoRound(){ const anchorRound=1243; const anchorDraw=new Date('2026-09-26T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
   const done=anchorRound+Math.max(0,Math.floor((now-anchorDraw)/week)); const nextRound=done+1;
   let nextDraw=anchorDraw; while(nextDraw<=now)nextDraw+=week; const dday=Math.ceil((nextDraw-now)/86400000); const nd=new Date(nextDraw);
   const wd=['일','월','화','수','목','금','토'][nd.getDay()];
   return {next:nextRound, date:`${nd.getMonth()+1}/${nd.getDate()}(${wd})`, dday}; }
-const LOTTO_LAST={round:1242, nums:[2,4,10,16,31,41], bonus:9, date:'2026.9.19'};
+const LOTTO_LAST={round:1243, nums:[9,18,24,38,43,44], bonus:35, date:'2026.9.26'};
 function renderLottoBanner(){ const el=document.getElementById('ltRoundBanner'); if(!el)return; const r=lottoRound();
   const L=LOTTO_LAST; const ball=n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:12px;margin:0 1px">${n}</span>`;
   el.innerHTML=`<div class="ltb-row"><span class="ltb-badge">🔔 다음 추첨</span><b>제 ${r.next}회</b> · ${r.date} 20:35 · <span class="ltb-dday">D-${r.dday}</span></div>`+
@@ -3131,7 +3150,6 @@ function calcLotto(){ const strat=document.getElementById('ltStrategy').value; c
   if(include.length>6){ show('ltRes','<div class="big">고정수는 최대 6개까지예요</div>',true); return; }
   if(45-exclude.length<6){ show('ltRes','<div class="big">제외수가 너무 많아요</div>',true); return; }
   const relaxed=include.length>=3||(45-exclude.length)<20;
-  // 후보를 대량 생성 → 당첨패턴 점수 상위만 채택(고도화)
   const pool=[]; const seen=new Set();
   for(let t=0;t<1500&&pool.length<400;t++){ const n=ltPick(weights,include,exclude); if(n.length<6)break; if(!relaxed&&!ltValid(n))continue; const key=n.join(','); if(seen.has(key))continue; seen.add(key); pool.push({n,score:ltScore(n,strat)}); }
   pool.sort((a,b)=>b.score-a.score);
@@ -3142,7 +3160,7 @@ function calcLotto(){ const strat=document.getElementById('ltStrategy').value; c
   const avgScore=Math.round(sets.reduce((a,s)=>a+ltScore(s,strat),0)/sets.length);
   const order=LOTTO_FREQ.map((f,i)=>[i+1,f]); const hot=order.slice().sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]); const cold=order.slice().sort((a,b)=>a[1]-b[1]).slice(0,5).map(x=>x[0]);
   const stratName={balance:'빈도 균형',hot:'핫 넘버',cold:'콜드 넘버',trend:'최근 트렌드(20회 핫)',trendcold:'최근 미출현(20회 콜드)'}[strat];
-  show('ltRes',`<div class="label">${stratName} · ${games}게임 <span style="font-size:11px;color:var(--muted)">(당첨패턴 점수 상위 채택)</span></div>${rows}<div class="sub" style="margin-top:12px">🎯 평균 패턴점수 <b>${avgScore}</b> · 모두 AC 7↑·합 100~175 조건 통과<br>🔥 최다 출현 TOP5: <b>${hot.join(', ')}</b><br>❄️ 최소 출현 BOTTOM5: <b>${cold.join(', ')}</b><br><span style="font-size:11px">1~1242회(2026.9.19) 누적 · 합계·홀짝·고저·AC값(산술복잡도)을 역대 당첨 분포에 맞춰 최적화했어요.</span></div>`); }
+  show('ltRes',`<div class="label">${stratName} · ${games}게임 <span style="font-size:11px;color:var(--muted)">(당첨패턴 점수 상위 채택)</span></div>${rows}<div class="sub" style="margin-top:12px">🎯 평균 패턴점수 <b>${avgScore}</b> · 모두 AC 7↑·합 100~175 조건 통과<br>🔥 최다 출현 TOP5: <b>${hot.join(', ')}</b><br>❄️ 최소 출현 BOTTOM5: <b>${cold.join(', ')}</b><br><span style="font-size:11px">1~1243회(2026.9.26) 누적 · 합계·홀짝·고저·AC값(산술복잡도)을 역대 당첨 분포에 맞춰 최적화했어요.</span></div>`); }
 
 /* ===== 위탁·매입 마진 ===== */
 let mgCur='buy';
@@ -3195,7 +3213,10 @@ function calcLottocheck(){ const raw=document.getElementById('lcNums').value; co
   const total=Math.round(items.reduce((a,i)=>a+i[1],0)/items.length);
   const grade=total>=85?['S','var(--f1)','역대 당첨 패턴과 매우 유사해요! 🎯']:total>=70?['A','var(--f2)','흔한 당첨 패턴에 잘 맞아요 👍']:total>=55?['B','var(--f5)','무난하지만 조금 치우쳤어요']:total>=40?['C','var(--f3)','다소 치우친 조합이에요']:['D','var(--f3)','통계적으로 드문 조합이에요'];
   const rows=items.map(([nm,sc,desc])=>`<div class="ri"><span class="nm">${nm} <span style="color:var(--muted);font-size:11px">${desc}</span></span><span class="vl">${Math.round(sc)}점</span></div>`).join('');
-  show('lcRes',`<div class="label">내 번호 패턴 진단</div><div class="big" style="color:${grade[1]}">${total}점 · ${grade[0]}등급</div><div style="margin:6px 0 4px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${s.map(n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:13px">${n}</span>`).join('')}</div><div class="rowlist" style="margin-top:10px">${rows}</div><div class="sub">${grade[2]}<br><span style="font-size:11px">점수가 높아도 당첨 확률(1/8,145,060)은 모든 조합이 동일해요. 치우침 확인용이에요.</span></div>`); }
+  // 최근 20회 트렌드 대비 적중: 내 번호 중 최근 20회에 1번 이상 출현한 개수
+  const recentHits=s.filter(n=>(typeof LOTTO_R20!=='undefined')&&LOTTO_R20[n-1]>0); const rangeTxt=(typeof LOTTO_R20_RANGE!=='undefined')?LOTTO_R20_RANGE:'';
+  const trendRow=`<div class="ri"><span class="nm">최근 20회(${rangeTxt}) 등장 번호</span><span class="vl">${recentHits.length}/6개 ${recentHits.length?'('+recentHits.join(',')+')':''}</span></div>`;
+  show('lcRes',`<div class="label">내 번호 패턴 진단</div><div class="big" style="color:${grade[1]}">${total}점 · ${grade[0]}등급</div><div style="margin:6px 0 4px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${s.map(n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:13px">${n}</span>`).join('')}</div><div class="rowlist" style="margin-top:10px">${rows}${trendRow}</div><div class="sub">${grade[2]}<br><span style="font-size:11px">점수가 높아도 당첨 확률(1/8,145,060)은 모든 조합이 동일해요. 치우침·최근 트렌드 확인용이에요.</span></div>`); }
 
 /* ===== 퇴직연금 예상 (DC/DB) ===== */
 let rpCur='dc';
@@ -3224,6 +3245,28 @@ function calcFurusato(){ const d=parseFloat(document.getElementById('fsAmount').
   const credit=Math.min(d,100000)+Math.max(d-100000,0)*0.165; const gift=d*0.3; const benefit=credit+gift; const rate=benefit/d*100;
   show('fsRes',`<div class="label">실질 혜택 (세액공제 + 답례품)</div><div class="big" style="color:var(--f1)">${fmt(Math.round(benefit),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">기부금</span><span class="vl">${fmt(d,0)}원</span></div><div class="ri"><span class="nm">세액공제 (10만↓ 전액·초과 16.5%)</span><span class="vl">${fmt(Math.round(credit),0)}원</span></div><div class="ri"><span class="nm">답례품 (30%)</span><span class="vl">${fmt(Math.round(gift),0)}원</span></div><div class="ri"><span class="nm">혜택 환원율</span><span class="vl">${fmt(rate,1)}%</span></div></div><div class="sub">${d<=100000?'✅ 10만원 이하는 세액공제 전액! 답례품까지 130% 환원돼요.':d<=200000?'10만원까지 채우고 그 이상은 16.5%만 공제돼요.':'초과분은 16.5% 공제 + 답례품 30%예요.'}<br><span style="font-size:11px">지방소득세 포함 기준. 실제 공제는 결정세액 한도 내에서 적용돼요.</span></div>`); }
 
+/* ===== 청약 가점 ===== */
+function calcSubscore(){ const g=id=>{let v=parseFloat(document.getElementById(id).value);return isNaN(v)||v<0?0:v;};
+  const nh=g('ssNoHouse'), fam=g('ssFamily'), acc=g('ssAccount');
+  const anyInput=['ssNoHouse','ssFamily','ssAccount'].some(id=>document.getElementById(id).value!=='');
+  if(!anyInput){document.getElementById('ssRes').classList.remove('show');return;}
+  const pNoHouse=Math.min(2*(Math.floor(nh)+1),32);
+  const pFamily=Math.min(5+5*Math.floor(fam),35);
+  let pAcc; if(acc<0.5)pAcc=1; else if(acc<1)pAcc=2; else pAcc=Math.min(2+Math.floor(acc),17);
+  const total=pNoHouse+pFamily+pAcc;
+  show('ssRes',`<div class="label">청약 가점 (84점 만점)</div><div class="big" style="color:var(--f2)">${total} 점</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">무주택 기간 (${fmt(nh,0)}년)</span><span class="vl">${pNoHouse} / 32점</span></div><div class="ri"><span class="nm">부양가족 (${fmt(fam,0)}명)</span><span class="vl">${pFamily} / 35점</span></div><div class="ri"><span class="nm">청약통장 (${fmt(acc,0)}년)</span><span class="vl">${pAcc} / 17점</span></div></div><div class="sub">${total>=69?'🏆 상위권 점수예요! 인기 단지도 노려볼 만해요.':total>=50?'👍 중상위권. 지역·평형에 따라 당첨 가능성이 있어요.':'무주택기간·통장기간이 쌓일수록 점수가 올라가요.'}<br><span style="font-size:11px">무주택기간은 만 30세(혼인 시 혼인신고일)부터 산정. 실제 가점은 청약 시 자격 확인이 필요해요.</span></div>`); }
+
+/* ===== 건보 피부양자 자격판정 ===== */
+function calcHealthdep(){ const inc=parseFloat(document.getElementById('hdIncome').value), prop=parseFloat(document.getElementById('hdProperty').value); const biz=document.getElementById('hdBiz').checked;
+  if(isNaN(inc)&&isNaN(prop)&&!biz){document.getElementById('hdRes').classList.remove('show');return;}
+  const income=isNaN(inc)?0:inc, property=isNaN(prop)?0:prop; const reasons=[]; let ok=true;
+  if(biz){ ok=false; reasons.push('사업자등록+사업소득 발생 → 탈락'); }
+  if(income>20000000){ ok=false; reasons.push(`연 합산소득 ${fmt(income,0)}원 > 2,000만원 → 탈락`); }
+  if(property>900000000){ ok=false; reasons.push(`재산 과표 ${fmt(property,0)}원 > 9억 → 탈락`); }
+  else if(property>540000000&&income>10000000){ ok=false; reasons.push('재산 과표 5.4~9억 구간은 소득 1,000만원 이하만 유지 가능 → 탈락'); }
+  const passList=[]; if(income<=20000000)passList.push('소득 2,000만원 이하 ✓'); if(property<=540000000)passList.push('재산 과표 5.4억 이하 ✓'); else if(property<=900000000&&income<=10000000)passList.push('재산 5.4~9억 + 소득 1,000만↓ ✓'); if(!biz)passList.push('사업소득 없음 ✓');
+  show('hdRes',`<div class="label">건강보험 피부양자 자격</div><div class="big" style="color:${ok?'var(--f1)':'var(--f3)'}">${ok?'✅ 자격 유지 가능':'❌ 자격 상실(지역가입)'}</div><div class="sub" style="margin-top:8px">${ok?passList.map(x=>'• '+x).join('<br>'):reasons.map(x=>'• '+x).join('<br>')}<br><span style="font-size:11px">${ok?'모든 요건을 충족해요. 실제 등록은 공단 확인이 필요해요.':'탈락 시 지역가입자로 전환돼 별도 보험료가 부과돼요.'} 이자·배당은 연 2,000만원 초과 시 전액 소득에 합산돼요.</span></div>`); }
+
 /* ===== 영업일 D-day ===== */
 let bdCur='between';
 function bdMode(m){ bdCur=m; document.querySelectorAll('#v-bizdays .seg button').forEach(b=>b.classList.toggle('on',b.dataset.bd===m)); document.getElementById('bdBetween').style.display=m==='between'?'':'none'; document.getElementById('bdAfter').style.display=m==='after'?'':'none'; calcBizdays(); }
@@ -3249,12 +3292,21 @@ function closeReport(){ const ov=document.getElementById('reportModal'); if(ov)o
 function reportExport(){ if(!report.length)return; const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const W=560, pad=34, cardGap=16, headH=110; let y=headH; const blocks=[];
   report.forEach(r=>{ const ln=r.lines.length; const h=44+ln*26+16; blocks.push({r,y,h}); y+=h+cardGap; });
-  const H=y+30;
+  // 금액(원) 막대그래프용 데이터 추출: 각 항목의 최대 '원' 값
+  const barItems=[]; report.forEach(r=>{ const m=(r.lines.join(' ').match(/([\d,]+)\s*원/g)||[]).map(x=>parseInt(x.replace(/[^\d]/g,''),10)).filter(v=>!isNaN(v)&&v>0); if(m.length)barItems.push({name:r.name,value:Math.max(...m)}); });
+  const showBars=barItems.length>=2; const barH=showBars?(56+barItems.length*30+20):0;
+  const barTop=y+6; const H=y+barH+30;
   const now=new Date(); const dstr=`${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`;
   let body='';
   blocks.forEach(({r,y,h})=>{ body+=`<rect x="${pad}" y="${y}" width="${W-pad*2}" height="${h}" rx="14" fill="#FFFFFF" stroke="#E8DFC9"/><rect x="${pad}" y="${y}" width="5" height="${h}" rx="2.5" fill="#B08D3A"/><text x="${pad+20}" y="${y+30}" font-size="13" fill="#8A6D2E" font-family="sans-serif" font-weight="700">${esc(r.name)}</text>`;
     r.lines.forEach((l,i)=>{ const big=(i===1); body+=`<text x="${pad+20}" y="${y+52+i*26}" font-size="${big?'20':'14'}" fill="${big?'#20232A':i===0?'#7A7E88':'#4A4E58'}" font-family="sans-serif" font-weight="${big?'800':'500'}">${esc(l.length>44?l.slice(0,43)+'…':l)}</text>`; }); });
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="#FBF7EE"/><rect x="0" y="0" width="${W}" height="8" fill="#B08D3A"/><text x="${pad}" y="52" font-size="24" fill="#20232A" font-family="sans-serif" font-weight="800">📊 내 계산 리포트</text><text x="${pad}" y="78" font-size="13" fill="#8A6D2E" font-family="sans-serif">모두의 계산기 백화점 · ${dstr} · ${report.length}개 결과</text>${body}<text x="${pad}" y="${H-12}" font-size="11" fill="#A99B78" font-family="sans-serif">modu-calculator · 참고용 개산 결과입니다</text></svg>`;
+  // 막대그래프 섹션
+  let barSvg='';
+  if(showBars){ const mx=Math.max(...barItems.map(b=>b.value)); const bx=pad+150, bw=W-pad-bx-70; const palette=['#B08D3A','#2E7D6B','#C6704A','#5A78B0','#8A6D2E','#B0894A'];
+    barSvg=`<text x="${pad}" y="${barTop+24}" font-size="15" fill="#20232A" font-family="sans-serif" font-weight="800">💰 금액 비교</text>`;
+    barItems.forEach((b,i)=>{ const yy=barTop+44+i*30; const len=Math.max(mx>0?b.value/mx*bw:0,2); const col=palette[i%palette.length];
+      barSvg+=`<text x="${pad}" y="${yy+12}" font-size="12" fill="#4A4E58" font-family="sans-serif">${esc(b.name.length>10?b.name.slice(0,9)+'…':b.name)}</text><rect x="${bx}" y="${yy}" width="${len.toFixed(1)}" height="16" rx="4" fill="${col}"/><text x="${bx+len+6}" y="${yy+12}" font-size="11" fill="#7A7E88" font-family="sans-serif">${b.value.toLocaleString()}원</text>`; }); }
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}"><rect width="${W}" height="${H}" fill="#FBF7EE"/><rect x="0" y="0" width="${W}" height="8" fill="#B08D3A"/><text x="${pad}" y="52" font-size="24" fill="#20232A" font-family="sans-serif" font-weight="800">📊 내 계산 리포트</text><text x="${pad}" y="78" font-size="13" fill="#8A6D2E" font-family="sans-serif">모두의 계산기 백화점 · ${dstr} · ${report.length}개 결과</text>${body}${barSvg}<text x="${pad}" y="${H-12}" font-size="11" fill="#A99B78" font-family="sans-serif">modu-calculator · 참고용 개산 결과입니다</text></svg>`;
   // SVG → PNG (오프라인, 라이브러리 없이)
   const img=new Image(); const svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
   img.onload=function(){ const scale=2; const cv=document.createElement('canvas'); cv.width=W*scale; cv.height=H*scale; const ctx=cv.getContext('2d'); ctx.scale(scale,scale); ctx.drawImage(img,0,0);
@@ -3265,7 +3317,7 @@ function reportExport(){ if(!report.length)return; const esc=s=>String(s).replac
 
 /* ===== 업데이트 내역 ===== */
 const CHANGELOG=[
-  ['2026.09','🍀 로또 1242회(9.19) 최신화 + 최근 20회 트렌드 전략 + 고정수·제외수 지정 + 최근 당첨번호 표시','🛡️ 예금자보호 한도(2025.9~ 1억) 계산기','🎁 고향사랑기부제(한도 2,000만·세액공제+답례품) 계산기','🍀 추천/진단 통합 + 회차 자동 안내','⌨️ 키보드 단축키(/ 검색)·🏬 백화점 배경·📱 모바일 정렬','📊 결과 리포트·🏦 퇴직연금·📆 영업일 D-day'],
+  ['2026.09','🍀 로또 1243회(9.26) 최신화 + 최근 20회 트렌드 + 고정수·제외수 + 최근 당첨번호','🩺 건보 피부양자 판정·🏠 청약 가점·🛡️ 예금자보호·🎁 고향사랑기부 계산기','🎰 로또 진단에 최근 20회 트렌드 적중 지표','📊 결과 리포트 이미지에 금액 막대그래프 추가','⌨️ 단축키·🏬 배경·📱 모바일 정렬·🏦 퇴직연금·📆 영업일'],
   ['2026.08','📈 주식 평단가(물타기)·✈️ 여행 환전 예산 추가','🧾 연말정산 종합·ISA 절세·월세 세액공제','💱 실시간 환율 자동 연동(ECB)','🏬 백화점 배경 고도화·📱 모바일 최적화'],
   ['2026.07','🛒 위탁·매입 마진(플랫폼·관세 반영)','🔑 전월세 전환·🎯 목표 매도가·⚖️ 손익분기점·🎓 학점·💕 기념일','👥 방문자(누적·오늘·현재접속) 정밀 집계','📱 QR 결과 공유'],
   ['정밀화','⚖️ 2026년 4대보험 요율 전면 반영(국민연금 4.75%·건강 3.595%·장기요양 13.14%)','💵 최저임금 10,320원·실업급여 하한·국민연금 상한 659만·A값 갱신','🏛️ 취득세·종부세·상속세·자동차세(연납) 등 실제 법령 반영']
