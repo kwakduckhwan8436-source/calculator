@@ -280,6 +280,10 @@ body::after{ content:""; position:fixed; inset:0; z-index:-1; pointer-events:non
 .lt-banner .ltb-dday{ color:#C6483C; font-weight:800; }
 .lt-banner .ltb-sub{ font-size:11.5px; color:var(--muted); margin-top:6px; }
 .lt-seg{ margin-bottom:14px; }
+.lt-prob{ margin:14px 0 4px; padding:14px 16px; border-radius:14px; background:linear-gradient(135deg,rgba(46,125,107,.12),rgba(46,125,107,.04)); border:1px solid rgba(46,125,107,.28); }
+.lt-prob-h{ font-size:13px; color:var(--ink); }
+.lt-prob-v{ font-size:28px; font-weight:800; color:var(--f1); margin:4px 0; }
+.lt-prob-s{ font-size:12px; color:var(--muted); line-height:1.6; }
 .result .rep{ background:var(--f2-bg,rgba(46,125,107,.12)); }
 /* 결과 액션 버튼 정렬 통일 (PC·모바일 공통) */
 .result{ position:relative; }
@@ -924,20 +928,20 @@ select{cursor:pointer;}
     <section class="view" id="v-parental" data-floor="2"><div class="panel">
       <div class="field"><label>월 통상임금(원)</label><input type="number" id="ptWage" placeholder="예: 3000000" oninput="calcParental()"></div>
       <div class="field"><label>육아휴직 기간(개월)</label><input type="number" id="ptMonth" placeholder="예: 12" oninput="calcParental()"></div>
-      <div class="result" id="ptRes"></div><p class="hint">통상임금의 80%, 월 상한 150만·하한 70만(2024 기준). 급여의 25%는 복직 6개월 후 지급(사후지급금). 6+6 부모육아휴직제 등 특례는 미반영한 <b>참고용</b>이에요.</p></div></section>
+      <div class="result" id="parRes"></div><p class="hint">통상임금의 80%, 월 상한 150만·하한 70만(2024 기준). 급여의 25%는 복직 6개월 후 지급(사후지급금). 6+6 부모육아휴직제 등 특례는 미반영한 <b>참고용</b>이에요.</p></div></section>
 
     <!-- 학자금 상환 -->
     <section class="view" id="v-studentloan" data-floor="2"><div class="panel">
       <div class="field"><label>연 소득(원)</label><input type="number" id="slIncome" placeholder="예: 30000000" oninput="calcStudentloan()"></div>
       <div class="field"><label>학자금 대출 잔액(원)</label><input type="number" id="slBalance" placeholder="예: 20000000" oninput="calcStudentloan()"></div>
-      <div class="result" id="slRes"></div><p class="hint">취업 후 상환(ICL): 연소득이 상환기준소득(약 1,751만원, 2024) 초과 시 초과분의 20%를 의무상환해요. 기준은 매년 바뀌는 <b>참고용</b>이에요.</p></div></section>
+      <div class="result" id="sloanRes"></div><p class="hint">취업 후 상환(ICL): 연소득이 상환기준소득(약 1,751만원, 2024) 초과 시 초과분의 20%를 의무상환해요. 기준은 매년 바뀌는 <b>참고용</b>이에요.</p></div></section>
 
     <!-- 적금 만기표 -->
     <section class="view" id="v-savingtable" data-floor="2"><div class="panel">
       <div class="field"><label>월 납입액(원)</label><input type="number" id="stM" placeholder="예: 300000" oninput="calcSavingtable()"></div>
       <div class="grid2"><div class="field"><label>연 이율(%)</label><input type="number" id="stR" placeholder="예: 3.5" oninput="calcSavingtable()"></div><div class="field"><label>기간(개월)</label><input type="number" id="stN" placeholder="예: 24" oninput="calcSavingtable()"></div></div>
       <div class="field"><label>과세 유형</label><select id="stTax" onchange="calcSavingtable()"><option value="0.154">일반과세 15.4%</option><option value="0.095">세금우대 9.5%</option><option value="0">비과세</option></select></div>
-      <div class="result" id="stRes"></div><p class="hint">정기적금(단리) 기준. 이자=월납입×(연이율/12)×n(n+1)/2. 이자에만 세금이 붙어요.</p></div></section>
+      <div class="result" id="stbRes"></div><p class="hint">정기적금(단리) 기준. 이자=월납입×(연이율/12)×n(n+1)/2. 이자에만 세금이 붙어요.</p></div></section>
 
     <!-- 중간예납 -->
     <section class="view" id="v-interimtax" data-floor="3"><div class="panel">
@@ -963,7 +967,7 @@ select{cursor:pointer;}
       <div class="field"><label>이동 거리(km)</label><input type="number" id="txDist" placeholder="예: 8" oninput="calcTaxi()"></div>
       <div class="grid2"><div class="field"><label>기본요금(원)</label><input type="number" id="txBase" placeholder="4800" oninput="calcTaxi()"></div><div class="field"><label>기본거리(km)</label><input type="number" id="txBaseKm" placeholder="1.6" oninput="calcTaxi()"></div></div>
       <div class="field"><label>할증</label><select id="txSur" onchange="calcTaxi()"><option value="1">주간 (할증 없음)</option><option value="1.2">심야 20%</option><option value="1.4">심야 40%</option></select></div>
-      <div class="result" id="txRes"></div><p class="hint">서울 중형택시 기준(기본 4,800원/1.6km, 131원/131m). 시간요금(저속)은 제외한 <b>거리 기준 근사치</b>예요. 지역마다 요금이 달라요.</p></div></section>
+      <div class="result" id="taxiRes"></div><p class="hint">서울 중형택시 기준(기본 4,800원/1.6km, 131원/131m). 시간요금(저속)은 제외한 <b>거리 기준 근사치</b>예요. 지역마다 요금이 달라요.</p></div></section>
 
     <!-- 주차요금 -->
     <section class="view" id="v-parking" data-floor="1"><div class="panel">
@@ -1068,7 +1072,7 @@ select{cursor:pointer;}
       <div class="grid2"><div class="field"><label>연 주행거리(km)</label><input type="number" id="tcKm" placeholder="예: 12000" oninput="calcCartco()"></div><div class="field"><label>연비(km/L)</label><input type="number" id="tcEff" placeholder="예: 11" oninput="calcCartco()"></div></div>
       <div class="grid2"><div class="field"><label>유가(원/L)</label><input type="number" id="tcFuel" placeholder="예: 1700" oninput="calcCartco()"></div><div class="field"><label>연 보험료(원)</label><input type="number" id="tcIns" placeholder="예: 800000" oninput="calcCartco()"></div></div>
       <div class="grid2"><div class="field"><label>연 자동차세(원)</label><input type="number" id="tcTax" placeholder="예: 400000" oninput="calcCartco()"></div><div class="field"><label>연 정비·기타(원)</label><input type="number" id="tcMaint" placeholder="예: 500000" oninput="calcCartco()"></div></div>
-      <div class="result" id="tcRes"></div><p class="hint">총소유비용 = 감가상각(구입가−중고예상가) + (연료+보험+세금+정비)×보유기간. 실제 감가·연비·보험료는 차종·조건마다 달라요.</p></div></section>
+      <div class="result" id="tcoRes"></div><p class="hint">총소유비용 = 감가상각(구입가−중고예상가) + (연료+보험+세금+정비)×보유기간. 실제 감가·연비·보험료는 차종·조건마다 달라요.</p></div></section>
 
     <!-- 연금저축·IRP 세액공제 -->
     <section class="view" id="v-pensiontax" data-floor="3"><div class="panel">
@@ -1147,18 +1151,19 @@ select{cursor:pointer;}
       <div id="ltRoundBanner" class="lt-banner"></div>
       <div class="seg lt-seg"><button class="on" data-lt="gen" onclick="ltMode('gen')">🍀 번호 추천</button><button data-lt="check" onclick="ltMode('check')">🎰 내 번호 진단</button></div>
       <div id="ltGen">
-        <div class="field"><label>생성 전략</label><select id="ltStrategy"><option value="balance">빈도 균형 (추천·당첨패턴 반영)</option><option value="hot">핫 넘버 (전체 자주 나온 번호)</option><option value="cold">콜드 넘버 (전체 안 나온 번호)</option><option value="trend">최근 트렌드 (최근 20회 핫)</option><option value="trendcold">최근 미출현 (최근 20회 콜드)</option></select></div>
-        <div class="grid2"><div class="field"><label>게임 수</label><select id="ltGames"><option value="5" selected>5게임 (A~E)</option><option value="1">1게임</option><option value="3">3게임</option><option value="10">10게임</option></select></div><div class="field"><label>고정수 · 선택 (반드시 포함)</label><input type="text" id="ltInclude" placeholder="예: 7, 17"></div></div>
+        <div class="field"><label>생성 전략</label><select id="ltStrategy"><option value="avoid" selected>추천 · 당첨금 분할 회피 (많이 고르는 패턴 배제)</option><option value="evidence">근거 기반 (균등 추출 + 실측 분포 필터)</option><option value="hot">재미용 · 전체 누적 핫</option><option value="cold">재미용 · 전체 누적 콜드</option><option value="trend">재미용 · 최근 20회 핫</option><option value="trendcold">재미용 · 최근 20회 콜드</option></select></div>
+        <div class="grid2"><div class="field"><label>게임 수</label><select id="ltGames"><option value="1">1게임</option><option value="3">3게임</option><option value="5" selected>5게임 (A~E)</option><option value="7">7게임 (번호 42개 겹침 없이)</option><option value="10">10게임</option></select></div><div class="field"><label>고정수 · 선택 (반드시 포함)</label><input type="text" id="ltInclude" placeholder="예: 7, 17"></div></div>
         <div class="field"><label>제외수 · 선택 (뽑지 않을 번호)</label><input type="text" id="ltExclude" placeholder="예: 1, 45"></div>
+        <div class="field"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="ltSpreadChk" checked style="width:auto;transform:scale(1.25)"> 게임끼리 번호 겹침 최소화 <span style="color:var(--muted);font-weight:500">(권장 · 최소 1게임 당첨 확률↑)</span></label></div>
         <div class="actions"><button class="btn primary" onclick="calcLotto()">🍀 번호 생성</button><button class="btn ghost" onclick="calcLotto()">다시 뽑기</button></div>
         <div class="result" id="ltRes"></div>
-        <p class="hint">1~1243회(2026.9.26) 전체 빈도 + <b>최근 20회(1224~1243) 트렌드</b>를 내장하고, 후보를 대량 생성해 <b>당첨 패턴 점수</b>가 높은 조합만 골라줘요. <b>고정수·제외수</b> 지정과 <b>진단 탭</b> 연동도 돼요. <b>단, 로또는 매 회차 독립 확률(1등 1/8,145,060)이라 어떤 방법도 실제 당첨 확률 자체를 높이지는 못해요.</b></p>
+        <p class="hint"><b>수학적으로 효과가 증명된 두 가지</b>를 기본으로 적용해요. ① <b>게임끼리 번호 겹침 최소화</b>: 같은 금액으로 '최소 1게임 5등 이상' 당첨 확률이 올라가요(5게임 기준 약 11.0% → 11.8%). ② <b>당첨금 분할 회피</b>: 생일 범위(1~31)·등차수열·최근 당첨 조합처럼 많이 고르는 조합을 피해, 당첨 시 나눠 받을 위험을 줄여요. 필터는 8,145,060조합 전수계산 분포(실제 추첨의 79.7% 포함)를 쓰고, 1~1244회 공정성 검정상 핫·콜드 번호는 근거가 없어요. <b>1등 확률은 게임 수에만 비례하며 번호 선택으로 바뀌지 않아요.</b></p>
       </div>
       <div id="ltCheck" style="display:none">
-        <div class="field"><label>내 번호 6개 (1~45, 쉼표/공백 구분)</label><input type="text" id="lcNums" placeholder="예: 5, 12, 18, 27, 33, 44" oninput="calcLottocheck()"></div>
-        <div class="actions"><button class="btn primary" onclick="calcLottocheck()">🎰 진단</button><button class="btn ghost" onclick="ltFillFromGen()">추천번호 불러오기</button></div>
-        <div class="result" id="lcRes"></div>
-        <p class="hint">직접 고른(또는 추천받은) 번호가 역대 당첨 조합의 통계 패턴(합계 100~175·홀짝 3:3·고저 균형·AC 7↑·구간 분산)에 얼마나 부합하는지 100점 만점으로 점수화해요. <b>점수가 높다고 당첨 확률이 오르는 건 아니에요</b> — 치우친 조합인지 확인하는 용도예요.</p>
+        <div class="field"><label>내 번호 (한 줄에 한 게임 · 여러 게임 가능)</label><textarea id="lcNums" rows="3" placeholder="예: 5, 12, 18, 27, 33, 44&#10;여러 게임이면 줄을 바꿔 입력" style="min-height:96px;font-size:16px"></textarea></div>
+        <div class="actions"><button class="btn primary" onclick="calcLottocheck()">🎰 진단</button><button class="btn ghost" onclick="ltFillFromGen()">추천번호 전체 불러오기</button></div>
+        <div class="result" id="ltcRes"></div>
+        <p class="hint">한 게임만 넣으면 패턴별 <b>전수계산 확률</b>과 <b>당첨금 분할 위험</b>을, 여러 게임(한 줄에 한 게임)을 넣으면 <b>게임끼리 겹침</b>과 그 때문에 줄어든 '최소 1게임 당첨 확률'을 보여줘요. 1등 확률은 모든 조합이 같아요.</p>
       </div>
     </div></section>
 
@@ -1221,7 +1226,6 @@ select{cursor:pointer;}
       <div class="grid2"><div class="field"><label>광고비 (개당, 원)</label><input type="number" id="mgAd" placeholder="예: 2000" oninput="calcMargin()"></div><div class="field"><label>출고 택배비 (개당, 원)</label><input type="number" id="mgShip" placeholder="예: 3000" oninput="calcMargin()"></div></div>
       <div class="grid2" id="mgBuyOnly"><div class="field"><label>포장·부자재 (개당, 원)</label><input type="number" id="mgPack" placeholder="예: 500" oninput="calcMargin()"></div><div class="field"><label>반품률(%)</label><input type="number" id="mgReturn" placeholder="예: 3" oninput="calcMargin()"></div></div>
       <div class="field" id="mgDutyWrap"><label>수입 관세율(%) · 해외 매입 시</label><input type="number" id="mgDuty" placeholder="예: 8 (국내 매입은 0)" oninput="calcMargin()"></div>
-      <div class="field" id="mgDutyWrap"><label>수입 관세율(%) · 해외 사입 시</label><input type="number" id="mgDuty" placeholder="예: 8 (국내 사입은 0)" oninput="calcMargin()"></div>
       <div class="field"><label>부가세 처리</label><select id="mgVat" onchange="calcMargin()"><option value="1">일반과세 (매출 10%, 매입 공제)</option><option value="0">간이·면세 (부가세 없음)</option></select></div>
       <div class="field"><label>월 목표 순이익 (원) · 선택</label><input type="number" id="mgGoal" placeholder="필요 판매량 계산" oninput="calcMargin()"></div>
       <div class="result" id="mgRes"></div><p class="hint">매입은 재고를 직접 사입, 위탁은 주문 시 공급사가 발송(포장·재고 없음). 부가세는 매출세액(판매가×10/110)에서 매입세액을 공제한 <b>납부액</b>만 차감해요. 실제 수수료·정산주기는 플랫폼마다 달라요.</p></div></section>
@@ -1331,7 +1335,7 @@ select{cursor:pointer;}
     <!-- 인생 시계 -->
     <section class="view" id="v-lifeclock" data-floor="1"><div class="panel">
       <div class="field"><label>생년월일</label><input type="date" id="lcDate"></div>
-      <div class="actions"><button class="btn primary" onclick="calcLife()">계산</button><button class="btn ghost" onclick="reset('v-lifeclock')">초기화</button></div><div class="result" id="lcRes"></div></div></section>
+      <div class="actions"><button class="btn primary" onclick="calcLife()">계산</button><button class="btn ghost" onclick="reset('v-lifeclock')">초기화</button></div><div class="result" id="lfRes"></div></div></section>
 
     <!-- 72법칙 -->
     <section class="view" id="v-rule72" data-floor="2"><div class="panel">
@@ -1372,7 +1376,7 @@ select{cursor:pointer;}
       <div class="field"><label>거리(km)</label><input type="number" id="pcDist" placeholder="예: 10" oninput="calcPace()"><div class="seg" style="margin-top:8px"><button onclick="document.getElementById('pcDist').value='5';calcPace()">5K</button><button onclick="document.getElementById('pcDist').value='10';calcPace()">10K</button><button onclick="document.getElementById('pcDist').value='21.0975';calcPace()">하프</button><button onclick="document.getElementById('pcDist').value='42.195';calcPace()">풀</button></div></div>
       <div id="pcTimeIn"><div class="field"><label>목표 시간</label><div class="grid3"><input type="number" id="pcH" placeholder="시" oninput="calcPace()"><input type="number" id="pcM" placeholder="분" oninput="calcPace()"><input type="number" id="pcS" placeholder="초" oninput="calcPace()"></div></div></div>
       <div id="pcPaceIn" style="display:none"><div class="field"><label>페이스 (1km당)</label><div class="row"><input type="number" id="pcPm" placeholder="분" oninput="calcPace()"><input type="number" id="pcPs" placeholder="초" oninput="calcPace()"></div></div></div>
-      <div class="result" id="pcRes"></div></div></section>
+      <div class="result" id="paceRes"></div></div></section>
 
     <!-- 연차 개수 -->
     <section class="view" id="v-leave" data-floor="1"><div class="panel">
@@ -1649,7 +1653,7 @@ const GUIDE={
   breakeven:'고정비·판매단가·개당 변동비로 손익분기점(BEP) 수량과 매출을 계산해요.',
   gpa:'과목별 학점과 등급으로 평량평균(GPA)을 4.5 만점 기준으로 계산해요.',
   anniv:'사귀기 시작한 날(또는 특정일) 기준으로 100일·200일·1주년 등 다가오는 기념일을 알려줘요.',
-  lotto:'1회부터 1243회(2026.9.26)까지 번호별 실제 출현 횟수를 담아, 빈도·핫·콜드 전략과 당첨 패턴(합계·홀짝·구간 분산)을 반영해 번호를 추천해요.',
+  lotto:'1~1244회 통계와 전수계산 분포로 번호를 추천·진단해요. 게임끼리 번호 겹침을 줄여 최소 1게임 당첨 확률을 높이고, 많이 고르는 조합을 피해 당첨금 분할 위험을 낮춰요.',
   retirepension:'퇴직연금을 DC형(운용수익률 기준 적립)과 DB형(퇴직 전 평균임금×근속연수)으로 예상 수령액을 계산해요.',
   deposit:'예금자보호 한도(2025.9.1부터 원금+이자 합산 1억원)를 기준으로 안전 예치 금액과 초과분, 필요한 분산 은행 수를 계산해요.',
   furusato:'고향사랑기부제 기부금으로 세액공제(10만원 이하 전액·초과분 16.5%)와 답례품(30%)을 합친 실질 혜택을 계산해요.',
@@ -2489,13 +2493,13 @@ function lvStart(){ if(lvOn){ window.removeEventListener('deviceorientation',lvH
 function flashOn(){ let o=document.getElementById('flashOverlay'); if(!o){ o=document.createElement('div'); o.id='flashOverlay'; o.style.cssText='position:fixed;inset:0;background:#fff;z-index:9999;cursor:pointer'; o.title='탭하면 꺼져요'; o.onclick=()=>o.remove(); document.body.appendChild(o); try{o.requestFullscreen&&o.requestFullscreen();}catch(e){} } }
 
 /* ===== 인생 시계 ===== */
-function calcLife(){ const bd=new Date(document.getElementById('lcDate').value); if(isNaN(bd))return show('lcRes','<div class="big">생년월일을 선택하세요</div>',true);
-  const now=new Date(); const days=Math.floor((now-bd)/864e5); if(days<0)return show('lcRes','<div class="big">미래 날짜예요</div>',true);
+function calcLife(){ const bd=new Date(document.getElementById('lcDate').value); if(isNaN(bd))return show('lfRes','<div class="big">생년월일을 선택하세요</div>',true);
+  const now=new Date(); const days=Math.floor((now-bd)/864e5); if(days<0)return show('lfRes','<div class="big">미래 날짜예요</div>',true);
   const hours=Math.floor((now-bd)/36e5), weeks=Math.floor(days/7);
   const nextMil=[1000,5000,10000,15000,20000,25000,30000].find(m=>m>days);
   const milDate=new Date(bd.getTime()+nextMil*864e5);
   const nextBd=new Date(now.getFullYear(),bd.getMonth(),bd.getDate()); if(nextBd<now)nextBd.setFullYear(now.getFullYear()+1); const bdLeft=Math.ceil((nextBd-now)/864e5);
-  show('lcRes',`<div class="label">지금까지 산 날</div><div class="big" style="color:var(--f1)">${fmt(days,0)}일</div><div class="sub">약 <b>${fmt(weeks,0)}주</b> · <b>${fmt(hours,0)}시간</b><hr>다음 <b>${fmt(nextMil,0)}일</b>째 → ${milDate.getFullYear()}. ${milDate.getMonth()+1}. ${milDate.getDate()}. (D-${fmt(nextMil-days,0)})<br>다음 생일까지 <b>D-${bdLeft}</b></div>`); }
+  show('lfRes',`<div class="label">지금까지 산 날</div><div class="big" style="color:var(--f1)">${fmt(days,0)}일</div><div class="sub">약 <b>${fmt(weeks,0)}주</b> · <b>${fmt(hours,0)}시간</b><hr>다음 <b>${fmt(nextMil,0)}일</b>째 → ${milDate.getFullYear()}. ${milDate.getMonth()+1}. ${milDate.getDate()}. (D-${fmt(nextMil-days,0)})<br>다음 생일까지 <b>D-${bdLeft}</b></div>`); }
 
 /* ===== 72법칙 ===== */
 function calcRule72(){ const r=parseFloat(document.getElementById('r72R').value); if(isNaN(r)||r<=0){document.getElementById('r72Res').classList.remove('show');return;}
@@ -2666,14 +2670,14 @@ function calcBtu(){ const a=parseFloat(document.getElementById('btuArea').value)
 
 /* ===== 러닝 페이스 ===== */
 let paceCur='time';
-function paceMode(m){ paceCur=m; document.querySelectorAll('#v-pace .seg button[data-pc]').forEach(b=>b.classList.toggle('on',b.dataset.pc===m)); document.getElementById('pcTimeIn').style.display=m==='time'?'':'none'; document.getElementById('pcPaceIn').style.display=m==='pace'?'':'none'; document.getElementById('pcRes').classList.remove('show'); }
-function calcPace(){ const dist=parseFloat(document.getElementById('pcDist').value); if(isNaN(dist)||dist<=0){document.getElementById('pcRes').classList.remove('show');return;}
-  if(paceCur==='time'){ const h=parseFloat(document.getElementById('pcH').value)||0,m=parseFloat(document.getElementById('pcM').value)||0,s=parseFloat(document.getElementById('pcS').value)||0; const totSec=h*3600+m*60+s; if(totSec<=0){document.getElementById('pcRes').classList.remove('show');return;}
+function paceMode(m){ paceCur=m; document.querySelectorAll('#v-pace .seg button[data-pc]').forEach(b=>b.classList.toggle('on',b.dataset.pc===m)); document.getElementById('pcTimeIn').style.display=m==='time'?'':'none'; document.getElementById('pcPaceIn').style.display=m==='pace'?'':'none'; document.getElementById('paceRes').classList.remove('show'); }
+function calcPace(){ const dist=parseFloat(document.getElementById('pcDist').value); if(isNaN(dist)||dist<=0){document.getElementById('paceRes').classList.remove('show');return;}
+  if(paceCur==='time'){ const h=parseFloat(document.getElementById('pcH').value)||0,m=parseFloat(document.getElementById('pcM').value)||0,s=parseFloat(document.getElementById('pcS').value)||0; const totSec=h*3600+m*60+s; if(totSec<=0){document.getElementById('paceRes').classList.remove('show');return;}
     const paceSec=totSec/dist; const pm=Math.floor(paceSec/60),ps=Math.round(paceSec%60); const speed=dist/(totSec/3600);
-    show('pcRes',`<div class="label">${fmt(dist,3).replace(/\.?0+$/,'')}km 페이스</div><div class="big" style="color:var(--f4)">${pm}'${String(ps).padStart(2,'0')}" <span style="font-size:16px;color:var(--muted)">/km</span></div><div class="sub">평균 속도 <b>${fmt(speed,2)} km/h</b> · 총 ${h>0?h+'시간 ':''}${m}분 ${s}초</div>`); }
-  else{ const pm=parseFloat(document.getElementById('pcPm').value)||0,ps=parseFloat(document.getElementById('pcPs').value)||0; const paceSec=pm*60+ps; if(paceSec<=0){document.getElementById('pcRes').classList.remove('show');return;}
+    show('paceRes',`<div class="label">${fmt(dist,3).replace(/\.?0+$/,'')}km 페이스</div><div class="big" style="color:var(--f4)">${pm}'${String(ps).padStart(2,'0')}" <span style="font-size:16px;color:var(--muted)">/km</span></div><div class="sub">평균 속도 <b>${fmt(speed,2)} km/h</b> · 총 ${h>0?h+'시간 ':''}${m}분 ${s}초</div>`); }
+  else{ const pm=parseFloat(document.getElementById('pcPm').value)||0,ps=parseFloat(document.getElementById('pcPs').value)||0; const paceSec=pm*60+ps; if(paceSec<=0){document.getElementById('paceRes').classList.remove('show');return;}
     const totSec=paceSec*dist; const hh=Math.floor(totSec/3600),mm=Math.floor(totSec%3600/60),ss=Math.round(totSec%60); const speed=3600/paceSec;
-    show('pcRes',`<div class="label">${fmt(dist,3).replace(/\.?0+$/,'')}km 완주 시간</div><div class="big" style="color:var(--f4)">${hh>0?hh+':':''}${String(mm).padStart(hh>0?2:1,'0')}:${String(ss).padStart(2,'0')}</div><div class="sub">페이스 ${pm}'${String(ps).padStart(2,'0')}"/km · 속도 <b>${fmt(speed,2)} km/h</b></div>`); }
+    show('paceRes',`<div class="label">${fmt(dist,3).replace(/\.?0+$/,'')}km 완주 시간</div><div class="big" style="color:var(--f4)">${hh>0?hh+':':''}${String(mm).padStart(hh>0?2:1,'0')}:${String(ss).padStart(2,'0')}</div><div class="sub">페이스 ${pm}'${String(ps).padStart(2,'0')}"/km · 속도 <b>${fmt(speed,2)} km/h</b></div>`); }
 }
 
 /* ===== 연차 개수 ===== */
@@ -2770,23 +2774,23 @@ function calcLoancompare(){ const P=parseFloat(document.getElementById('lcP').va
   show('lcRes',`<div class="label">총이자 비교 (원리금 vs 원금균등)</div><div class="big" style="color:var(--f2)">차이 ${fmt(Math.round(int1-int2),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">원리금균등 월납</span><span class="vl">${fmt(A,0)}원</span></div><div class="ri"><span class="nm">원리금균등 총이자</span><span class="vl">${fmt(int1,0)}원</span></div><div class="ri"><span class="nm">원금균등 첫달</span><span class="vl">${fmt(first,0)}원</span></div><div class="ri"><span class="nm">원금균등 총이자</span><span class="vl">${fmt(int2,0)}원</span></div></div><div class="label" style="margin-top:14px">총이자 비교</div>${chartBars([{label:'원리금균등',value:int1,color:'var(--f4)'},{label:'원금균등',value:int2,color:'var(--f1)'}])}<div class="sub">원금균등이 총이자는 적지만 초기 부담이 커요.</div>`); }
 
 /* ===== 육아휴직 급여 ===== */
-function calcParental(){ const w=parseFloat(document.getElementById('ptWage').value),m=parseInt(document.getElementById('ptMonth').value,10); if(isNaN(w)||isNaN(m)||w<=0||m<=0){document.getElementById('ptRes').classList.remove('show');return;}
+function calcParental(){ const w=parseFloat(document.getElementById('ptWage').value),m=parseInt(document.getElementById('ptMonth').value,10); if(isNaN(w)||isNaN(m)||w<=0||m<=0){document.getElementById('parRes').classList.remove('show');return;}
   const pay=Math.min(Math.max(w*0.8,700000),1500000); const monthlyPaid=pay*0.75; const hold=pay*0.25; const total=pay*m;
-  show('ptRes',`<div class="label">월 육아휴직 급여 (지급액)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyPaid),0)} 원</div><div class="sub">산정액 ${fmt(pay,0)}원 (통상임금 80%, 상·하한 적용)<br>매월 75% 지급 + 사후지급금(25%) ${fmt(Math.round(hold),0)}원/월은 복직 6개월 후<br>${m}개월 총 급여 <b>${fmt(total,0)}원</b></div>`); }
+  show('parRes',`<div class="label">월 육아휴직 급여 (지급액)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyPaid),0)} 원</div><div class="sub">산정액 ${fmt(pay,0)}원 (통상임금 80%, 상·하한 적용)<br>매월 75% 지급 + 사후지급금(25%) ${fmt(Math.round(hold),0)}원/월은 복직 6개월 후<br>${m}개월 총 급여 <b>${fmt(total,0)}원</b></div>`); }
 
 /* ===== 학자금 상환(ICL) ===== */
-function calcStudentloan(){ const income=parseFloat(document.getElementById('slIncome').value),bal=parseFloat(document.getElementById('slBalance').value); if(isNaN(income)||isNaN(bal)||income<0||bal<=0){document.getElementById('slRes').classList.remove('show');return;} const th=17510000;
+function calcStudentloan(){ const income=parseFloat(document.getElementById('slIncome').value),bal=parseFloat(document.getElementById('slBalance').value); if(isNaN(income)||isNaN(bal)||income<0||bal<=0){document.getElementById('sloanRes').classList.remove('show');return;} const th=17510000;
   const over=Math.max(income-th,0); const annual=over*0.2;
-  if(annual<=0)return show('slRes',`<div class="label">의무 상환액</div><div class="big" style="color:var(--f1)">0 원</div><div class="sub">연소득이 상환기준소득(${fmt(th,0)}원) 이하라 올해 의무상환은 없어요.</div>`);
+  if(annual<=0)return show('sloanRes',`<div class="label">의무 상환액</div><div class="big" style="color:var(--f1)">0 원</div><div class="sub">연소득이 상환기준소득(${fmt(th,0)}원) 이하라 올해 의무상환은 없어요.</div>`);
   const yearsToPay=bal/annual;
-  show('slRes',`<div class="label">연 의무 상환액 (ICL)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(annual),0)} 원</div><div class="sub">기준소득 초과분 ${fmt(over,0)}원 × 20%<br>월 약 ${fmt(Math.round(annual/12),0)}원<br>잔액 ${fmt(bal,0)}원 → 이자 제외 약 <b>${fmt(yearsToPay,1)}년</b> 소요</div>`); }
+  show('sloanRes',`<div class="label">연 의무 상환액 (ICL)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(annual),0)} 원</div><div class="sub">기준소득 초과분 ${fmt(over,0)}원 × 20%<br>월 약 ${fmt(Math.round(annual/12),0)}원<br>잔액 ${fmt(bal,0)}원 → 이자 제외 약 <b>${fmt(yearsToPay,1)}년</b> 소요</div>`); }
 
 /* ===== 적금 만기표 ===== */
-function calcSavingtable(){ const m=parseFloat(document.getElementById('stM').value),r=parseFloat(document.getElementById('stR').value),n=parseInt(document.getElementById('stN').value,10),tax=parseFloat(document.getElementById('stTax').value); if(isNaN(m)||isNaN(r)||isNaN(n)||m<=0||n<=0||r<0){document.getElementById('stRes').classList.remove('show');return;}
+function calcSavingtable(){ const m=parseFloat(document.getElementById('stM').value),r=parseFloat(document.getElementById('stR').value),n=parseInt(document.getElementById('stN').value,10),tax=parseFloat(document.getElementById('stTax').value); if(isNaN(m)||isNaN(r)||isNaN(n)||m<=0||n<=0||r<0){document.getElementById('stbRes').classList.remove('show');return;}
   const principal=m*n; const interest=m*(r/100/12)*n*(n+1)/2; const taxAmt=interest*tax; const net=principal+interest-taxAmt;
   const series=[],labels=[]; const step=Math.max(1,Math.round(n/12)); for(let k=step;k<=n;k+=step){ const pr=m*k; const it=m*(r/100/12)*k*(k+1)/2; series.push(pr+it); labels.push(k+'개월'); } if(labels[labels.length-1]!==n+'개월'){ series.push(principal+interest); labels.push(n+'개월'); } series.unshift(0); labels.unshift('0');
   const chart=chartArea(series,labels,'var(--f2)'); const donut=chartDonut([{label:'원금',value:principal,color:'var(--f2)'},{label:'세후이자',value:Math.max(interest-taxAmt,0),color:'var(--star)'}]);
-  show('stRes',`<div class="label">만기 세후 수령액</div><div class="big" style="color:var(--f2)">${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">납입 원금 (${n}개월)</span><span class="vl">${fmt(principal,0)}원</span></div><div class="ri"><span class="nm">세전 이자</span><span class="vl">${fmt(Math.round(interest),0)}원</span></div><div class="ri"><span class="nm">이자 과세 (${fmt(tax*100,1)}%)</span><span class="vl">−${fmt(Math.round(taxAmt),0)}원</span></div><div class="ri"><span class="nm">세후 이자</span><span class="vl">${fmt(Math.round(interest-taxAmt),0)}원</span></div></div><div class="label" style="margin-top:14px">적립 성장</div>${chart}${donut}`); }
+  show('stbRes',`<div class="label">만기 세후 수령액</div><div class="big" style="color:var(--f2)">${fmt(Math.round(net),0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">납입 원금 (${n}개월)</span><span class="vl">${fmt(principal,0)}원</span></div><div class="ri"><span class="nm">세전 이자</span><span class="vl">${fmt(Math.round(interest),0)}원</span></div><div class="ri"><span class="nm">이자 과세 (${fmt(tax*100,1)}%)</span><span class="vl">−${fmt(Math.round(taxAmt),0)}원</span></div><div class="ri"><span class="nm">세후 이자</span><span class="vl">${fmt(Math.round(interest-taxAmt),0)}원</span></div></div><div class="label" style="margin-top:14px">적립 성장</div>${chart}${donut}`); }
 
 /* ===== 중간예납 ===== */
 function calcInterimtax(){ const t=parseFloat(document.getElementById('imTax').value); if(isNaN(t)||t<0){document.getElementById('imRes').classList.remove('show');return;} const half=t*0.5;
@@ -2810,9 +2814,9 @@ function calcInherit(){ const amt=parseFloat(document.getElementById('ihAmt').va
   show('ihRes',`<div class="label">예상 상속세</div><div class="big" style="color:var(--f3)">${fmt(Math.round(fin),0)} 원</div><div class="sub">과세표준 ${fmt(base,0)}원 (상속 ${fmt(amt,0)} − 공제 ${fmt(ded,0)})<br>산출세액 ${fmt(Math.round(tax),0)}원 (세율 ${fmt(rate*100,0)}%, 누진공제 ${fmt(ndc,0)})${credit>0?`<br>신고세액공제 −${fmt(Math.round(credit),0)}원`:''}<br>실효세율 <b>${fmt(fin/amt*100,2)}%</b></div>`); }
 
 /* ===== 택시요금 ===== */
-function calcTaxi(){ const dist=parseFloat(document.getElementById('txDist').value); let base=parseFloat(document.getElementById('txBase').value); if(isNaN(base)||base<=0)base=4800; let baseKm=parseFloat(document.getElementById('txBaseKm').value); if(isNaN(baseKm)||baseKm<0)baseKm=1.6; const sur=parseFloat(document.getElementById('txSur').value)||1; if(isNaN(dist)||dist<=0){document.getElementById('txRes').classList.remove('show');return;}
+function calcTaxi(){ const dist=parseFloat(document.getElementById('txDist').value); let base=parseFloat(document.getElementById('txBase').value); if(isNaN(base)||base<=0)base=4800; let baseKm=parseFloat(document.getElementById('txBaseKm').value); if(isNaN(baseKm)||baseKm<0)baseKm=1.6; const sur=parseFloat(document.getElementById('txSur').value)||1; if(isNaN(dist)||dist<=0){document.getElementById('taxiRes').classList.remove('show');return;}
   const extraM=Math.max(dist-baseKm,0)*1000; const units=Math.ceil(extraM/131); const fare=(base+units*131)*sur;
-  show('txRes',`<div class="label">예상 택시요금${sur>1?` (할증 ${Math.round((sur-1)*100)}%)`:''}</div><div class="big" style="color:var(--f1)">${fmt(Math.round(fare/100)*100,0)} 원</div><div class="sub">기본 ${fmt(base,0)}원(${baseKm}km) + 추가 ${fmt(dist-baseKm>0?dist-baseKm:0,2)}km<br>131m당 131원 · 거리 기준 근사</div>`); }
+  show('taxiRes',`<div class="label">예상 택시요금${sur>1?` (할증 ${Math.round((sur-1)*100)}%)`:''}</div><div class="big" style="color:var(--f1)">${fmt(Math.round(fare/100)*100,0)} 원</div><div class="sub">기본 ${fmt(base,0)}원(${baseKm}km) + 추가 ${fmt(dist-baseKm>0?dist-baseKm:0,2)}km<br>131m당 131원 · 거리 기준 근사</div>`); }
 
 /* ===== 주차요금 ===== */
 function calcParking(){ const min=parseFloat(document.getElementById('pkMin').value); let base=parseFloat(document.getElementById('pkBase').value); if(isNaN(base)||base<0)base=1000; let baseMin=parseFloat(document.getElementById('pkBaseMin').value); if(isNaN(baseMin)||baseMin<0)baseMin=30; let add=parseFloat(document.getElementById('pkAdd').value); if(isNaN(add)||add<0)add=1000; let unit=parseFloat(document.getElementById('pkUnit').value); if(isNaN(unit)||unit<=0)unit=10; const max=parseFloat(document.getElementById('pkMax').value); if(isNaN(min)||min<=0){document.getElementById('pkRes').classList.remove('show');return;}
@@ -3016,12 +3020,12 @@ function calcLeaveplan(){ const D=parseFloat(document.getElementById('lpDays').v
 /* ===== 자동차 총소유비용 TCO ===== */
 function calcCartco(){ const P=parseFloat(document.getElementById('tcPrice').value); let Y=parseFloat(document.getElementById('tcYears').value); if(isNaN(Y)||Y<=0)Y=5; let resid=parseFloat(document.getElementById('tcResid').value); if(isNaN(resid)||resid<0)resid=40;
   const km=parseFloat(document.getElementById('tcKm').value),eff=parseFloat(document.getElementById('tcEff').value),fuelP=parseFloat(document.getElementById('tcFuel').value); let ins=parseFloat(document.getElementById('tcIns').value); if(isNaN(ins)||ins<0)ins=0; let tax=parseFloat(document.getElementById('tcTax').value); if(isNaN(tax)||tax<0)tax=0; let maint=parseFloat(document.getElementById('tcMaint').value); if(isNaN(maint)||maint<0)maint=0;
-  if(isNaN(P)||isNaN(km)||isNaN(eff)||isNaN(fuelP)||P<=0||km<0||eff<=0||fuelP<0){document.getElementById('tcRes').classList.remove('show');return;}
+  if(isNaN(P)||isNaN(km)||isNaN(eff)||isNaN(fuelP)||P<=0||km<0||eff<=0||fuelP<0){document.getElementById('tcoRes').classList.remove('show');return;}
   const residual=P*resid/100; const deprec=P-residual; const fuelYr=km/eff*fuelP;
   const fuelTot=fuelYr*Y, insTot=ins*Y, taxTot=tax*Y, maintTot=maint*Y; const total=deprec+fuelTot+insTot+taxTot+maintTot;
   const perMonth=total/(Y*12); const perKm=km>0?total/(km*Y):0;
   const donut=chartDonut([{label:'감가상각',value:deprec,color:'var(--f4)'},{label:'연료',value:fuelTot,color:'var(--f3)'},{label:'보험',value:insTot,color:'var(--f2)'},{label:'세금',value:taxTot,color:'var(--f5)'},{label:'정비',value:maintTot,color:'var(--f1)'}]);
-  show('tcRes',`<div class="label">${fmt(Y,0)}년 총소유비용 (TCO)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="sub">월 평균 <b>${fmt(Math.round(perMonth),0)}원</b> · km당 <b>${fmt(Math.round(perKm),0)}원</b><br>감가상각 ${fmt(Math.round(deprec),0)}원 (중고 예상가 ${fmt(Math.round(residual),0)}원)<br>연료 ${fmt(Math.round(fuelTot),0)} · 보험 ${fmt(insTot,0)} · 세금 ${fmt(taxTot,0)} · 정비 ${fmt(maintTot,0)}</div>${donut}`); }
+  show('tcoRes',`<div class="label">${fmt(Y,0)}년 총소유비용 (TCO)</div><div class="big" style="color:var(--f3)">${fmt(Math.round(total),0)} 원</div><div class="sub">월 평균 <b>${fmt(Math.round(perMonth),0)}원</b> · km당 <b>${fmt(Math.round(perKm),0)}원</b><br>감가상각 ${fmt(Math.round(deprec),0)}원 (중고 예상가 ${fmt(Math.round(residual),0)}원)<br>연료 ${fmt(Math.round(fuelTot),0)} · 보험 ${fmt(insTot,0)} · 세금 ${fmt(taxTot,0)} · 정비 ${fmt(maintTot,0)}</div>${donut}`); }
 
 /* ===== 연금저축·IRP 세액공제 ===== */
 function calcPensiontax(){ let pen=parseFloat(document.getElementById('ptaxPension').value); if(isNaN(pen)||pen<0)pen=0; let irp=parseFloat(document.getElementById('ptaxIrp').value); if(isNaN(irp)||irp<0)irp=0; const rate=parseFloat(document.getElementById('ptaxIncome').value)/100;
@@ -3099,68 +3103,142 @@ function calcAnniv(){ const v=document.getElementById('anvDate').value; if(!v){d
   const rows=list.slice(0,4).map(([label,dt,left])=>`<div class="ri"><span class="nm">${label} (${dt.getMonth()+1}/${dt.getDate()})</span><span class="vl">${left===0?'오늘! 🎉':'D-'+left}</span></div>`).join('');
   show('anvRes',`<div class="label">함께한 지</div><div class="big" style="color:var(--f1)">${fmt(daysSince,0)}일째</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
-/* ===== 로또 번호 생성 (1~1235회 실제 출현 횟수 내장, 보너스 포함) ===== */
-const LOTTO_FREQ=[203,193,204,198,178,200,203,183,165,192,194,207,211,195,196,200,204,198,193,202,192,167,170,201,176,197,214,183,174,190,203,180,207,210,194,190,200,203,193,196,170,183,202,190,197];
-const LOTTO_R20=[0,3,1,3,0,2,3,2,4,2,5,3,7,2,3,3,1,6,4,3,2,3,2,4,2,1,1,2,3,1,4,2,1,4,2,2,3,4,1,2,3,4,4,5,1];const LOTTO_R20_RANGE="1224~1243";
+/* ===== 로또 엔진 v2 — 근거 기반 (2026.10) =====
+   근거① 1~1244회 번호별 누적 출현(보너스 포함, 합계=회차×7 검증).
+   근거② 전체 8,145,060 조합 전수계산으로 얻은 패턴별 정확 확률(LOTTO_DIST)·전형성 백분위표(LOTTO_TYPQ).
+   근거③ 공정성 χ² 검정(1회 7개 비복원 추첨 보정 ×44/38): 번호별 차이가 우연 범위인지 확인.
+   ※ 모든 조합의 1등 확률은 1/8,145,060으로 같다. 필터·점수는 이 확률을 바꾸지 않는다.
+     근거 있는 개선은 '많이 고르는 조합'을 피해 당첨 시 분할 위험을 낮추는 것뿐이다. */
+const LOTTO_ROUND=1244;
+const LOTTO_FREQ=[204,193,204,198,178,200,203,183,165,192,194,207,212,195,196,200,204,199,193,202,192,167,170,201,177,198,214,183,174,190,203,180,207,211,194,190,200,204,193,196,170,183,202,190,197];
+const LOTTO_R20=[1,3,1,3,0,2,3,2,3,2,5,3,8,2,3,3,1,6,4,3,1,3,2,4,2,2,0,2,3,1,4,2,1,5,2,2,3,5,1,2,3,4,4,4,0];const LOTTO_R20_RANGE="1225~1244";
+const LOTTO_DIST={"T":8145060,"sum":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,3,5,7,11,14,20,26,35,44,58,71,90,110,136,163,199,235,282,331,391,454,532,612,709,811,931,1057,1206,1360,1540,1729,1945,2172,2432,2702,3009,3331,3691,4068,4490,4928,5415,5923,6481,7062,7700,8359,9079,9825,10632,11466,12368,13294,14291,15316,16411,17534,18733,19955,21255,22581,23982,25407,26912,28434,30036,31656,33351,35060,36847,38638,40505,42375,44313,46247,48250,50236,52286,54316,56399,58453,60559,62621,64728,66787,68878,70911,72974,74963,76974,78907,80848,82701,84560,86315,88068,89714,91344,92858,94355,95721,97063,98273,99446,100480,101478,102324,103129,103784,104387,104836,105237,105474,105661,105690,105661,105474,105237,104836,104387,103784,103129,102324,101478,100480,99446,98273,97063,95721,94355,92858,91344,89714,88068,86315,84560,82701,80848,78907,76974,74963,72974,70911,68878,66787,64728,62621,60559,58453,56399,54316,52286,50236,48250,46247,44313,42375,40505,38638,36847,35060,33351,31656,30036,28434,26912,25407,23982,22581,21255,19955,18733,17534,16411,15316,14291,13294,12368,11466,10632,9825,9079,8359,7700,7062,6481,5923,5415,4928,4490,4068,3691,3331,3009,2702,2432,2172,1945,1729,1540,1360,1206,1057,931,811,709,612,532,454,391,331,282,235,199,163,136,110,90,71,58,44,35,26,20,14,11,7,5,3,2,1,1],"odd":[74613,605682,1850695,2727340,2045505,740278,100947],"low":[100947,740278,2045505,2727340,1850695,605682,74613],"ac":[180,858,7873,26292,103461,239998,823318,1148170,2675680,1609174,1510056],"cons":[3838380,3290040,913900,98800,3900,40],"zone":[0,840,249220,2685000,4210000,1000000],"last":[0,0,4480,259400,2124400,4048680,1708100],"bday":[3003,62062,465465,1636180,2863315,2378754,736281]};
+const LOTTO_TYPQ=[-55.3854,-20.9248,-19.0887,-18.0807,-17.3943,-16.8621,-16.4467,-16.1057,-15.817,-15.5783,-15.3643,-15.1817,-15.0102,-14.8505,-14.7037,-14.5669,-14.4421,-14.3278,-14.2226,-14.1199,-14.0269,-13.9381,-13.8553,-13.7714,-13.697,-13.6252,-13.5502,-13.48,-13.4142,-13.3514,-13.2919,-13.2326,-13.1792,-13.1241,-13.0724,-13.0221,-12.972,-12.9241,-12.8767,-12.8311,-12.7865,-12.7423,-12.7015,-12.6577,-12.6153,-12.5739,-12.5351,-12.496,-12.4576,-12.4203,-12.3814,-12.347,-12.306,-12.2673,-12.228,-12.1954,-12.1576,-12.1221,-12.0869,-12.0533,-12.0166,-11.9804,-11.9427,-11.9077,-11.8724,-11.8384,-11.801,-11.7667,-11.7309,-11.6944,-11.6569,-11.6242,-11.589,-11.5542,-11.5169,-11.4835,-11.4411,-11.4025,-11.3616,-11.3262,-11.2848,-11.2483,-11.2106,-11.1757,-11.1335,-11.0871,-11.0459,-10.9974,-10.9462,-10.9035,-10.8522,-10.7982,-10.7496,-10.694,-10.6328,-10.5672,-10.4809,-10.3682,-10.2442,-10.0696,-9.7576];
+const LT_COVERAGE=79.67; /* 필터(합89~187·홀1~5·구간≥3·3연속없음·AC≥6) 통과 조합 비율 = 실제 추첨이 이 범위에 들 확률 */
 function ltBallColor(n){ return n<=10?'#FBC400':n<=20?'#69C8F2':n<=30?'#FF7272':n<=40?'#AAAAAA':'#B0D840'; }
+/* --- χ² 공정성 검정 (정규화 상위 불완전감마) --- */
+function ltGln(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);let s=1.000000000190015;for(const ci of c)s+=ci/++y;return -t+Math.log(2.5066282746310005*s/x);}
+function ltGammq(a,x){ if(x<=0)return 1;
+  if(x<a+1){let ap=a,sum=1/a,del=sum;for(let n=0;n<500;n++){ap++;del*=x/ap;sum+=del;if(Math.abs(del)<Math.abs(sum)*1e-14)break;}return 1-sum*Math.exp(-x+a*Math.log(x)-ltGln(a));}
+  let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<500;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-14)break;}
+  return Math.exp(-x+a*Math.log(x)-ltGln(a))*h; }
+function ltChi(){ const N=45,k=7,E=LOTTO_ROUND*k/N; let s=0; for(const o of LOTTO_FREQ)s+=(o-E)*(o-E)/E; const stat=s*(N-1)/(N-k); return {stat, p:ltGammq(22,stat/2)}; }
+/* --- 추출 가중치: 근거 기반 전략은 균등(모든 번호 동일 확률) --- */
 function ltWeights(strategy){ const mx=Math.max(...LOTTO_FREQ),mn=Math.min(...LOTTO_FREQ);
-  if(strategy==='trend'){ return LOTTO_R20.map(f=>Math.pow(f+1,2.2)); }
+  if(strategy==='trend') return LOTTO_R20.map(f=>Math.pow(f+1,2.2));
   if(strategy==='trendcold'){ const rmx=Math.max(...LOTTO_R20); return LOTTO_R20.map(f=>Math.pow(rmx-f+1,2.2)); }
-  return LOTTO_FREQ.map(f=>{ if(strategy==='random')return 1; if(strategy==='hot')return Math.pow(f-mn+5,2.4); if(strategy==='cold')return Math.pow(mx-f+5,2.4); return f; }); }
+  if(strategy==='hot') return LOTTO_FREQ.map(f=>Math.pow(f-mn+5,2.4));
+  if(strategy==='cold') return LOTTO_FREQ.map(f=>Math.pow(mx-f+5,2.4));
+  return LOTTO_FREQ.map(()=>1); }
 function ltPick(weights,include,exclude){ include=include||[]; exclude=exclude||[];
   let avail=Array.from({length:45},(_,i)=>i).filter(i=>!exclude.includes(i+1)&&!include.includes(i+1)); const chosen=include.slice(0,6); let w=weights.slice();
   for(let k=chosen.length;k<6&&avail.length;k++){ let total=0; for(const i of avail)total+=w[i]; let r=Math.random()*total,pick=avail[0]; for(const i of avail){ r-=w[i]; if(r<=0){pick=i;break;} } chosen.push(pick+1); avail.splice(avail.indexOf(pick),1); }
   return chosen.sort((a,b)=>a-b); }
-function ltValid(nums){ const sum=nums.reduce((a,b)=>a+b,0); if(sum<90||sum>185)return false; const odd=nums.filter(n=>n%2).length; if(odd<1||odd>5)return false; let run=1,mx=1; for(let i=1;i<6;i++){ if(nums[i]===nums[i-1]+1){run++;mx=Math.max(mx,run);}else run=1; } if(mx>2)return false; const dec=new Set(nums.map(n=>Math.floor((n-1)/10))); if(dec.size<3)return false; if(ltAC([...nums].sort((a,b)=>a-b))<7)return false; return true; }
-/* AC값(산술복잡도): 6개 번호 쌍 차이의 서로 다른 개수 − 5. 실제 당첨조합은 대개 7~10 */
+/* AC값(산술복잡도) = 6개 번호 쌍 차이 중 서로 다른 값의 개수 − 5 */
 function ltAC(nums){ const d=new Set(); for(let i=0;i<6;i++)for(let j=i+1;j<6;j++)d.add(Math.abs(nums[i]-nums[j])); return d.size-5; }
-/* 역대 당첨 분포에 얼마나 부합하는지 점수화(고도화 핵심) */
-function ltScore(nums,strategy){ const s=[...nums].sort((a,b)=>a-b); const sum=s.reduce((a,b)=>a+b,0); const odd=s.filter(n=>n%2).length; const low=s.filter(n=>n<=22).length; const ac=ltAC(s);
-  let sc=0;
-  sc += (sum>=100&&sum<=175)?(30-Math.abs(sum-138)/6):-25;          // 합계: 평균 138 부근 최적
-  sc += (odd===3?22:(odd===2||odd===4)?14:(odd===1||odd===5)?4:-10);// 홀짝: 3:3 최적
-  sc += (low===3?16:(low===2||low===4)?10:2);                        // 고저: 3:3 최적
-  sc += Math.min(Math.max(ac,0),10)*3;                              // AC값: 높을수록(≥7) 가점
-  let cons=0; for(let i=1;i<6;i++)if(s[i]===s[i-1]+1)cons++;
-  sc += (cons===0?8:cons===1?11:cons===2?3:-8);                     // 연속: 0~1쌍 최적
-  const dec=new Set(s.map(n=>Math.floor((n-1)/10))).size; sc += dec*3;// 구간 분산
-  const last=new Set(s.map(n=>n%10)); sc += last.size*2;             // 끝수 다양성
-  const favg=s.reduce((a,n)=>a+LOTTO_FREQ[n-1],0)/6;
-  if(strategy==='hot')sc += (favg-193)*0.8; else if(strategy==='cold')sc += (193-favg)*0.8; else sc += (12-Math.abs(favg-193))*0.4;
-  return sc; }
+/* 패턴 특징 (전수계산과 같은 정의) */
+function ltFeat(nums){ const n=[...nums].sort((a,b)=>a-b); let s=0,o=0,l=0,c=0,run=1,mrun=1,bd=0;
+  for(let i=0;i<6;i++){ const v=n[i]; s+=v; if(v%2)o++; if(v<=22)l++; if(v<=31)bd++; if(i){ if(v===n[i-1]+1){c++;run++;mrun=Math.max(mrun,run);} else run=1; } }
+  const z=new Set(n.map(v=>Math.floor((v-1)/10))).size, ld=new Set(n.map(v=>v%10)).size;
+  return {n,s,o,l,ac:ltAC(n),c,mrun,z,ld,bd}; }
+/* 실측 분포 필터 — 통과 범위에 실제 추첨 결과가 들 확률 79.67% (전수계산) */
+function ltValid(nums){ const f=ltFeat(nums); return f.s>=89&&f.s<=187&&f.o>=1&&f.o<=5&&f.z>=3&&f.mrun<=2&&f.ac>=6; }
+/* 전형성: 각 패턴 확률의 로그합 → 전체 조합 대비 백분위(0~100, 클수록 흔한 패턴) */
+function ltTypical(f){ const D=LOTTO_DIST,L=(a,i)=>Math.log(Math.max(a[i],1)/D.T); return L(D.sum,f.s)+L(D.odd,f.o)+L(D.low,f.l)+L(D.ac,f.ac)+L(D.cons,f.c)+L(D.zone,f.z)+L(D.last,f.ld); }
+function ltTypPct(score){ let p=0; for(let i=0;i<=100;i++) if(LOTTO_TYPQ[i]<=score)p=i; return p; }
+function ltProb(arr,i){ return Math.max(arr[i]||0,0)/LOTTO_DIST.T*100; }
+function ltSumCum(s){ let a=0; for(let i=0;i<=s;i++)a+=LOTTO_DIST.sum[i]; return a/LOTTO_DIST.T*100; }
+/* 당첨금 분할 위험: 많은 사람이 고르는 것으로 알려진 패턴 */
+function ltPopular(nums){ const f=ltFeat(nums),n=f.n; let risk=0; const why=[];
+  if(f.bd===6){risk+=35;why.push('6개 모두 1~31(생일·기념일 범위)');} else if(f.bd===5){risk+=12;why.push('5개가 1~31');}
+  const d=[];for(let i=1;i<6;i++)d.push(n[i]-n[i-1]);
+  if(d.every(x=>x===d[0])){risk+=45;why.push('등차수열(간격 '+d[0]+' 일정)');}
+  else{ let best=1,cur=1; for(let i=1;i<d.length;i++){ if(d[i]===d[i-1]){cur++;best=Math.max(best,cur);} else cur=1; } if(best>=3){risk+=18;why.push('4개 이상 같은 간격');} }
+  if(f.mrun>=3){risk+=25;why.push(f.mrun+'연속 번호');}
+  const lastCnt={}; n.forEach(v=>lastCnt[v%10]=(lastCnt[v%10]||0)+1); if(Math.max(...Object.values(lastCnt))>=4){risk+=15;why.push('끝수 4개 이상 같음');}
+  for(let k=3;k<=9;k++) if(n.every(v=>v%k===0)){risk+=25;why.push(k+'의 배수만');break;}
+  const col={},row={}; n.forEach(v=>{col[(v-1)%7]=(col[(v-1)%7]||0)+1; row[Math.floor((v-1)/7)]=(row[Math.floor((v-1)/7)]||0)+1;});
+  if(Math.max(...Object.values(col))>=4){risk+=15;why.push('용지 세로줄 패턴');}
+  if(Math.max(...Object.values(row))>=5){risk+=15;why.push('용지 가로줄 패턴');}
+  const pm=(typeof LOTTO_RECENT_SETS!=='undefined')?ltPastMatch(n):0; const isLast=typeof LOTTO_LAST!=='undefined'&&LOTTO_LAST.nums.every(v=>n.includes(v));
+  if(isLast){risk+=50;why.push('직전 회차 당첨번호 그대로');} else if(pm===6){risk+=50;why.push('최근 당첨 조합 그대로');} else if(pm===5){risk+=20;why.push('최근 당첨 조합과 5개 일치');}
+  risk=Math.min(risk,100); const level=risk<20?['낮음','var(--f1)']:risk<45?['보통','var(--f5)']:['높음','var(--f3)'];
+  return {risk,level,why}; }
+/* 순위 키: 전형성 백분위 − 분할위험 가중 (전략별 가중) */
+function ltRankKey(nums,strategy){ const f=ltFeat(nums), pct=ltTypPct(ltTypical(f)), pop=ltPopular(nums).risk;
+  if(strategy==='avoid') return pct*0.3-2*pop+8*(6-f.bd); /* 32~45(날짜로 고르기 어려운 번호) 비중↑ */
+  return pct-(strategy==='evidence'?0.6:0.3)*pop; }
+/* --- 다게임 최적화 (2026.10) ---
+   ① 게임 간 번호 겹침 최소화: 같은 돈으로 '최소 1게임 5등↑' 확률 최대화 (1등 확률은 게임 수에만 비례)
+   ② 분할위험: 최근 22회 실제 당첨 조합을 그대로/거의 그대로 쓰는 경우까지 감지 */
+const LOTTO_RECENT_SETS=[[16,18,20,32,33,39],[9,18,21,27,44,45],[8,9,19,25,41,42],[4,6,13,17,26,28],[11,14,16,34,41,44],[24,29,30,31,35,44],[12,13,29,34,37,42],[3,8,9,22,28,42],[4,13,14,18,31,38],[12,15,19,22,24,36],[2,7,20,25,37,40],[11,15,19,31,35,43],[6,7,11,15,39,43],[12,18,21,29,34,38],[10,20,23,34,37,40],[2,13,18,32,38,42],[11,13,22,32,33,36],[11,13,19,20,31,44],[7,13,16,23,24,43],[2,4,10,16,31,41],[9,18,24,38,43,44],[1,13,18,26,34,38]]; /* 1223~1244회, 교차확인 */
+const LT_P_ANY=194130/8145060; /* 1게임이 5등 이상일 정확 확률 2.383% */
+function ltPastMatch(nums){ let best=0; for(const s of LOTTO_RECENT_SETS){ const c=s.filter(v=>nums.includes(v)).length; if(c>best)best=c; } return best; }
+/* 겹침 최소 그리디: 이미 쓴 번호는 거의 뽑히지 않게 하고, 필터 통과 조합 중 겹침이 가장 적은 것을 채택 */
+function ltSpread(strat,N,include,exclude,relaxed){ const base=ltWeights(strat), used=new Set(), out=[], fixed=new Set(include);
+  for(let g=0;g<N;g++){ const w=base.map((x,i)=>used.has(i+1)&&!fixed.has(i+1)?x*1e-3:x); let best=null,bk=null,anyB=null,anyK=null;
+    for(let t=0;t<1500;t++){ const n=ltPick(w,include,exclude); if(n.length<6)break; if(out.some(s=>s.join()===n.join()))continue;
+      const ov=n.filter(v=>used.has(v)&&!fixed.has(v)).length, k=[ov,-ltRankKey(n,strat)];
+      if(!anyB||k[0]<anyK[0]||(k[0]===anyK[0]&&k[1]<anyK[1])){anyB=n;anyK=k;}
+      if(!relaxed&&!ltValid(n))continue; if(!best||k[0]<bk[0]||(k[0]===bk[0]&&k[1]<bk[1])){best=n;bk=k;} }
+    /* 겹침(실제 확률에 영향) 우선, 필터(확률 무관)는 겹침이 같을 때만 반영 */
+    const pick=(best&&bk[0]<=anyK[0])?best:anyB; if(!pick)break; out.push(pick); pick.forEach(v=>used.add(v)); }
+  return out; }
+/* 몬테카를로: 여러 게임 묶음들의 '최소 1게임 5등↑' 확률 — 같은 모의추첨으로 동시에 채점해 비교 잡음 제거 */
+function ltMultiProbs(groups,T){ T=T||100000; const mark=new Uint8Array(46),p=new Uint8Array(45),hit=groups.map(()=>0);
+  for(let t=0;t<T;t++){ for(let i=0;i<45;i++)p[i]=i+1; for(let i=0;i<6;i++){ const j=i+Math.floor(Math.random()*(45-i)); const x=p[i]; p[i]=p[j]; p[j]=x; mark[p[i]]=1; }
+    for(let g=0;g<groups.length;g++){ for(const s of groups[g]){ let c=0; for(const v of s)c+=mark[v]; if(c>=3){hit[g]++;break;} } }
+    for(let i=0;i<6;i++)mark[p[i]]=0; }
+  return hit.map(x=>x/T); }
+function ltMultiProb(sets,T){ return ltMultiProbs([sets],T)[0]; }
+function ltOverlapInfo(sets){ const distinct=new Set(sets.flat()).size; let maxPair=0,pairs=0;
+  for(let i=0;i<sets.length;i++)for(let j=i+1;j<sets.length;j++){ const c=sets[i].filter(v=>sets[j].includes(v)).length; if(c>maxPair)maxPair=c; if(c>0)pairs++; }
+  return {distinct,maxPair,pairs,ideal:Math.min(6*sets.length,45)}; }
 /* 추천/진단 탭 전환 */
-let _lastGen=null;
+let _lastGen=null, _lastGenAll=null;
 function ltMode(m){ document.querySelectorAll('#v-lotto .lt-seg button').forEach(b=>b.classList.toggle('on',b.dataset.lt===m)); document.getElementById('ltGen').style.display=m==='gen'?'':'none'; document.getElementById('ltCheck').style.display=m==='check'?'':'none'; }
-function ltFillFromGen(){ if(!_lastGen){ toast('먼저 번호를 추천받아 주세요'); ltMode('gen'); return; } document.getElementById('lcNums').value=_lastGen.join(', '); calcLottocheck(); }
+function ltFillFromGen(){ if(!_lastGenAll){ toast('먼저 번호를 추천받아 주세요'); ltMode('gen'); return; } document.getElementById('lcNums').value=_lastGenAll.map(g=>g.join(', ')).join('\n'); calcLottocheck(); }
 /* 로또 회차 자동 안내 (매주 토 20:35 추첨) */
-function lottoRound(){ const anchorRound=1243; const anchorDraw=new Date('2026-09-26T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
+function lottoRound(){ const anchorRound=1244; const anchorDraw=new Date('2026-10-03T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
   const done=anchorRound+Math.max(0,Math.floor((now-anchorDraw)/week)); const nextRound=done+1;
   let nextDraw=anchorDraw; while(nextDraw<=now)nextDraw+=week; const dday=Math.ceil((nextDraw-now)/86400000); const nd=new Date(nextDraw);
   const wd=['일','월','화','수','목','금','토'][nd.getDay()];
   return {next:nextRound, date:`${nd.getMonth()+1}/${nd.getDate()}(${wd})`, dday}; }
-const LOTTO_LAST={round:1243, nums:[9,18,24,38,43,44], bonus:35, date:'2026.9.26'};
-function renderLottoBanner(){ const el=document.getElementById('ltRoundBanner'); if(!el)return; const r=lottoRound();
-  const L=LOTTO_LAST; const ball=n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:12px;margin:0 1px">${n}</span>`;
+const LOTTO_LAST={round:1244, nums:[1,13,18,26,34,38], bonus:25, date:'2026.10.3'};
+function ltBall(n,sz){ sz=sz||34; return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${sz}px;height:${sz}px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:${Math.round(sz*0.41)}px;margin:0 1px;box-shadow:0 2px 5px rgba(0,0,0,.15)">${n}</span>`; }
+function renderLottoBanner(){ const el=document.getElementById('ltRoundBanner'); if(!el)return; const r=lottoRound(), L=LOTTO_LAST, X=ltChi();
   el.innerHTML=`<div class="ltb-row"><span class="ltb-badge">🔔 다음 추첨</span><b>제 ${r.next}회</b> · ${r.date} 20:35 · <span class="ltb-dday">D-${r.dday}</span></div>`+
-    `<div class="ltb-last">🏆 <b>${L.round}회</b> (${L.date}) ${L.nums.map(ball).join('')} <span style="color:var(--muted);font-size:11px">+ 보너스</span> ${ball(L.bonus)}</div>`+
-    `<div class="ltb-sub">📊 통계 반영: 1~${L.round}회(${L.date}) · 매주 갱신</div>`; }
+    `<div class="ltb-last">🏆 <b>${L.round}회</b> (${L.date}) ${L.nums.map(n=>ltBall(n,26)).join('')} <span style="color:var(--muted);font-size:11px">+ 보너스</span> ${ltBall(L.bonus,26)}</div>`+
+    `<div class="ltb-sub">🧪 공정성 검정(1~${L.round}회): χ²=${X.stat.toFixed(1)}, p=${X.p.toFixed(2)} → 번호별 출현 차이는 <b>우연 범위</b>${X.p<0.05?' (주의: 유의한 편차)':''}</div>`+
+    `<div class="ltb-sub">📊 통계 반영: 1~${L.round}회(${L.date}) · 전체 8,145,060조합 전수계산 분포</div>`; }
 function calcLotto(){ const strat=document.getElementById('ltStrategy').value; const games=parseInt(document.getElementById('ltGames').value,10); const weights=ltWeights(strat);
+  const spreadOn=!document.getElementById('ltSpreadChk')||document.getElementById('ltSpreadChk').checked;
   const parseNums=id=>{const el=document.getElementById(id); if(!el)return[]; return [...new Set((el.value.match(/\d+/g)||[]).map(Number).filter(n=>n>=1&&n<=45))];};
   let include=parseNums('ltInclude'), exclude=parseNums('ltExclude'); include=include.filter(n=>!exclude.includes(n));
   if(include.length>6){ show('ltRes','<div class="big">고정수는 최대 6개까지예요</div>',true); return; }
   if(45-exclude.length<6){ show('ltRes','<div class="big">제외수가 너무 많아요</div>',true); return; }
   const relaxed=include.length>=3||(45-exclude.length)<20;
-  const pool=[]; const seen=new Set();
-  for(let t=0;t<1500&&pool.length<400;t++){ const n=ltPick(weights,include,exclude); if(n.length<6)break; if(!relaxed&&!ltValid(n))continue; const key=n.join(','); if(seen.has(key))continue; seen.add(key); pool.push({n,score:ltScore(n,strat)}); }
-  pool.sort((a,b)=>b.score-a.score);
-  const sets=pool.slice(0,games).map(p=>p.n); let guard=0; while(sets.length<games&&guard++<2000){ const n=ltPick(weights,include,exclude); if(n.length===6)sets.push(n); }
-  _lastGen=sets[0]?[...sets[0]]:null;
-  const labels='ABCDEFGHIJ'; const rows=sets.map((s,i)=>{ const sum=s.reduce((a,b)=>a+b,0); const odd=s.filter(n=>n%2).length; const ac=ltAC([...s].sort((a,b)=>a-b)); const zone=[0,0,0,0,0]; s.forEach(n=>zone[Math.floor((n-1)/10)]++);
-    return `<div style="display:flex;align-items:center;gap:8px;margin:9px 0;flex-wrap:wrap"><span style="font-weight:800;color:var(--muted);width:18px">${labels[i]}</span>${s.map(n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:14px;box-shadow:0 2px 5px rgba(0,0,0,.15)">${n}</span>`).join('')}<span style="font-size:11px;color:var(--muted);margin-left:2px">합 ${sum}·홀${odd}·AC${ac}·구간 ${zone.filter(z=>z>0).length}</span></div>`; }).join('');
-  const avgScore=Math.round(sets.reduce((a,s)=>a+ltScore(s,strat),0)/sets.length);
-  const order=LOTTO_FREQ.map((f,i)=>[i+1,f]); const hot=order.slice().sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]); const cold=order.slice().sort((a,b)=>a[1]-b[1]).slice(0,5).map(x=>x[0]);
-  const stratName={balance:'빈도 균형',hot:'핫 넘버',cold:'콜드 넘버',trend:'최근 트렌드(20회 핫)',trendcold:'최근 미출현(20회 콜드)'}[strat];
-  show('ltRes',`<div class="label">${stratName} · ${games}게임 <span style="font-size:11px;color:var(--muted)">(당첨패턴 점수 상위 채택)</span></div>${rows}<div class="sub" style="margin-top:12px">🎯 평균 패턴점수 <b>${avgScore}</b> · 모두 AC 7↑·합 100~175 조건 통과<br>🔥 최다 출현 TOP5: <b>${hot.join(', ')}</b><br>❄️ 최소 출현 BOTTOM5: <b>${cold.join(', ')}</b><br><span style="font-size:11px">1~1243회(2026.9.26) 누적 · 합계·홀짝·고저·AC값(산술복잡도)을 역대 당첨 분포에 맞춰 최적화했어요.</span></div>`); }
+  let sets;
+  if(spreadOn){ sets=ltSpread(strat,games,include,exclude,relaxed); }
+  else{ const pool=[]; const seen=new Set();
+    for(let t=0;t<2000&&pool.length<500;t++){ const n=ltPick(weights,include,exclude); if(n.length<6)break; if(!relaxed&&!ltValid(n))continue; const key=n.join(','); if(seen.has(key))continue; seen.add(key); pool.push({n,key:ltRankKey(n,strat)}); }
+    pool.sort((a,b)=>b.key-a.key); sets=pool.slice(0,games).map(p=>p.n); }
+  if(!sets.length){ show('ltRes','<div class="big">조건에 맞는 조합을 만들지 못했어요</div><div class="sub">고정수·제외수를 줄여 보세요.</div>',true); return; }
+  _lastGen=[...sets[0]]; _lastGenAll=sets.map(s=>[...s]);
+  const labels='ABCDEFGHIJ'; let passCnt=0, lowRisk=0;
+  const rows=sets.map((s,i)=>{ const f=ltFeat(s), pct=ltTypPct(ltTypical(f)), P=ltPopular(s); if(ltValid(s))passCnt++; if(P.risk<20)lowRisk++;
+    return `<div style="display:flex;align-items:center;gap:8px;margin:9px 0;flex-wrap:wrap"><span style="font-weight:800;color:var(--muted);width:18px">${labels[i]}</span>${s.map(n=>ltBall(n)).join('')}<span style="font-size:11px;color:var(--muted);margin-left:2px">합 ${f.s}·홀${f.o}·AC${f.ac}·구간${f.z} · <span style="white-space:nowrap">전형성 상위 ${100-pct}%</span> · <span style="white-space:nowrap">분할위험 <b style="color:${P.level[1]}">${P.level[0]}</b></span></span></div>`; }).join('');
+  const N=sets.length, O=ltOverlapInfo(sets), pMy=ltMultiProb(sets,100000), pRand=1-Math.pow(1-LT_P_ANY,N);
+  const X=ltChi(); const order=LOTTO_FREQ.map((f,i)=>[i+1,f]); const hot=order.slice().sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]); const cold=order.slice().sort((a,b)=>a[1]-b[1]).slice(0,5).map(x=>x[0]);
+  const stratName={evidence:'근거 기반',avoid:'분할 회피',hot:'재미용·전체 핫',cold:'재미용·전체 콜드',trend:'재미용·최근 20회 핫',trendcold:'재미용·최근 20회 콜드'}[strat]||strat;
+  const fun=['hot','cold','trend','trendcold'].includes(strat);
+  const probCard=N>1?`<div class="lt-prob"><div class="lt-prob-h">🎯 이 ${N}게임으로 <b>최소 1게임 5등 이상</b> 당첨될 확률</div><div class="lt-prob-v">${(pMy*100).toFixed(2)}%</div><div class="lt-prob-s">아무렇게나 ${N}게임: ${(pRand*100).toFixed(2)}% · 서로 다른 번호 <b>${O.distinct}/${O.ideal}개</b>${O.maxPair?` · 최대 ${O.maxPair}개 겹침`:' · 겹침 없음'}<br>1등 확률은 ${N}/8,145,060으로 조합과 무관해요. 겹침을 줄이면 '하나라도 맞을' 확률만 올라가요 (모의추첨 10만 회).</div></div>`:'';
+  show('ltRes',`<div class="label">${stratName} · ${N}게임${spreadOn&&N>1?' · 겹침 최소화':''}</div>${rows}${probCard}<div class="sub" style="margin-top:12px">`+
+    (N<games?`ℹ️ 고정수 조건 때문에 서로 다른 조합을 ${N}게임까지만 만들 수 있었어요.<br>`:'')+
+    `✅ ${passCnt}/${N}게임이 실측 분포 필터 통과 — 실제 추첨 결과의 <b>${LT_COVERAGE}%</b>가 들어오는 범위(전수계산)<br>`+
+    `🛡️ 분할위험 '낮음' ${lowRisk}/${N}게임 — 당첨 시 1등을 여럿이 나눌 위험이 작은 조합<br>`+
+    `🧪 번호별 출현 차이 χ²=${X.stat.toFixed(1)}, p=${X.p.toFixed(2)} → 핫·콜드 번호는 <b>통계적 근거 없음</b>${fun?' (지금 고른 전략은 재미용이에요)':''}<br>`+
+    `<span style="font-size:11px">참고 · 누적 최다 ${hot.join(', ')} / 최소 ${cold.join(', ')} (1~${LOTTO_ROUND}회). 1,000원당 평균 회수액은 약 500원(당첨금 비율 50%)이에요.</span></div>`); }
 
 /* ===== 위탁·매입 마진 ===== */
 let mgCur='buy';
@@ -3194,29 +3272,50 @@ function calcTravelbudget(){ fillTravel(); const budget=parseFloat(document.getE
   const name=FXRATES[cur][0];
   show('tbRes',`<div class="label">환전 예산 (${name})</div><div class="big" style="color:var(--f1)">${fmt(local, local<100?2:0)} ${cur}</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">적용 환율</span><span class="vl">1 ${cur} = ${fmt(unit,2)}원</span></div>${perDay!=null?`<div class="ri"><span class="nm">하루 예산 (${fmt(days,0)}일)</span><span class="vl">${fmt(perDay,perDay<100?2:0)} ${cur}</span></div><div class="ri"><span class="nm">하루 예산(원)</span><span class="vl">${fmt(Math.round(perDayKrw),0)}원</span></div>`:''}</div><div class="sub">실제 환전 시 스프레드로 약 1~2% 적게 받을 수 있어요.</div>`); }
 
-/* ===== 내 로또번호 진단 ===== */
-function calcLottocheck(){ const raw=document.getElementById('lcNums').value; const nums=(raw.match(/\d+/g)||[]).map(Number);
-  const box=document.getElementById('lcRes');
-  if(nums.length!==6){ if(raw.trim())show('lcRes','<div class="big">번호 6개를 입력하세요</div><div class="sub">1~45 사이 서로 다른 6개</div>',true); else box.classList.remove('show'); return; }
-  if(nums.some(n=>n<1||n>45)||new Set(nums).size!==6){ show('lcRes','<div class="big">1~45의 서로 다른 6개여야 해요</div>',true); return; }
-  const s=[...nums].sort((a,b)=>a-b); const sum=s.reduce((a,b)=>a+b,0); const odd=s.filter(n=>n%2).length; const low=s.filter(n=>n<=22).length; const ac=ltAC(s);
-  let cons=0; for(let i=1;i<6;i++)if(s[i]===s[i-1]+1)cons++; const dec=new Set(s.map(n=>Math.floor((n-1)/10))).size; const last=new Set(s.map(n=>n%10)).size;
-  // 항목별 점수(0~100 환산)
-  const items=[
-    ['합계',(sum>=100&&sum<=175)?100-Math.abs(sum-138)/0.75:Math.max(0,40-Math.abs(sum-138)/2), sum>=100&&sum<=175?`${sum} (이상적 범위)`:`${sum} (100~175 벗어남)`],
-    ['홀짝 균형',odd===3?100:(odd===2||odd===4)?75:(odd===1||odd===5)?35:0, `홀 ${odd} : 짝 ${6-odd}`],
-    ['고저 균형',low===3?100:(low===2||low===4)?75:40, `저 ${low} : 고 ${6-low}`],
-    ['AC값(복잡도)',Math.min(ac,10)*10, `${ac} ${ac>=7?'(양호)':'(낮음)'}`],
-    ['연속수',cons===0?90:cons===1?100:cons===2?55:15, `${cons}쌍`],
-    ['구간 분산',dec>=4?100:dec===3?80:dec===2?45:15, `${dec}개 구간`]
-  ];
-  const total=Math.round(items.reduce((a,i)=>a+i[1],0)/items.length);
-  const grade=total>=85?['S','var(--f1)','역대 당첨 패턴과 매우 유사해요! 🎯']:total>=70?['A','var(--f2)','흔한 당첨 패턴에 잘 맞아요 👍']:total>=55?['B','var(--f5)','무난하지만 조금 치우쳤어요']:total>=40?['C','var(--f3)','다소 치우친 조합이에요']:['D','var(--f3)','통계적으로 드문 조합이에요'];
-  const rows=items.map(([nm,sc,desc])=>`<div class="ri"><span class="nm">${nm} <span style="color:var(--muted);font-size:11px">${desc}</span></span><span class="vl">${Math.round(sc)}점</span></div>`).join('');
-  // 최근 20회 트렌드 대비 적중: 내 번호 중 최근 20회에 1번 이상 출현한 개수
-  const recentHits=s.filter(n=>(typeof LOTTO_R20!=='undefined')&&LOTTO_R20[n-1]>0); const rangeTxt=(typeof LOTTO_R20_RANGE!=='undefined')?LOTTO_R20_RANGE:'';
-  const trendRow=`<div class="ri"><span class="nm">최근 20회(${rangeTxt}) 등장 번호</span><span class="vl">${recentHits.length}/6개 ${recentHits.length?'('+recentHits.join(',')+')':''}</span></div>`;
-  show('lcRes',`<div class="label">내 번호 패턴 진단</div><div class="big" style="color:${grade[1]}">${total}점 · ${grade[0]}등급</div><div style="margin:6px 0 4px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${s.map(n=>`<span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:13px">${n}</span>`).join('')}</div><div class="rowlist" style="margin-top:10px">${rows}${trendRow}</div><div class="sub">${grade[2]}<br><span style="font-size:11px">점수가 높아도 당첨 확률(1/8,145,060)은 모든 조합이 동일해요. 치우침·최근 트렌드 확인용이에요.</span></div>`); }
+/* ===== 내 로또번호 진단 (근거 기반) ===== */
+function calcLottocheck(){ const raw=document.getElementById('lcNums').value;
+  const G=ltParseGames(raw); if(G.lines>=2){ if(G.bad.length){ show('ltcRes',`<div class="big">${G.bad.join(', ')}번째 줄을 확인해 주세요</div><div class="sub">한 줄에 1~45 사이 서로 다른 6개씩 입력해요.</div>`,true); return; } if(G.games.length>20){ show('ltcRes','<div class="big">한 번에 20게임까지 진단할 수 있어요</div>',true); return; } calcLottoMulti(G.games); return; }
+  const nums=(raw.match(/\d+/g)||[]).map(Number);
+  const box=document.getElementById('ltcRes');
+  if(nums.length!==6){ if(raw.trim())show('ltcRes','<div class="big">번호 6개를 입력하세요</div><div class="sub">1~45 사이 서로 다른 6개</div>',true); else box.classList.remove('show'); return; }
+  if(nums.some(n=>n<1||n>45)||new Set(nums).size!==6){ show('ltcRes','<div class="big">1~45의 서로 다른 6개여야 해요</div>',true); return; }
+  const f=ltFeat(nums), D=LOTTO_DIST, pct=ltTypPct(ltTypical(f)), P=ltPopular(nums), ok=ltValid(nums);
+  const pr=(a,i)=>ltProb(a,i).toFixed(1)+'%';
+  const sumCum=ltSumCum(f.s);
+  const typLabel=pct>=75?['매우 흔한 패턴','var(--f1)']:pct>=40?['흔한 패턴','var(--f2)']:pct>=15?['보통 패턴','var(--f5)']:pct>=3?['드문 패턴','var(--f3)']:['매우 드문 패턴','var(--f3)'];
+  const rows=[
+    ['합계',`${f.s} · 전체의 ${sumCum.toFixed(1)}%가 이 값 이하`],
+    ['홀짝',`홀${f.o}:짝${6-f.o} · 이 비율이 나올 확률 ${pr(D.odd,f.o)}`],
+    ['고저(1~22 / 23~45)',`저${f.l}:고${6-f.l} · 확률 ${pr(D.low,f.l)}`],
+    ['AC값(복잡도)',`${f.ac} · 확률 ${pr(D.ac,f.ac)}`],
+    ['연속 쌍',`${f.c}쌍 · 확률 ${pr(D.cons,f.c)}`],
+    ['구간 분산',`${f.z}개 구간 · 확률 ${pr(D.zone,f.z)}`],
+    ['끝수 종류',`${f.ld}종 · 확률 ${pr(D.last,f.ld)}`]
+  ].map(([nm,v])=>`<div class="ri"><span class="nm">${nm}</span><span class="vl" style="font-size:12.5px">${v}</span></div>`).join('');
+  const recentHits=f.n.filter(n=>LOTTO_R20[n-1]>0);
+  const extra=`<div class="ri"><span class="nm">실측 분포 필터</span><span class="vl">${ok?'통과 ✓':'범위 밖'} <span style="color:var(--muted);font-size:11px">(실제 추첨의 ${LT_COVERAGE}%가 통과)</span></span></div>`+
+    `<div class="ri"><span class="nm">최근 20회(${LOTTO_R20_RANGE}) 등장 번호</span><span class="vl">${recentHits.length}/6개${recentHits.length?' ('+recentHits.join(',')+')':''}</span></div>`+
+    `<div class="ri"><span class="nm">당첨금 분할 위험</span><span class="vl" style="color:${P.level[1]}"><b>${P.level[0]}</b> (${P.risk}점)</span></div>`;
+  show('ltcRes',`<div class="label">내 번호 근거 기반 진단</div><div class="big" style="color:${typLabel[1]}">${typLabel[0]} · 전형성 상위 ${100-pct}%</div><div style="margin:6px 0 4px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center">${f.n.map(n=>ltBall(n,32)).join('')}</div><div class="rowlist" style="margin-top:10px">${rows}${extra}</div><div class="sub">${P.why.length?'⚠️ 분할위험 요인: '+P.why.join(' · ')+'<br>':'🛡️ 많이 고르는 패턴이 없어 분할 위험이 낮아요.<br>'}<span style="font-size:11px">확률은 전체 8,145,060조합 전수계산 값이에요. 이 조합의 1등 확률도 1/8,145,060으로 다른 조합과 같아요 — 전형성은 '얼마나 흔한 모양인가', 분할위험은 '당첨 시 나눠 받을 가능성'을 뜻해요.</span></div>`); }
+
+/* 여러 게임 진단: 한 줄에 한 게임 */
+function ltParseGames(raw){ const segs=raw.split(/\n|;|\//).map(x=>x.trim()).filter(Boolean); const games=[],bad=[];
+  segs.forEach((seg,i)=>{ const n=(seg.match(/\d+/g)||[]).map(Number); if(n.length===6&&n.every(v=>v>=1&&v<=45)&&new Set(n).size===6)games.push(n.sort((a,b)=>a-b)); else bad.push(i+1); });
+  return {games,bad,lines:segs.length}; }
+function calcLottoMulti(games){ const N=games.length, O=ltOverlapInfo(games), pRand=1-Math.pow(1-LT_P_ANY,N);
+  const ideal=ltSpread('evidence',N,[],[],false); const pr=ltMultiProbs([games,ideal],100000); const pMy=pr[0];
+  /* 완전히 안 겹치는 묶음은 대칭성으로 확률이 정확히 같다 → 겹침 0이면 손해 0 */
+  const noOverlap=O.distinct===6*N; const pIdeal=noOverlap?pMy:Math.max(pr[1],pMy); const labels='ABCDEFGHIJKLMNOPQRST';
+  let highRisk=0;
+  const rows=games.map((s,i)=>{ const P=ltPopular(s); if(P.risk>=45)highRisk++;
+    const ov=games.map((t,j)=>j===i?0:t.filter(v=>s.includes(v)).length); const mx=Math.max(...ov);
+    return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0;flex-wrap:wrap"><span style="font-weight:800;color:var(--muted);width:18px">${labels[i]}</span>${s.map(n=>ltBall(n,28)).join('')}<span style="font-size:11px;color:var(--muted)"><span style="white-space:nowrap">다른 게임과 최대 ${mx}개 겹침</span> · <span style="white-space:nowrap">분할위험 <b style="color:${P.level[1]}">${P.level[0]}</b></span>${P.why.length?' ('+P.why.join(', ')+')':''}</span></div>`; }).join('');
+  const loss=noOverlap?0:(pIdeal-pMy)*100;
+  const verdict=loss>=1?['⚠️ 게임끼리 번호가 많이 겹쳐요','var(--f3)']:loss>=0.3?['조금 겹쳐요','var(--f5)']:['👍 거의 겹치지 않아요','var(--f1)'];
+  show('ltcRes',`<div class="label">여러 게임 진단 · ${N}게임</div><div class="big" style="color:${verdict[1]}">${verdict[0]}</div>${rows}`+
+    `<div class="lt-prob"><div class="lt-prob-h">🎯 최소 1게임 5등 이상 당첨 확률</div><div class="lt-prob-v">${(pMy*100).toFixed(2)}%</div>`+
+    `<div class="lt-prob-s">겹침 없이 고르면: <b>${(pIdeal*100).toFixed(2)}%</b> · 아무렇게나: ${(pRand*100).toFixed(2)}%<br>서로 다른 번호 ${O.distinct}/${O.ideal}개 · 겹치는 게임 쌍 ${O.pairs}개 · 최대 ${O.maxPair}개 겹침</div></div>`+
+    `<div class="sub">${loss>=0.3?`같은 금액으로 '하나라도 맞을' 확률을 약 <b>${loss.toFixed(1)}%p</b> 손해 보고 있어요. 번호 추천 탭의 '겹침 최소화'를 쓰면 이 손해를 없앨 수 있어요.<br>`:''}${highRisk?`분할위험 '높음' 게임이 ${highRisk}개 있어요 — 당첨돼도 여럿이 나눠 받을 가능성이 커요.<br>`:''}<span style="font-size:11px">1등 확률은 ${N}/8,145,060으로 번호 선택과 무관해요. 확률은 모의추첨 10만 회 값이라 ±0.2%p 정도 차이가 날 수 있어요.</span></div>`); }
 
 /* ===== 퇴직연금 예상 (DC/DB) ===== */
 let rpCur='dc';
@@ -3317,6 +3416,7 @@ function reportExport(){ if(!report.length)return; const esc=s=>String(s).replac
 
 /* ===== 업데이트 내역 ===== */
 const CHANGELOG=[
+  ['2026.10','🎯 다게임 겹침 최소화: 같은 금액으로 최소 1게임 당첨 확률↑ (5게임 11.0%→11.8%, 확률 표시)','🧾 진단 탭 여러 게임 모드: 겹침·손해 확률 진단','🔧 결과가 안 보이던 8종 수정 (인생시계·페이스·육아휴직·학자금·적금표·택시·장바구니·로또 진단 — 화면 id 중복)','🛡️ 분할위험에 최근 22회 당첨 조합 재사용 감지 추가 · 기본 전략=분할 회피','🍀 로또 1244회(10.3) 최신화','🧮 근거 기반 엔진: 8,145,060조합 전수계산 분포로 필터 재설정(커버리지 71.8%→79.7%)','🧪 공정성 χ² 검정 표시(p=0.68: 핫·콜드 차이는 우연 범위)','🛡️ 당첨금 분할 위험 진단·회피 전략 추가','🎰 진단: 패턴별 정확 확률·전형성 백분위 표시'],
   ['2026.09','🍀 로또 1243회(9.26) 최신화 + 최근 20회 트렌드 + 고정수·제외수 + 최근 당첨번호','🩺 건보 피부양자 판정·🏠 청약 가점·🛡️ 예금자보호·🎁 고향사랑기부 계산기','🎰 로또 진단에 최근 20회 트렌드 적중 지표','📊 결과 리포트 이미지에 금액 막대그래프 추가','⌨️ 단축키·🏬 배경·📱 모바일 정렬·🏦 퇴직연금·📆 영업일'],
   ['2026.08','📈 주식 평단가(물타기)·✈️ 여행 환전 예산 추가','🧾 연말정산 종합·ISA 절세·월세 세액공제','💱 실시간 환율 자동 연동(ECB)','🏬 백화점 배경 고도화·📱 모바일 최적화'],
   ['2026.07','🛒 위탁·매입 마진(플랫폼·관세 반영)','🔑 전월세 전환·🎯 목표 매도가·⚖️ 손익분기점·🎓 학점·💕 기념일','👥 방문자(누적·오늘·현재접속) 정밀 집계','📱 QR 결과 공유'],
@@ -3324,7 +3424,7 @@ const CHANGELOG=[
 ];
 function showChangelog(){ let ov=document.getElementById('clModal'); if(!ov){ ov=document.createElement('div'); ov.id='clModal'; ov.className='qr-modal'; ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show');}; document.body.appendChild(ov); }
   const body=CHANGELOG.map(g=>`<div class="cl-group"><div class="cl-ver">${g[0]}</div>${g.slice(1).map(x=>`<div class="cl-item">${x}</div>`).join('')}</div>`).join('');
-  ov.innerHTML=`<div class="qr-box" style="max-width:380px;text-align:left"><button class="qr-x" onclick="document.getElementById('clModal').classList.remove('show')">✕</button><div class="qr-title" style="text-align:center">🆕 업데이트 내역</div><div class="cl-list">${body}</div><div class="sub" style="text-align:center;margin-top:6px">총 126종 · 매주 로또·매년 세율 최신화</div></div>`;
+  ov.innerHTML=`<div class="qr-box" style="max-width:380px;text-align:left"><button class="qr-x" onclick="document.getElementById('clModal').classList.remove('show')">✕</button><div class="qr-title" style="text-align:center">🆕 업데이트 내역</div><div class="cl-list">${body}</div><div class="sub" style="text-align:center;margin-top:6px">총 129종 · 매주 로또·매년 세율 최신화</div></div>`;
   ov.classList.add('show'); }
 
 /* ===== 키보드 단축키 ===== */
