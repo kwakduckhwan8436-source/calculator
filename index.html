@@ -647,7 +647,7 @@ select{cursor:pointer;}
       <div class="seg"><button class="on" data-jm="toWol" onclick="jeonseMode('toWol')">전세→월세</button><button data-jm="toJeon" onclick="jeonseMode('toJeon')">월세→전세</button></div>
       <div id="jsToWol"><div class="field"><label>전세 보증금(전환할 금액, 원)</label><input type="number" id="jsAmt" placeholder="예: 100000000" oninput="calcJeonse()"></div></div>
       <div id="jsToJeon" style="display:none"><div class="grid2"><div class="field"><label>월세(원)</label><input type="number" id="jsWol" placeholder="예: 500000" oninput="calcJeonse()"></div><div class="field"><label>보증금(원)</label><input type="number" id="jsDep" placeholder="예: 10000000" oninput="calcJeonse()"></div></div></div>
-      <div class="field"><label>전월세 전환율(%)</label><input type="number" id="jsRate" placeholder="예: 5.5" oninput="calcJeonse()"></div><div class="result" id="jsRes"></div>
+      <div class="field"><label>전월세 전환율(%)</label><input type="number" id="jsRate" placeholder="예: 5.0 (법정 상한)" oninput="calcJeonse()"></div><div class="result" id="jsRes"></div>
       <p class="hint">월세 = (보증금 차액) × 전환율 ÷ 12. 반대로 월세를 전세로 환산할 수도 있어요.</p></div></section>
 
     <section class="view" id="v-severance" data-floor="2"><div class="panel">
@@ -883,7 +883,7 @@ select{cursor:pointer;}
     <!-- 4대보험 -->
     <section class="view" id="v-insurance" data-floor="2"><div class="panel">
       <div class="field"><label>월 급여(보수월액, 원)</label><input type="number" id="insSal" placeholder="예: 3000000" oninput="calcInsurance()"></div>
-      <div class="result" id="insRes"></div><p class="hint">근로자 부담분(2024년 요율): 국민연금 4.5%·건강보험 3.545%·장기요양(건보의 12.95%)·고용보험 0.9%. 회사도 같은 몫을 부담해요. 요율은 매년 바뀌는 <b>참고용</b>이에요.</p></div></section>
+      <div class="result" id="insRes"></div><p class="hint">근로자 부담분(2026년 요율): 국민연금 4.75%(기준소득월액 41만~659만원)·건강보험 3.595%·장기요양(건보의 13.14%)·고용보험 0.9%. 공단 방식대로 10원 미만은 절사해요. 회사도 같은 몫(고용보험은 규모별 추가)을 부담해요.</p></div></section>
 
     <!-- 대출한도 LTV·DSR -->
     <section class="view" id="v-loanlimit" data-floor="2"><div class="panel">
@@ -897,7 +897,7 @@ select{cursor:pointer;}
     <section class="view" id="v-unemploy" data-floor="2"><div class="panel">
       <div class="field"><label>이직 전 1일 평균임금(원)</label><input type="number" id="unWage" placeholder="예: 100000" oninput="calcUnemploy()"></div>
       <div class="grid2"><div class="field"><label>나이(만)</label><input type="number" id="unAge" placeholder="예: 35" oninput="calcUnemploy()"></div><div class="field"><label>고용보험 가입기간(년)</label><input type="number" id="unYear" placeholder="예: 4" oninput="calcUnemploy()"></div></div>
-      <div class="result" id="unRes"></div><p class="hint">1일 구직급여=평균임금의 60%(2024년 상한 66,000원·하한 63,104원). 소정급여일수는 나이·가입기간별 120~270일. 실제 수급은 요건 심사에 따라 달라지는 <b>참고용</b>이에요.</p></div></section>
+      <div class="result" id="unRes"></div><p class="hint">1일 구직급여=평균임금의 60%(2026년 상한 68,100원·하한 66,048원, 하루 8시간 기준). 2027년 최저임금 10,700원 확정으로 내년 하한·상한은 바뀔 예정이에요. 소정급여일수는 나이·가입기간별 120~270일. 실제 수급은 요건 심사에 따라 달라지는 <b>참고용</b>이에요.</p></div></section>
 
     <!-- 중개보수(복비) -->
     <section class="view" id="v-brokerage" data-floor="2"><div class="panel">
@@ -910,7 +910,8 @@ select{cursor:pointer;}
     <section class="view" id="v-pension" data-floor="2"><div class="panel">
       <div class="field"><label>가입기간(년)</label><input type="number" id="pnYear" placeholder="예: 20" oninput="calcPension()"></div>
       <div class="field"><label>가입기간 평균 월소득(원)</label><input type="number" id="pnIncome" placeholder="예: 3000000" oninput="calcPension()"></div>
-      <div class="result" id="pnRes"></div><p class="hint">노령연금은 최소 10년(120개월) 가입해야 받아요. A값(전체 가입자 평균소득) 약 299만원·상수 1.2 기준의 <b>개산</b>이며, 실제는 매년 재평가돼요.</p></div></section>
+      <div class="field"><label>가입 시작 연도 · 선택</label><input type="number" id="pnStart" placeholder="예: 2005 (비우면 올해부터)" oninput="calcPension()"></div>
+      <div class="result" id="pnRes"></div><p class="hint">노령연금은 최소 10년(120개월) 가입해야 받아요. A값 3,193,511원(2026)과 가입 연도별 소득대체율 상수(2026년 이후 가입분 43%=1.29)를 가중한 <b>개산</b>이에요. 실제는 소득 재평가·크레딧 등으로 달라져요.</p></div></section>
 
     <!-- 연봉 역산 -->
     <section class="view" id="v-netreverse" data-floor="2"><div class="panel">
@@ -928,13 +929,15 @@ select{cursor:pointer;}
     <section class="view" id="v-parental" data-floor="2"><div class="panel">
       <div class="field"><label>월 통상임금(원)</label><input type="number" id="ptWage" placeholder="예: 3000000" oninput="calcParental()"></div>
       <div class="field"><label>육아휴직 기간(개월)</label><input type="number" id="ptMonth" placeholder="예: 12" oninput="calcParental()"></div>
-      <div class="result" id="parRes"></div><p class="hint">통상임금의 80%, 월 상한 150만·하한 70만(2024 기준). 급여의 25%는 복직 6개월 후 지급(사후지급금). 6+6 부모육아휴직제 등 특례는 미반영한 <b>참고용</b>이에요.</p></div></section>
+      <label style="display:flex;gap:8px;align-items:center;margin:4px 0 10px;font-size:14px"><input type="checkbox" id="ptSix" onchange="calcParental()" style="width:18px;height:18px"> 6+6 부모육아휴직제 (생후 18개월 내 부모 모두 사용)</label>
+      <div class="result" id="parRes"></div><p class="hint">2026년 기준: 1~3개월 통상임금 100%(상한 250만), 4~6개월 100%(상한 200만), 7개월부터 80%(상한 160만), 하한 70만원. 사후지급금은 2025년에 폐지돼 매달 전액 지급돼요. 6+6 특례는 첫 6개월 상한이 250~450만원으로 올라가요.</p></div></section>
 
     <!-- 학자금 상환 -->
     <section class="view" id="v-studentloan" data-floor="2"><div class="panel">
-      <div class="field"><label>연 소득(원)</label><input type="number" id="slIncome" placeholder="예: 30000000" oninput="calcStudentloan()"></div>
+      <div class="field"><label>연 소득금액(원) · 총급여 − 근로소득공제</label><input type="number" id="slIncome" placeholder="예: 30000000" oninput="calcStudentloan()"></div>
+      <div class="field"><label>대출 구분</label><select id="slRate" onchange="calcStudentloan()"><option value="0.2">학부생 대출 (초과분의 20%)</option><option value="0.25">대학원생 대출 (초과분의 25%)</option></select></div>
       <div class="field"><label>학자금 대출 잔액(원)</label><input type="number" id="slBalance" placeholder="예: 20000000" oninput="calcStudentloan()"></div>
-      <div class="result" id="sloanRes"></div><p class="hint">취업 후 상환(ICL): 연소득이 상환기준소득(약 1,751만원, 2024) 초과 시 초과분의 20%를 의무상환해요. 기준은 매년 바뀌는 <b>참고용</b>이에요.</p></div></section>
+      <div class="result" id="sloanRes"></div><p class="hint">취업 후 상환(ICL): 소득금액이 상환기준소득 <b>1,898만원</b>(2026년 통지분 · 총급여 약 2,851만원)을 넘으면 초과분의 20%(대학원 25%)를 의무상환해요.</p></div></section>
 
     <!-- 적금 만기표 -->
     <section class="view" id="v-savingtable" data-floor="2"><div class="panel">
@@ -995,7 +998,7 @@ select{cursor:pointer;}
     <!-- 건강보험 지역가입자 -->
     <section class="view" id="v-reghealth" data-floor="2"><div class="panel">
       <div class="field"><label>연 소득(사업·근로·기타 합계, 원)</label><input type="number" id="rhIncome" placeholder="예: 30000000" oninput="calcReghealth()"></div>
-      <div class="result" id="rhRes"></div><p class="hint">지역가입자 소득보험료(7.19%, 2024)와 장기요양(건보의 12.95%)을 개산해요. <b>재산·자동차 점수분은 별도로 가산</b>되므로, 정확한 금액은 건강보험공단 모의계산을 권장해요.</p></div></section>
+      <div class="result" id="rhRes"></div><p class="hint">지역가입자 소득보험료(7.19%, 2026·2027 동결)와 장기요양(건보의 13.14%)을 개산해요. <b>재산·자동차 점수분은 별도로 가산</b>되므로, 정확한 금액은 건강보험공단 모의계산을 권장해요.</p></div></section>
 
     <!-- 노동시간 환산 -->
     <section class="view" id="v-worktime" data-floor="1"><div class="panel">
@@ -1056,7 +1059,7 @@ select{cursor:pointer;}
       <div class="field"><label>연 소득(사업·근로·기타 합계, 원)</label><input type="number" id="rhxIncome" placeholder="예: 30000000" oninput="calcReghealthx()"></div>
       <div class="field"><label>재산세 과세표준 합계(원)</label><input type="number" id="rhxProp" placeholder="예: 150000000" oninput="calcReghealthx()"></div>
       <div class="field"><label>자동차 차량가액(원) · 4천만↑만 부과</label><input type="number" id="rhxCar" placeholder="예: 0 (없으면 0)" oninput="calcReghealthx()"></div>
-      <div class="result" id="rhxRes"></div><p class="hint">소득분(7.19%)에 재산·자동차 <b>부과점수 × 208.4원</b>(2024)을 더한 개산이에요. 실제 점수표는 60등급으로 세분화돼 있어 <b>참고용</b>이며, 정확한 금액은 건보공단 모의계산을 권장해요.</p></div></section>
+      <div class="result" id="rhxRes"></div><p class="hint">소득분(7.19%)에 재산·자동차 <b>부과점수 × 211.5원</b>(2026·2027 동결)을 더한 개산이에요. 실제 점수표는 60등급으로 세분화돼 있어 <b>참고용</b>이며, 정확한 금액은 건보공단 모의계산을 권장해요.</p></div></section>
 
     <!-- 연차 소진 플래너 -->
     <section class="view" id="v-leaveplan" data-floor="1"><div class="panel">
@@ -1106,8 +1109,8 @@ select{cursor:pointer;}
       <div class="seg"><button class="on" data-jr="toRent" onclick="jrMode('toRent')">전세→월세</button><button data-jr="toDep" onclick="jrMode('toDep')">월세→전세</button></div>
       <div id="jrToRent"><div class="field"><label>월세로 돌릴 보증금(원)</label><input type="number" id="jrAmt" placeholder="예: 100000000" oninput="calcJeonserent()"></div></div>
       <div id="jrToDep" style="display:none"><div class="field"><label>전세로 돌릴 월세(원)</label><input type="number" id="jrRent" placeholder="예: 500000" oninput="calcJeonserent()"></div></div>
-      <div class="field"><label>전환율(%)</label><input type="number" id="jrRate" placeholder="예: 5.5" oninput="calcJeonserent()"></div>
-      <div class="result" id="jrRes"></div><p class="hint">법정 전환율 상한 = 기준금리 + 2%p(2024년 기준 약 5.5%). 실제 계약은 협의이며 지역·시기마다 달라요.</p></div></section>
+      <div class="field"><label>전환율(%)</label><input type="number" id="jrRate" placeholder="예: 5.0 (법정 상한)" oninput="calcJeonserent()"></div>
+      <div class="result" id="jrRes"></div><p class="hint">법정 전환율 상한 = 기준금리 + 2%p → 현재 <b>5.0%</b>(기준금리 3.00%, 2026.8.27). 실제 계약은 협의이며 지역·시기마다 달라요.</p></div></section>
 
     <!-- 목표 매도가 -->
     <section class="view" id="v-selltarget" data-floor="2"><div class="panel">
@@ -1157,7 +1160,7 @@ select{cursor:pointer;}
         <div class="field"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="ltSpreadChk" checked style="width:auto;transform:scale(1.25)"> 게임끼리 번호 겹침 최소화 <span style="color:var(--muted);font-weight:500">(권장 · 최소 1게임 당첨 확률↑)</span></label></div>
         <div class="actions"><button class="btn primary" onclick="calcLotto()">🍀 번호 생성</button><button class="btn ghost" onclick="calcLotto()">다시 뽑기</button></div>
         <div class="result" id="ltRes"></div>
-        <p class="hint"><b>수학적으로 효과가 증명된 두 가지</b>를 기본으로 적용해요. ① <b>게임끼리 번호 겹침 최소화</b>: 같은 금액으로 '최소 1게임 5등 이상' 당첨 확률이 올라가요(5게임 기준 약 11.0% → 11.8%). ② <b>당첨금 분할 회피</b>: 생일 범위(1~31)·등차수열·최근 당첨 조합처럼 많이 고르는 조합을 피해, 당첨 시 나눠 받을 위험을 줄여요. 필터는 8,145,060조합 전수계산 분포(실제 추첨의 79.7% 포함)를 쓰고, 1~1244회 공정성 검정상 핫·콜드 번호는 근거가 없어요. <b>1등 확률은 게임 수에만 비례하며 번호 선택으로 바뀌지 않아요.</b></p>
+        <p class="hint"><b>수학적으로 효과가 증명된 두 가지</b>를 기본으로 적용해요. ① <b>게임끼리 번호 겹침 최소화</b>: 같은 금액으로 '최소 1게임 5등 이상' 당첨 확률이 올라가요(5게임 기준 약 11.0% → 11.8%). ② <b>당첨금 분할 회피</b>: 생일 범위(1~31)·등차수열·최근 당첨 조합처럼 많이 고르는 조합을 피해, 당첨 시 나눠 받을 위험을 줄여요. 필터는 8,145,060조합 전수계산 분포(실제 추첨의 79.7% 포함)를 쓰고, 1~1245회 공정성 검정상 핫·콜드 번호는 근거가 없어요. <b>1등 확률은 게임 수에만 비례하며 번호 선택으로 바뀌지 않아요.</b></p>
       </div>
       <div id="ltCheck" style="display:none">
         <div class="field"><label>내 번호 (한 줄에 한 게임 · 여러 게임 가능)</label><textarea id="lcNums" rows="3" placeholder="예: 5, 12, 18, 27, 33, 44&#10;여러 게임이면 줄을 바꿔 입력" style="min-height:96px;font-size:16px"></textarea></div>
@@ -1204,6 +1207,24 @@ select{cursor:pointer;}
       <div class="field"><label>재산세 과세표준 합계 (원)</label><input type="number" id="hdProperty" placeholder="예: 300000000" oninput="calcHealthdep()"></div>
       <div class="field"><label><input type="checkbox" id="hdBiz" onchange="calcHealthdep()" style="width:auto;margin-right:6px;transform:scale(1.2)">사업자등록이 있고 사업소득이 발생함</label></div>
       <div class="result" id="hdRes"></div><p class="hint">피부양자 자격: 연 합산소득 <b>2,000만원 이하</b>, 재산 과표 <b>5.4억 이하</b>(무조건)·<b>5.4~9억은 소득 1,000만원 이하</b>·<b>9억 초과 탈락</b>, 사업자등록+사업소득 있으면 탈락. 개산이며 실제 판정은 공단 기준을 따라요.</p></div></section>
+
+    <!-- 근로·자녀장려금 -->
+    <section class="view" id="v-eitc" data-floor="3"><div class="panel">
+      <div class="field"><label>가구 유형</label><select id="etType" onchange="calcEitc()"><option value="single">단독 (배우자·자녀·부양부모 없음)</option><option value="one" selected>홑벌이 (배우자 급여 300만 미만)</option><option value="dual">맞벌이 (배우자 급여 300만 이상)</option></select></div>
+      <div class="field"><label>부부 합산 연 총급여액 등(원) · 근로+사업소득</label><input type="number" id="etIncome" placeholder="예: 18000000" oninput="calcEitc()"></div>
+      <div class="grid2"><div class="field"><label>가구원 재산 합계(원)</label><input type="number" id="etAsset" placeholder="예: 100000000" oninput="calcEitc()"></div><div class="field"><label>18세 미만 부양자녀(명)</label><input type="number" id="etKids" placeholder="예: 1" min="0" oninput="calcEitc()"></div></div>
+      <label style="display:flex;gap:8px;align-items:center;margin:4px 0 10px;font-size:14px"><input type="checkbox" id="etLate" onchange="calcEitc()" style="width:18px;height:18px"> 기한 후 신청 (정기신청 기간 지나서 신청 → 95% 지급)</label>
+      <div class="result" id="etcRes"></div><p class="hint">홑벌이: 배우자 총급여 300만원 미만이거나, 배우자 없이 18세 미만 자녀·70세 이상 부모를 부양. 2026년 지급분(2025년 소득) 기준. 근로장려금 최대 단독 165만·홑벌이 285만·맞벌이 330만원, 소득 상한 2,200만·3,200만·4,400만원 미만. 자녀장려금은 총소득 7,000만원 미만, 자녀 1인당 50만~100만원. 재산 1.7억 이상이면 50%, 2.4억 이상이면 신청 불가(부채는 빼지 않음). 실제 지급액은 국세청 산정표(구간 단위)로 정해져 수천 원 차이가 날 수 있어요.</p></div></section>
+
+    <!-- 기초연금 -->
+    <section class="view" id="v-basicpension" data-floor="2"><div class="panel">
+      <div class="field"><label>가구 유형</label><select id="bpType" onchange="calcBasicpension()"><option value="single">단독가구</option><option value="both">부부가구 (둘 다 65세 이상·수급)</option><option value="one">부부가구 (1명만 수급)</option></select></div>
+      <div class="grid2"><div class="field"><label>본인 월 근로소득(원)</label><input type="number" id="bpWork" placeholder="예: 1500000" oninput="calcBasicpension()"></div><div class="field"><label>배우자 월 근로소득(원)</label><input type="number" id="bpWork2" placeholder="부부만 입력" oninput="calcBasicpension()"></div></div>
+      <div class="field"><label>그 밖의 월 소득(원) · 국민연금·이자·임대 등 가구 합</label><input type="number" id="bpOther" placeholder="예: 500000" oninput="calcBasicpension()"></div>
+      <div class="field"><label>거주 지역</label><select id="bpRegion" onchange="calcBasicpension()"><option value="135000000">대도시 (특별·광역시 구)</option><option value="85000000">중소도시 (시)</option><option value="72500000">농어촌 (군)</option></select></div>
+      <div class="grid2"><div class="field"><label>일반재산(원) · 주택 공시가 등</label><input type="number" id="bpProp" placeholder="예: 200000000" oninput="calcBasicpension()"></div><div class="field"><label>금융재산(원)</label><input type="number" id="bpFin" placeholder="예: 30000000" oninput="calcBasicpension()"></div></div>
+      <div class="grid2"><div class="field"><label>부채(원)</label><input type="number" id="bpDebt" placeholder="예: 0" oninput="calcBasicpension()"></div><div class="field"><label>본인 국민연금 월 수령액(원)</label><input type="number" id="bpNps" placeholder="없으면 0" oninput="calcBasicpension()"></div></div>
+      <div class="result" id="bpnRes"></div><p class="hint">2026년 기준: 선정기준액 단독 247만·부부 395.2만원, 기준연금액 349,700원(부부 모두 받으면 각 20% 감액). 소득인정액 = (근로소득−116만)×70% + 기타소득 + 재산의 소득환산액(기본재산·금융재산 2,000만 공제 후 연 4%). 고급차·회원권 등은 미반영한 <b>개산</b>이에요.</p></div></section>
 
     <!-- 영업일 D-day -->
     <section class="view" id="v-bizdays" data-floor="1"><div class="panel">
@@ -1531,6 +1552,8 @@ const CALCS=[
   {id:'bizdays',floor:1,icon:'📆',name:'영업일 D-day',desc:'주말 제외',kw:'영업일 근무일 d-day 주말 제외 날짜 계산'},
   {id:'margin',floor:3,icon:'🛒',name:'위탁·매입 마진',desc:'셀러 순이익',kw:'마진 위탁 매입 사입 드랍쉬핑 순이익 수수료 셀러 커머스'},
   {id:'roadmap',floor:2,icon:'🗺️',name:'인생 자산 로드맵',desc:'내집·은퇴 종합',kw:'로드맵 내집마련 은퇴 자산 시뮬레이터 노후'},
+  {id:'eitc',floor:3,icon:'🧧',name:'근로·자녀장려금',desc:'2026 지급액',kw:'근로장려금 자녀장려금 장려금 eitc 홑벌이 맞벌이 단독 국세청 환급'},
+  {id:'basicpension',floor:2,icon:'👵',name:'기초연금',desc:'수급·금액',kw:'기초연금 노인 65세 소득인정액 선정기준액 노후 연금'},
 ];
 const GUIDE={
   basic:'숫자와 연산 버튼으로 계산해요. 키보드 입력도 되고 <b>%</b>는 백분율, <b>⌫</b>는 한 글자 지우기예요.',
@@ -1622,7 +1645,7 @@ const GUIDE={
   pension:'가입기간과 평균 소득으로 국민연금 노령연금 월 수령액을 개산해요. 실제 A값·상수는 매년 바뀌어요.',
   netreverse:'목표 월 실수령액을 넣으면 필요한 연봉(세전)을 역산해요. 4대보험·소득세를 근사 반영해요.',
   loancompare:'같은 대출을 원리금균등과 원금균등으로 갚을 때 월 상환액과 총이자를 비교해요.',
-  parental:'통상임금으로 육아휴직 급여(80%·상하한)와 기간 총액을 계산해요. 사후지급금은 별도예요.',
+  parental:'2026년 기준(1~6개월 100%·상한 250/200만, 7개월~ 80%·160만)으로 육아휴직 급여와 총액을 계산해요. 6+6 부모육아휴직 특례도 지원해요.',
   studentloan:'취업 후 상환(ICL) 방식으로 연소득 기준 의무상환액과 예상 상환기간을 계산해요.',
   savingtable:'정기적금(단리)의 만기 원금·세전이자·세금·세후 실수령을 계산해요.',
   interimtax:'종합소득세 중간예납세액(전년 결정세액의 1/2)을 계산해요. 11월에 납부해요.',
@@ -1639,7 +1662,7 @@ const GUIDE={
   retire:'은퇴까지 기간·현재 자산·월 저축·수익률로 은퇴 시점 예상 자산을 계산하고, 4% 룰 기준 필요 노후자금과 비교해요.',
   refinance:'기존 대출을 새 금리로 갈아탈 때 남은 총이자 절감액에서 중도상환수수료를 빼 실제 이득을 계산해요.',
   windmill:'매달 새 예금(적금)에 가입하는 풍차돌리기의 만기 시점과 월별 만기 수령액을 캘린더로 보여줘요.',
-  reghealthx:'지역가입자 건강보험료를 소득정률(7.19%)+재산·자동차 점수(점수당 208.4원)로 더 정밀하게 개산해요.',
+  reghealthx:'지역가입자 건강보험료를 소득정률(7.19%)+재산·자동차 점수(점수당 211.5원)로 더 정밀하게 개산해요.',
   leaveplan:'남은 연차로 만들 수 있는 3~5일 연휴 횟수, 최대 연속 휴가, 마감까지 월별 소진량을 계산해 휴가 배치를 도와줘요.',
   cartco:'구입가·감가상각·연료·보험·세금·정비를 합쳐 자동차 총소유비용(TCO)과 월평균·km당 비용을 계산해요.',
   pensiontax:'연금저축·IRP 납입액으로 연말정산 세액공제 환급액을 계산해요. 소득에 따라 13.2% 또는 16.5%를 적용해요.',
@@ -1653,12 +1676,14 @@ const GUIDE={
   breakeven:'고정비·판매단가·개당 변동비로 손익분기점(BEP) 수량과 매출을 계산해요.',
   gpa:'과목별 학점과 등급으로 평량평균(GPA)을 4.5 만점 기준으로 계산해요.',
   anniv:'사귀기 시작한 날(또는 특정일) 기준으로 100일·200일·1주년 등 다가오는 기념일을 알려줘요.',
-  lotto:'1~1244회 통계와 전수계산 분포로 번호를 추천·진단해요. 게임끼리 번호 겹침을 줄여 최소 1게임 당첨 확률을 높이고, 많이 고르는 조합을 피해 당첨금 분할 위험을 낮춰요.',
+  lotto:'1~1245회 통계와 전수계산 분포로 번호를 추천·진단해요. 게임끼리 번호 겹침을 줄여 최소 1게임 당첨 확률을 높이고, 많이 고르는 조합을 피해 당첨금 분할 위험을 낮춰요.',
   retirepension:'퇴직연금을 DC형(운용수익률 기준 적립)과 DB형(퇴직 전 평균임금×근속연수)으로 예상 수령액을 계산해요.',
   deposit:'예금자보호 한도(2025.9.1부터 원금+이자 합산 1억원)를 기준으로 안전 예치 금액과 초과분, 필요한 분산 은행 수를 계산해요.',
   furusato:'고향사랑기부제 기부금으로 세액공제(10만원 이하 전액·초과분 16.5%)와 답례품(30%)을 합친 실질 혜택을 계산해요.',
   subscore:'주택청약 가점(무주택기간 32점·부양가족 35점·통장 가입기간 17점, 총 84점)을 항목별로 계산해요.',
   healthdep:'건강보험 피부양자 자격을 소득(연 2,000만원)·재산(과표 5.4억/9억)·사업자등록 요건으로 판정해요.',
+  eitc:'가구 유형·소득·재산·자녀 수로 2026년 근로장려금과 자녀장려금 예상액을 법정 산식으로 계산해요. 재산 감액·기한 후 신청(95%)도 반영해요.',
+  basicpension:'소득인정액(근로소득 공제·재산 환산)을 계산해 2026년 기초연금 수급 여부와 월 금액(부부 감액·소득역전 방지)을 개산해요.',
   bizdays:'시작일부터 목표일까지 주말(토·일)을 제외한 영업일수를 세거나, 오늘부터 N영업일 뒤 날짜를 계산해요.',
   margin:'위탁(드랍쉬핑)·매입(사입) 방식별로 판매수수료·결제·광고·배송·부가세·반품까지 반영해 셀러의 개당 순이익과 마진율을 정밀 계산해요.',
   roadmap:'현재 자산·저축·수익률로 나이별 자산을 시뮬레이션해 내 집 마련 가능 시점과 은퇴 후 자산 고갈 나이를 한 곡선으로 보여줘요.'
@@ -1809,8 +1834,8 @@ const I18N={
 };
 let LANG=store.get('cds_lang')||'ko';
 const EN_FLOOR={1:'Everyday',2:'Finance',3:'Tax & Shopping',4:'Health',5:'Math',6:'Convert & Life',7:'Fun & Tools'};
-const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random Number',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',stockavg:'Avg Buy Price',travelbudget:'Travel Budget',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',retirepension:'Retire Pension',deposit:'Deposit Protection',furusato:'Hometown Donation',subscore:'Housing Subscription',healthdep:'Insurance Dependent',bizdays:'Business Days',margin:'Seller Margin'};
-const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'in range',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',stockavg:'averaging',travelbudget:'per day',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',retirepension:'DC·DB',deposit:'1억 limit',furusato:'tax+gift',subscore:'84 points',healthdep:'eligibility',bizdays:'excl. weekends',margin:'net profit'};
+const EN_NAME={basic:'Calculator',sci:'Scientific',date:'Date Calc',age:'Age',time:'Time Calc',work:'Work & Pay',fuel:'Fuel Economy',random:'Random Number',loan:'Loan Repay',saving:'Savings',compound:'Compound',salary:'Net Salary',wage:'Wage↔Salary',avg:'Stock Avg',goal:'Savings Goal',jeonse:'Jeonse↔Rent',severance:'Severance',install:'Installment',eryield:'Real Yield',depcompare:'Savings vs Deposit',prepay:'Prepay Fee',vat:'VAT',discount:'Discount',split:'Split Bill',tax:'Acquisition Tax',captax:'Capital Gains',inctax:'Income Tax',yearend:'Year-end Tax',cartax:'Auto Tax',proptax:'Property Tax',gifttax:'Gift Tax',bmi:'BMI',bmr:'BMR',ideal:'Ideal Weight',bodyfat:'Body Fat',preg:'Due Date',hr:'Target HR',water:'Water Intake',bac:'Blood Alcohol',sleep:'Sleep Cycle',menstrual:'Menstrual',protein:'Protein',caffeine:'Caffeine',burn:'Calories Burned',alcocal:'Alcohol Cal',pace:'Running Pace',percent:'Percentage',ratio:'Ratio',gcd:'GCD·LCM',quad:'Quadratic',stat:'Statistics',combo:'Permutation',shape:'Geometry',prime:'Prime Check',unit:'Unit Convert',radix:'Radix',fx:'Currency',roman:'Roman',hangul:'Korean Won',textcount:'Word Count',worldclock:'World Clock',elec:'Electric Bill',size:'Clothing Size',cooking:'Cooking',manse:'Lunar Cal',color:'Color',timer:'Timer',feels:'Feels Like',medi:'Med Timing',draw:'Random Pick',zodiac:'Zodiac',ladder:'Ladder Game',metronome:'Metronome',level:'Level',flashlight:'Flashlight',lifeclock:'Life Clock',rule72:'Rule of 72',contrast:'WCAG Contrast',pyeong:'Pyeong↔㎡',btu:'AC Capacity',leave:'Annual Leave',petage:'Pet Age',insurance:'Payroll Insurance',loanlimit:'Loan Limit (DSR)',unemploy:'Unemployment Pay',brokerage:'Broker Fee',pension:'National Pension',netreverse:'Reverse Salary',loancompare:'Repayment Compare',parental:'Parental Leave Pay',studentloan:'Student Loan',savingtable:'Savings Maturity',interimtax:'Interim Tax',jongbu:'Real Estate Tax',inherit:'Inheritance Tax',taxi:'Taxi Fare',parking:'Parking Fee',fuelcost:'Fuel vs EV',parcel:'Parcel Weight',reghealth:'Health Insurance',worktime:'Work Hours',subs:'Subscriptions',roadmap:'Life Roadmap',homebuy:'Home Buying',retire:'Retirement',refinance:'Loan Refinance',windmill:'Deposit Windmill',reghealthx:'Health Ins. Detailed',leaveplan:'Leave Planner',cartco:'Car TCO',pensiontax:'Pension Tax Credit',yearendfull:'Year-end Full',isa:'ISA Tax Saving',rentcredit:'Rent Tax Credit',jeonserent:'Deposit↔Rent',selltarget:'Target Sell Price',stockavg:'Avg Buy Price',travelbudget:'Travel Budget',breakeven:'Break-even',gpa:'GPA',anniv:'Anniversary',lotto:'Lotto Generator',retirepension:'Retire Pension',deposit:'Deposit Protection',furusato:'Hometown Donation',subscore:'Housing Subscription',healthdep:'Insurance Dependent',eitc:'Work & Child Credit',basicpension:'Basic Pension',bizdays:'Business Days',margin:'Seller Margin'};
+const EN_DESC={basic:'arithmetic',sci:'trig·log',date:'D-day·diff',age:'birthdate',time:'time diff',work:'shift·wage',fuel:'km/L·cost',random:'in range',loan:'monthly pay',saving:'after-tax',compound:'future value',salary:'take-home',wage:'convert',avg:'avg·P/L',goal:'monthly save',jeonse:'both ways',severance:'by tenure',install:'card fee',eryield:'after-tax·infl',depcompare:'interest',prepay:'by remaining',vat:'supply·total',discount:'stacked',split:'N-way·each',tax:'property·car',captax:'gains est.',inctax:'base→tax',yearend:'refund est.',cartax:'cc·age',proptax:'assessed',gifttax:'deduction',bmi:'body mass',bmr:'calories',ideal:'weight',bodyfat:'girth',preg:'weeks',hr:'zones',water:'daily',bac:'estimate',sleep:'bed·wake',menstrual:'cycle',protein:'daily',caffeine:'remaining',burn:'MET',alcocal:'kcal',pace:'time·speed',percent:'ratio·change',ratio:'a:b=c:x',gcd:'GCD·LCM',quad:'roots',stat:'mean·SD',combo:'nPr·nCr',shape:'area·volume',prime:'factors',unit:'11 types',radix:'2·8·16',fx:'14 currencies',roman:'num↔roman',hangul:'to Korean',textcount:'chars·words',worldclock:'by city',elec:'progressive',size:'KR·US·EU',cooking:'cup↔g',manse:'lunar↔solar',color:'HEX·RGB',timer:'stopwatch',feels:'temp·humid',medi:'re-dose',draw:'pick·group',zodiac:'birthdate',ladder:'animated',metronome:'BPM',level:'tilt sensor',flashlight:'screen',lifeclock:'days·milestones',rule72:'2x period',contrast:'readability',pyeong:'area',btu:'cooling',leave:'by tenure',petage:'human age',insurance:'deductions',loanlimit:'LTV·DSR',unemploy:'benefit est.',brokerage:'by price',pension:'monthly est.',netreverse:'net→gross',loancompare:'total interest',parental:'80% pay',studentloan:'ICL',savingtable:'after-tax',interimtax:'½ of last',jongbu:'assessed sum',inherit:'deductions',taxi:'distance',parking:'time·cap',fuelcost:'gas vs EV',parcel:'volumetric',reghealth:'regional est.',worktime:'in hours',subs:'monthly total',roadmap:'home·retire',homebuy:'years to goal',retire:'4% rule',refinance:'net savings',windmill:'maturity cal',reghealthx:'income·assets',leaveplan:'holiday plan',cartco:'5-year cost',pensiontax:'refund',yearendfull:'all-in-one',isa:'tax-free',rentcredit:'refund',jeonserent:'convert',selltarget:'by return',stockavg:'averaging',travelbudget:'per day',breakeven:'BEP',gpa:'4.5 scale',anniv:'100 days',lotto:'stats-based',retirepension:'DC·DB',deposit:'1억 limit',furusato:'tax+gift',subscore:'84 points',healthdep:'eligibility',eitc:'2026 amount',basicpension:'eligibility·amount',bizdays:'excl. weekends',margin:'net profit'};
 function T(key){ const e=I18N[key]; return e?(e[LANG]||e.ko):key; }
 function name(c){ return (LANG==='en'&&EN_NAME[c.id])?EN_NAME[c.id]:c.name; }
 function desc(c){ return (LANG==='en'&&EN_DESC[c.id])?EN_DESC[c.id]:c.desc; }
@@ -2522,7 +2547,7 @@ const EXAMPLES={
   wage:{fields:{wgHour:'10320',wgMonHours:'209'},run:'calcWage'},
   avg:{fields:{avQty:'10',avPrice:'70000',avQty2:'5',avPrice2:'60000',avNow:'68000'},run:'calcAvg'},
   goal:{fields:{goTarget:'100000000',goR:'5',goY:'10'},run:'calcGoal'},
-  jeonse:{fields:{jsAmt:'100000000',jsRate:'5.5'},run:'calcJeonse'},
+  jeonse:{fields:{jsAmt:'100000000',jsRate:'5.0'},run:'calcJeonse'},
   severance:{fields:{svcPay:'3000000',svcY:'3',svcM:'6'},run:'calcSeverance'},
   install:{fields:{isP:'1200000',isN:'6',isR:'15'},run:'calcInstall'},
   eryield:{fields:{eyR:'4',eyInf:'2.5'},run:'calcEryield'},
@@ -2606,7 +2631,7 @@ const EXAMPLES={
   yearendfull:{fields:{yfSal:'50000000',yfFam:'1',yfCredit:'15000000',yfCheck:'5000000',yfMed:'1000000',yfDonate:'500000',yfPension:'6000000'},run:'calcYearendfull'},
   isa:{fields:{isaProfit:'3000000'},run:'calcIsa'},
   rentcredit:{fields:{rcSal:'45000000',rcRent:'500000'},run:'calcRentcredit'},
-  jeonserent:{fields:{jrAmt:'100000000',jrRate:'5.5'},run:'calcJeonserent'},
+  jeonserent:{fields:{jrAmt:'100000000',jrRate:'5.0'},run:'calcJeonserent'},
   selltarget:{fields:{stgPrice:'50000',stgTarget:'10',stgFee:'0.015',stgQty:'10'},run:'calcSelltarget'},
   stockavg:{fields:{saQty1:'100',saPrice1:'60000',saQty2:'50',saPrice2:'45000',saNow:'50000'},run:'calcStockavg'},
   travelbudget:{fields:{tbBudget:'2000000',tbDays:'5'},run:'calcTravelbudget'},
@@ -2618,6 +2643,8 @@ const EXAMPLES={
   furusato:{fields:{fsAmount:'100000'},run:'calcFurusato'},
   subscore:{fields:{ssNoHouse:'15',ssFamily:'3',ssAccount:'10'},run:'calcSubscore'},
   healthdep:{fields:{hdIncome:'15000000',hdProperty:'300000000'},run:'calcHealthdep'},
+  eitc:{fields:{etType:'one',etIncome:'18000000',etAsset:'100000000',etKids:'1'},run:'calcEitc'},
+  basicpension:{fields:{bpType:'single',bpWork:'1500000',bpWork2:'',bpOther:'500000',bpRegion:'135000000',bpProp:'200000000',bpFin:'30000000',bpDebt:'0',bpNps:'500000'},run:'calcBasicpension'},
   manse:{fields:{mnDate:'2024-09-17'},run:'calcManse'},
   contrast:{fields:{},run:'calcContrast'}
 };
@@ -2721,8 +2748,10 @@ function calcGifttax(){ const amt=parseFloat(document.getElementById('gtxAmt').v
 
 /* ===== 4대보험 ===== */
 function calcInsurance(){ const sal=parseFloat(document.getElementById('insSal').value); if(isNaN(sal)||sal<=0){document.getElementById('insRes').classList.remove('show');return;}
-  const pensionBase=Math.min(Math.max(sal,410000),6590000); const pension=Math.round(pensionBase*0.0475/10)*10;
-  const health=Math.round(sal*0.03595/10)*10; const care=Math.round(health*0.1314/10)*10; const emp=Math.round(sal*0.009/10)*10;
+  /* 공단 방식: 기준소득월액 천원 미만 절사, 보험료 10원 미만 절사. 부동소수 오차(26,999.999…) 보정용 1e-6 */
+  const cut10=x=>Math.floor(x/10+1e-6)*10;
+  const pensionBase=Math.floor(Math.min(Math.max(sal,410000),6590000)/1000)*1000; const pension=cut10(pensionBase*0.0475);
+  const health=cut10(sal*0.03595); const care=cut10(health*0.1314); const emp=cut10(sal*0.009);
   const total=pension+health+care+emp; const net=sal-total;
   show('insRes',`<div class="label">근로자 4대보험 공제 합계</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">국민연금 4.75%</span><span class="vl">${fmt(pension,0)}원</span></div><div class="ri"><span class="nm">건강보험 3.595%</span><span class="vl">${fmt(health,0)}원</span></div><div class="ri"><span class="nm">장기요양 (건보×13.14%)</span><span class="vl">${fmt(care,0)}원</span></div><div class="ri"><span class="nm">고용보험 0.9%</span><span class="vl">${fmt(emp,0)}원</span></div><div class="ri"><span class="nm">공제 후 (세전)</span><span class="vl">${fmt(net,0)}원</span></div></div><div class="sub">※ 소득세·지방소득세는 별도예요.</div>`); }
 
@@ -2736,10 +2765,11 @@ function calcLoanlimit(){ const price=parseFloat(document.getElementById('llPric
 
 /* ===== 실업급여 ===== */
 function calcUnemploy(){ const wage=parseFloat(document.getElementById('unWage').value),age=parseFloat(document.getElementById('unAge').value),yr=parseFloat(document.getElementById('unYear').value); if(isNaN(wage)||isNaN(age)||isNaN(yr)||wage<=0||age<=0||yr<0){document.getElementById('unRes').classList.remove('show');return;}
-  let daily=wage*0.6; daily=Math.min(daily,66000); daily=Math.max(daily,66048);
-  let days; if(yr<1)days=120; else if(yr<3)days=150; else if(yr<5)days=180; else if(yr<10)days=210; else days=240; if(age>=50)days=Math.min(days+30,270);
+  /* 2026년: 상한 68,100원, 하한 66,048원(최저임금 10,320원×80%×8시간). 하한이 상한보다 우선 */
+  const UN_MAX=68100, UN_MIN=66048; const raw=wage*0.6; let daily=Math.max(Math.min(raw,UN_MAX),UN_MIN); daily=Math.floor(daily);
+  const tier=yr<1?0:yr<3?1:yr<5?2:yr<10?3:4; const days=(age>=50?[120,180,210,240,270]:[120,150,180,210,240])[tier]; /* 고용보험법 별표1 */
   const total=daily*days;
-  show('unRes',`<div class="label">예상 구직급여 총액</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="sub">1일 구직급여 <b>${fmt(daily,0)}원</b> (평균임금의 60%, 상·하한 적용)<br>소정급여일수 <b>${days}일</b> (${age>=50?'50세 이상·':''}가입 ${yr}년)<br>월 환산 약 ${fmt(daily*30,0)}원</div>`); }
+  show('unRes',`<div class="label">예상 구직급여 총액</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="sub">1일 구직급여 <b>${fmt(daily,0)}원</b> (평균임금의 60%${raw>UN_MAX?' → 상한 68,100원 적용':raw<UN_MIN?' → 하한 66,048원 적용':''})<br>소정급여일수 <b>${days}일</b> (${age>=50?'50세 이상·':''}가입 ${yr}년)<br>월 환산 약 ${fmt(daily*30,0)}원</div>`); }
 
 /* ===== 중개보수(복비) ===== */
 let brokCur='trade';
@@ -2756,8 +2786,11 @@ function calcBrokerage(){ const amt=parseFloat(document.getElementById('bkAmt').
 /* ===== 국민연금 예상 ===== */
 function calcPension(){ const N=parseFloat(document.getElementById('pnYear').value),B=parseFloat(document.getElementById('pnIncome').value); if(isNaN(N)||isNaN(B)||N<=0||B<=0){document.getElementById('pnRes').classList.remove('show');return;}
   if(N<10)return show('pnRes',`<div class="label">가입기간 부족</div><div class="big" style="color:var(--f3)">수급 불가</div><div class="sub">노령연금은 최소 10년(120개월) 가입해야 받을 수 있어요. (현재 ${fmt(N,0)}년)</div>`);
-  const A=3089062; const factor=1+0.05*(N-20); const monthly=1.2*(A+B)*factor/12;
-  show('pnRes',`<div class="label">예상 월 노령연금 (개산)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthly/10)*10,0)} 원</div><div class="sub">가입 ${fmt(N,0)}년 · 평균소득 ${fmt(B,0)}원<br>연 환산 약 <b>${fmt(monthly*12,0)}원</b><br>소득대체율 상수 1.2·A값 299만 기준</div>`); }
+  /* A값 2026년 적용 3,193,511원. 소득대체율 상수: 1988~98 2.4, 1999~2007 1.8, 2008~2025 1.5→매년 0.015↓, 2026~ 1.29(43%) */
+  const A=3193511; const nowY=new Date().getFullYear(); let st=parseInt((document.getElementById('pnStart')||{}).value,10); if(isNaN(st)||st<1988||st>nowY+50)st=nowY;
+  const alphaOf=y=>y<=1998?2.4:y<=2007?1.8:y<=2025?1.5-0.015*(y-2008):1.29; let sum=0; const yrs=Math.ceil(N); for(let k=0;k<yrs;k++){ const wgt=Math.min(1,N-k); sum+=alphaOf(st+k)*wgt; } const alpha=sum/N;
+  const factor=1+0.05*(N-20); const monthly=alpha*(A+B)*factor/12;
+  show('pnRes',`<div class="label">예상 월 노령연금 (개산, 현재가치)</div><div class="big" style="color:var(--f2)">${fmt(Math.floor(monthly/10)*10,0)} 원</div><div class="sub">가입 ${fmt(N,0)}년(${st}년~) · 평균소득 ${fmt(B,0)}원<br>연 환산 약 <b>${fmt(Math.round(monthly*12),0)}원</b><br>가중 소득대체율 상수 ${alpha.toFixed(3)} (2026년 이후 가입분 1.29=43%) · A값 3,193,511원(2026)</div>`); }
 
 /* ===== 연봉 역산 ===== */
 function _net(annual,fam){ const mg=annual/12; const pb=Math.min(Math.max(mg,410000),6590000); const ins=(pb*0.0475+mg*0.03595+mg*0.03595*0.1314+mg*0.009)*12;
@@ -2775,12 +2808,18 @@ function calcLoancompare(){ const P=parseFloat(document.getElementById('lcP').va
 
 /* ===== 육아휴직 급여 ===== */
 function calcParental(){ const w=parseFloat(document.getElementById('ptWage').value),m=parseInt(document.getElementById('ptMonth').value,10); if(isNaN(w)||isNaN(m)||w<=0||m<=0){document.getElementById('parRes').classList.remove('show');return;}
-  const pay=Math.min(Math.max(w*0.8,700000),1500000); const monthlyPaid=pay*0.75; const hold=pay*0.25; const total=pay*m;
-  show('parRes',`<div class="label">월 육아휴직 급여 (지급액)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthlyPaid),0)} 원</div><div class="sub">산정액 ${fmt(pay,0)}원 (통상임금 80%, 상·하한 적용)<br>매월 75% 지급 + 사후지급금(25%) ${fmt(Math.round(hold),0)}원/월은 복직 6개월 후<br>${m}개월 총 급여 <b>${fmt(total,0)}원</b></div>`); }
+  /* 2025.1~ (2026 동일): 1~3개월 100%·상한 250만, 4~6개월 100%·상한 200만, 7개월~ 80%·상한 160만, 하한 70만, 사후지급금 폐지(매월 전액)
+     6+6 부모육아휴직제(생후 18개월 내 부모 모두 사용): 첫 6개월 100%, 상한 250·250·300·350·400·450만 */
+  const six=document.getElementById('ptSix')&&document.getElementById('ptSix').checked; const M=Math.min(m,18);
+  const SIX=[2500000,2500000,3000000,3500000,4000000,4500000];
+  const payOf=k=>{ let rate,cap; if(six&&k<=6){rate=1;cap=SIX[k-1];} else if(k<=3){rate=1;cap=2500000;} else if(k<=6){rate=1;cap=2000000;} else {rate=0.8;cap=1600000;} return Math.max(Math.min(w*rate,cap),700000); };
+  const pays=[]; for(let k=1;k<=M;k++)pays.push(payOf(k)); const total=pays.reduce((a,b)=>a+b,0);
+  const seg=(a,b)=>{ const xs=pays.slice(a-1,Math.min(b,M)); return xs.length?`<div class="ri"><span class="nm">${a}~${a+xs.length-1}개월</span><span class="vl">${xs.every(x=>x===xs[0])?fmt(xs[0],0)+'원/월':fmt(Math.min(...xs),0)+'~'+fmt(Math.max(...xs),0)+'원/월'}</span></div>`:''; };
+  show('parRes',`<div class="label">${M}개월 육아휴직 급여 총액${six?' · 6+6 특례':''}</div><div class="big" style="color:var(--f2)">${fmt(total,0)} 원</div><div class="rowlist" style="margin-top:12px">${seg(1,3)}${seg(4,6)}${seg(7,18)}</div><div class="sub">첫 달 ${fmt(pays[0],0)}원 · 월평균 ${fmt(Math.round(total/M),0)}원<br>2025년부터 사후지급금이 없어져 <b>매달 전액</b> 받아요.${m>18?'<br>ℹ️ 최대 18개월(부모 모두 3개월 이상 사용 시)까지만 계산했어요.':m>12?'<br>ℹ️ 12개월 초과분은 부모가 각각 3개월 이상 쓴 경우(최대 18개월)에만 받을 수 있어요.':''}</div>`); }
 
 /* ===== 학자금 상환(ICL) ===== */
-function calcStudentloan(){ const income=parseFloat(document.getElementById('slIncome').value),bal=parseFloat(document.getElementById('slBalance').value); if(isNaN(income)||isNaN(bal)||income<0||bal<=0){document.getElementById('sloanRes').classList.remove('show');return;} const th=17510000;
-  const over=Math.max(income-th,0); const annual=over*0.2;
+function calcStudentloan(){ const income=parseFloat(document.getElementById('slIncome').value),bal=parseFloat(document.getElementById('slBalance').value); if(isNaN(income)||isNaN(bal)||income<0||bal<=0){document.getElementById('sloanRes').classList.remove('show');return;} const th=18980000; /* 2026년 의무상환(2025년 귀속) 상환기준소득: 소득금액 1,898만원 ≈ 총급여 2,851만원 */
+  const rt=parseFloat((document.getElementById('slRate')||{}).value)||0.2; const over=Math.max(income-th,0); const annual=over*rt;
   if(annual<=0)return show('sloanRes',`<div class="label">의무 상환액</div><div class="big" style="color:var(--f1)">0 원</div><div class="sub">연소득이 상환기준소득(${fmt(th,0)}원) 이하라 올해 의무상환은 없어요.</div>`);
   const yearsToPay=bal/annual;
   show('sloanRes',`<div class="label">연 의무 상환액 (ICL)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(annual),0)} 원</div><div class="sub">기준소득 초과분 ${fmt(over,0)}원 × 20%<br>월 약 ${fmt(Math.round(annual/12),0)}원<br>잔액 ${fmt(bal,0)}원 → 이자 제외 약 <b>${fmt(yearsToPay,1)}년</b> 소요</div>`); }
@@ -2839,7 +2878,7 @@ function calcParcel(){ const w=parseFloat(document.getElementById('pcW').value),
 /* ===== 건강보험 지역가입자 ===== */
 function calcReghealth(){ const income=parseFloat(document.getElementById('rhIncome').value); if(isNaN(income)||income<0){document.getElementById('rhRes').classList.remove('show');return;}
   const monthlyIncome=income/12; const health=monthlyIncome*0.0719; const care=health*0.1314; const total=health+care;
-  show('rhRes',`<div class="label">지역가입자 건강보험료 (소득분, 월)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="sub">건강보험료 <b>${fmt(Math.round(health),0)}원</b> (소득월액 ${fmt(Math.round(monthlyIncome),0)}원 × 7.19%)<br>장기요양보험료 <b>${fmt(Math.round(care),0)}원</b> (건보의 12.95%)<hr>※ 재산·자동차 점수분이 추가로 붙어요.</div>`); }
+  show('rhRes',`<div class="label">지역가입자 건강보험료 (소득분, 월)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="sub">건강보험료 <b>${fmt(Math.round(health),0)}원</b> (소득월액 ${fmt(Math.round(monthlyIncome),0)}원 × 7.19%)<br>장기요양보험료 <b>${fmt(Math.round(care),0)}원</b> (건보의 13.14%)<hr>※ 재산·자동차 점수분이 추가로 붙어요.</div>`); }
 
 /* ===== 노동시간 환산 ===== */
 let wtCur='hour';
@@ -2989,9 +3028,9 @@ function calcWindmill(){ const amt=parseFloat(document.getElementById('wmAmt').v
 function _propScore(p){ const t=[[4.5e6,22],[9e6,68],[13.5e6,121],[22.5e6,172],[45e6,275],[67.5e6,391],[90e6,476],[112.5e6,545],[135e6,620],[202.5e6,706],[270e6,731],[405e6,757],[675e6,785],[900e6,812],[1.2e9,841],[1.5e9,881]]; for(const[cap,pt]of t){ if(p<=cap)return pt; } return 1200; }
 function calcReghealthx(){ const income=parseFloat(document.getElementById('rhxIncome').value); let prop=parseFloat(document.getElementById('rhxProp').value); if(isNaN(prop)||prop<0)prop=0; let car=parseFloat(document.getElementById('rhxCar').value); if(isNaN(car)||car<0)car=0;
   if(isNaN(income)||income<0){document.getElementById('rhxRes').classList.remove('show');return;}
-  const PPS=208.4; const incHealth=(income/12)*0.0719; const propScore=prop>0?_propScore(prop):0; const carScore=car>=4e7?113:0; const assetHealth=(propScore+carScore)*PPS;
+  const PPS=211.5; const incHealth=(income/12)*0.0719; const propScore=prop>0?_propScore(prop):0; const carScore=car>=4e7?113:0; const assetHealth=(propScore+carScore)*PPS;
   const health=incHealth+assetHealth; const care=health*0.1314; const total=health+care;
-  show('rhxRes',`<div class="label">지역가입자 건강보험료 (월, 개산)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">소득분 (7.19%)</span><span class="vl">${fmt(Math.round(incHealth),0)}원</span></div><div class="ri"><span class="nm">재산분 (${propScore}점)</span><span class="vl">${fmt(Math.round(propScore*PPS),0)}원</span></div><div class="ri"><span class="nm">자동차분 (${carScore}점)</span><span class="vl">${fmt(Math.round(carScore*PPS),0)}원</span></div><div class="ri"><span class="nm">장기요양 (12.95%)</span><span class="vl">${fmt(Math.round(care),0)}원</span></div></div><div class="sub">부과점수 208.4원 기준 · 자동차는 4천만원↑만 부과</div>`); }
+  show('rhxRes',`<div class="label">지역가입자 건강보험료 (월, 개산)</div><div class="big" style="color:var(--f2)">${fmt(Math.round(total/10)*10,0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">소득분 (7.19%)</span><span class="vl">${fmt(Math.round(incHealth),0)}원</span></div><div class="ri"><span class="nm">재산분 (${propScore}점)</span><span class="vl">${fmt(Math.round(propScore*PPS),0)}원</span></div><div class="ri"><span class="nm">자동차분 (${carScore}점)</span><span class="vl">${fmt(Math.round(carScore*PPS),0)}원</span></div><div class="ri"><span class="nm">장기요양 (13.14%)</span><span class="vl">${fmt(Math.round(care),0)}원</span></div></div><div class="sub">부과점수 211.5원 기준(2026) · 자동차는 4천만원↑만 부과</div>`); }
 
 /* ===== PWA 설치 ===== */
 (function(){ try{
@@ -3067,11 +3106,13 @@ function calcRentcredit(){ const sal=parseFloat(document.getElementById('rcSal')
 /* ===== 전월세 전환 ===== */
 let jrCur='toRent';
 function jrMode(m){ jrCur=m; document.querySelectorAll('#v-jeonserent .seg button').forEach(b=>b.classList.toggle('on',b.dataset.jr===m)); document.getElementById('jrToRent').style.display=m==='toRent'?'':'none'; document.getElementById('jrToDep').style.display=m==='toDep'?'':'none'; calcJeonserent(); }
-function calcJeonserent(){ let rate=parseFloat(document.getElementById('jrRate').value); if(isNaN(rate)||rate<=0)rate=5.5;
+/* 법정 전환율 상한 = 한국은행 기준금리 + 2%p (주택임대차보호법 시행령 제9조). 기준금리 3.00% (2026.8.27 금통위) */
+const BOK_BASE=3.0, JR_CAP=BOK_BASE+2;
+function calcJeonserent(){ let rate=parseFloat(document.getElementById('jrRate').value); if(isNaN(rate)||rate<=0)rate=JR_CAP;
   if(jrCur==='toRent'){ const amt=parseFloat(document.getElementById('jrAmt').value); if(isNaN(amt)||amt<=0){document.getElementById('jrRes').classList.remove('show');return;} const monthly=amt*(rate/100)/12;
-    show('jrRes',`<div class="label">환산 월세</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthly),0)} 원</div><div class="sub">보증금 ${fmt(amt,0)}원을 전환율 ${fmt(rate,1)}%로 월세 전환<br>연 ${fmt(Math.round(monthly*12),0)}원${rate>5.5?'<br>⚠️ 법정 상한(약 5.5%)을 초과했어요.':''}</div>`);
+    show('jrRes',`<div class="label">환산 월세</div><div class="big" style="color:var(--f2)">${fmt(Math.round(monthly),0)} 원</div><div class="sub">보증금 ${fmt(amt,0)}원을 전환율 ${fmt(rate,1)}%로 월세 전환<br>연 ${fmt(Math.round(monthly*12),0)}원${rate>JR_CAP?`<br>⚠️ 법정 상한(${JR_CAP.toFixed(1)}%)을 초과했어요.`:''}</div>`);
   }else{ const r=parseFloat(document.getElementById('jrRent').value); if(isNaN(r)||r<=0){document.getElementById('jrRes').classList.remove('show');return;} const dep=r*12/(rate/100);
-    show('jrRes',`<div class="label">환산 전세 보증금</div><div class="big" style="color:var(--f2)">${fmt(Math.round(dep),0)} 원</div><div class="sub">월세 ${fmt(r,0)}원을 전환율 ${fmt(rate,1)}%로 보증금 전환<br>연 월세 ${fmt(r*12,0)}원 ÷ ${fmt(rate,1)}%${rate>5.5?'<br>⚠️ 법정 상한(약 5.5%)을 초과했어요.':''}</div>`); } }
+    show('jrRes',`<div class="label">환산 전세 보증금</div><div class="big" style="color:var(--f2)">${fmt(Math.round(dep),0)} 원</div><div class="sub">월세 ${fmt(r,0)}원을 전환율 ${fmt(rate,1)}%로 보증금 전환<br>연 월세 ${fmt(r*12,0)}원 ÷ ${fmt(rate,1)}%${rate>JR_CAP?`<br>⚠️ 법정 상한(${JR_CAP.toFixed(1)}%)을 초과했어요.`:''}</div>`); } }
 
 /* ===== 목표 매도가 ===== */
 function calcSelltarget(){ const P=parseFloat(document.getElementById('stgPrice').value),T=parseFloat(document.getElementById('stgTarget').value); let fee=parseFloat(document.getElementById('stgFee').value); if(isNaN(fee)||fee<0)fee=0.015; let qty=parseFloat(document.getElementById('stgQty').value); if(isNaN(qty)||qty<=0)qty=1;
@@ -3104,14 +3145,14 @@ function calcAnniv(){ const v=document.getElementById('anvDate').value; if(!v){d
   show('anvRes',`<div class="label">함께한 지</div><div class="big" style="color:var(--f1)">${fmt(daysSince,0)}일째</div><div class="rowlist" style="margin-top:12px">${rows}</div>`); }
 
 /* ===== 로또 엔진 v2 — 근거 기반 (2026.10) =====
-   근거① 1~1244회 번호별 누적 출현(보너스 포함, 합계=회차×7 검증).
+   근거① 1~1245회 번호별 누적 출현(보너스 포함, 합계=회차×7 검증).
    근거② 전체 8,145,060 조합 전수계산으로 얻은 패턴별 정확 확률(LOTTO_DIST)·전형성 백분위표(LOTTO_TYPQ).
    근거③ 공정성 χ² 검정(1회 7개 비복원 추첨 보정 ×44/38): 번호별 차이가 우연 범위인지 확인.
    ※ 모든 조합의 1등 확률은 1/8,145,060으로 같다. 필터·점수는 이 확률을 바꾸지 않는다.
      근거 있는 개선은 '많이 고르는 조합'을 피해 당첨 시 분할 위험을 낮추는 것뿐이다. */
-const LOTTO_ROUND=1244;
-const LOTTO_FREQ=[204,193,204,198,178,200,203,183,165,192,194,207,212,195,196,200,204,199,193,202,192,167,170,201,177,198,214,183,174,190,203,180,207,211,194,190,200,204,193,196,170,183,202,190,197];
-const LOTTO_R20=[1,3,1,3,0,2,3,2,3,2,5,3,8,2,3,3,1,6,4,3,1,3,2,4,2,2,0,2,3,1,4,2,1,5,2,2,3,5,1,2,3,4,4,4,0];const LOTTO_R20_RANGE="1225~1244";
+const LOTTO_ROUND=1245;
+const LOTTO_FREQ=[204,193,204,199,179,200,203,183,165,192,194,208,212,195,196,200,204,199,193,202,192,167,170,201,178,198,214,184,174,190,203,181,207,211,194,190,200,204,193,196,170,184,202,190,197];
+const LOTTO_R20=[3,3,1,4,1,2,3,1,2,2,3,3,8,2,3,3,1,5,3,3,1,3,2,4,2,2,0,3,3,1,5,3,1,5,2,2,3,5,1,2,2,4,4,4,0];const LOTTO_R20_RANGE="1226~1245";
 const LOTTO_DIST={"T":8145060,"sum":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,2,3,5,7,11,14,20,26,35,44,58,71,90,110,136,163,199,235,282,331,391,454,532,612,709,811,931,1057,1206,1360,1540,1729,1945,2172,2432,2702,3009,3331,3691,4068,4490,4928,5415,5923,6481,7062,7700,8359,9079,9825,10632,11466,12368,13294,14291,15316,16411,17534,18733,19955,21255,22581,23982,25407,26912,28434,30036,31656,33351,35060,36847,38638,40505,42375,44313,46247,48250,50236,52286,54316,56399,58453,60559,62621,64728,66787,68878,70911,72974,74963,76974,78907,80848,82701,84560,86315,88068,89714,91344,92858,94355,95721,97063,98273,99446,100480,101478,102324,103129,103784,104387,104836,105237,105474,105661,105690,105661,105474,105237,104836,104387,103784,103129,102324,101478,100480,99446,98273,97063,95721,94355,92858,91344,89714,88068,86315,84560,82701,80848,78907,76974,74963,72974,70911,68878,66787,64728,62621,60559,58453,56399,54316,52286,50236,48250,46247,44313,42375,40505,38638,36847,35060,33351,31656,30036,28434,26912,25407,23982,22581,21255,19955,18733,17534,16411,15316,14291,13294,12368,11466,10632,9825,9079,8359,7700,7062,6481,5923,5415,4928,4490,4068,3691,3331,3009,2702,2432,2172,1945,1729,1540,1360,1206,1057,931,811,709,612,532,454,391,331,282,235,199,163,136,110,90,71,58,44,35,26,20,14,11,7,5,3,2,1,1],"odd":[74613,605682,1850695,2727340,2045505,740278,100947],"low":[100947,740278,2045505,2727340,1850695,605682,74613],"ac":[180,858,7873,26292,103461,239998,823318,1148170,2675680,1609174,1510056],"cons":[3838380,3290040,913900,98800,3900,40],"zone":[0,840,249220,2685000,4210000,1000000],"last":[0,0,4480,259400,2124400,4048680,1708100],"bday":[3003,62062,465465,1636180,2863315,2378754,736281]};
 const LOTTO_TYPQ=[-55.3854,-20.9248,-19.0887,-18.0807,-17.3943,-16.8621,-16.4467,-16.1057,-15.817,-15.5783,-15.3643,-15.1817,-15.0102,-14.8505,-14.7037,-14.5669,-14.4421,-14.3278,-14.2226,-14.1199,-14.0269,-13.9381,-13.8553,-13.7714,-13.697,-13.6252,-13.5502,-13.48,-13.4142,-13.3514,-13.2919,-13.2326,-13.1792,-13.1241,-13.0724,-13.0221,-12.972,-12.9241,-12.8767,-12.8311,-12.7865,-12.7423,-12.7015,-12.6577,-12.6153,-12.5739,-12.5351,-12.496,-12.4576,-12.4203,-12.3814,-12.347,-12.306,-12.2673,-12.228,-12.1954,-12.1576,-12.1221,-12.0869,-12.0533,-12.0166,-11.9804,-11.9427,-11.9077,-11.8724,-11.8384,-11.801,-11.7667,-11.7309,-11.6944,-11.6569,-11.6242,-11.589,-11.5542,-11.5169,-11.4835,-11.4411,-11.4025,-11.3616,-11.3262,-11.2848,-11.2483,-11.2106,-11.1757,-11.1335,-11.0871,-11.0459,-10.9974,-10.9462,-10.9035,-10.8522,-10.7982,-10.7496,-10.694,-10.6328,-10.5672,-10.4809,-10.3682,-10.2442,-10.0696,-9.7576];
 const LT_COVERAGE=79.67; /* 필터(합89~187·홀1~5·구간≥3·3연속없음·AC≥6) 통과 조합 비율 = 실제 추첨이 이 범위에 들 확률 */
@@ -3171,7 +3212,7 @@ function ltRankKey(nums,strategy){ const f=ltFeat(nums), pct=ltTypPct(ltTypical(
 /* --- 다게임 최적화 (2026.10) ---
    ① 게임 간 번호 겹침 최소화: 같은 돈으로 '최소 1게임 5등↑' 확률 최대화 (1등 확률은 게임 수에만 비례)
    ② 분할위험: 최근 22회 실제 당첨 조합을 그대로/거의 그대로 쓰는 경우까지 감지 */
-const LOTTO_RECENT_SETS=[[16,18,20,32,33,39],[9,18,21,27,44,45],[8,9,19,25,41,42],[4,6,13,17,26,28],[11,14,16,34,41,44],[24,29,30,31,35,44],[12,13,29,34,37,42],[3,8,9,22,28,42],[4,13,14,18,31,38],[12,15,19,22,24,36],[2,7,20,25,37,40],[11,15,19,31,35,43],[6,7,11,15,39,43],[12,18,21,29,34,38],[10,20,23,34,37,40],[2,13,18,32,38,42],[11,13,22,32,33,36],[11,13,19,20,31,44],[7,13,16,23,24,43],[2,4,10,16,31,41],[9,18,24,38,43,44],[1,13,18,26,34,38]]; /* 1223~1244회, 교차확인 */
+const LOTTO_RECENT_SETS=[[9,18,21,27,44,45],[8,9,19,25,41,42],[4,6,13,17,26,28],[1,14,16,34,41,44],[24,29,30,31,35,44],[12,13,29,34,37,42],[3,8,9,22,28,42],[4,13,14,18,31,38],[12,15,19,22,24,36],[2,7,20,25,37,40],[1,15,19,31,35,43],[6,7,11,15,39,43],[12,18,21,29,34,38],[10,20,23,34,37,40],[2,13,18,32,38,42],[11,13,22,32,33,36],[11,13,19,20,31,44],[7,13,16,23,24,43],[2,4,10,16,31,41],[9,18,24,38,43,44],[1,13,18,26,34,38],[4,5,25,28,32,42]]; /* 1224~1245회, 회차별 기사 원문 대조(2026.10.10) */
 const LT_P_ANY=194130/8145060; /* 1게임이 5등 이상일 정확 확률 2.383% */
 function ltPastMatch(nums){ let best=0; for(const s of LOTTO_RECENT_SETS){ const c=s.filter(v=>nums.includes(v)).length; if(c>best)best=c; } return best; }
 /* 겹침 최소 그리디: 이미 쓴 번호는 거의 뽑히지 않게 하고, 필터 통과 조합 중 겹침이 가장 적은 것을 채택 */
@@ -3199,12 +3240,12 @@ let _lastGen=null, _lastGenAll=null;
 function ltMode(m){ document.querySelectorAll('#v-lotto .lt-seg button').forEach(b=>b.classList.toggle('on',b.dataset.lt===m)); document.getElementById('ltGen').style.display=m==='gen'?'':'none'; document.getElementById('ltCheck').style.display=m==='check'?'':'none'; }
 function ltFillFromGen(){ if(!_lastGenAll){ toast('먼저 번호를 추천받아 주세요'); ltMode('gen'); return; } document.getElementById('lcNums').value=_lastGenAll.map(g=>g.join(', ')).join('\n'); calcLottocheck(); }
 /* 로또 회차 자동 안내 (매주 토 20:35 추첨) */
-function lottoRound(){ const anchorRound=1244; const anchorDraw=new Date('2026-10-03T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
+function lottoRound(){ const anchorRound=1245; const anchorDraw=new Date('2026-10-10T20:35:00+09:00').getTime(); const week=7*86400000; const now=Date.now();
   const done=anchorRound+Math.max(0,Math.floor((now-anchorDraw)/week)); const nextRound=done+1;
   let nextDraw=anchorDraw; while(nextDraw<=now)nextDraw+=week; const dday=Math.ceil((nextDraw-now)/86400000); const nd=new Date(nextDraw);
   const wd=['일','월','화','수','목','금','토'][nd.getDay()];
   return {next:nextRound, date:`${nd.getMonth()+1}/${nd.getDate()}(${wd})`, dday}; }
-const LOTTO_LAST={round:1244, nums:[1,13,18,26,34,38], bonus:25, date:'2026.10.3'};
+const LOTTO_LAST={round:1245, nums:[4,5,25,28,32,42], bonus:12, date:'2026.10.10'};
 function ltBall(n,sz){ sz=sz||34; return `<span style="display:inline-flex;align-items:center;justify-content:center;width:${sz}px;height:${sz}px;border-radius:50%;background:${ltBallColor(n)};color:#fff;font-weight:800;font-size:${Math.round(sz*0.41)}px;margin:0 1px;box-shadow:0 2px 5px rgba(0,0,0,.15)">${n}</span>`; }
 function renderLottoBanner(){ const el=document.getElementById('ltRoundBanner'); if(!el)return; const r=lottoRound(), L=LOTTO_LAST, X=ltChi();
   el.innerHTML=`<div class="ltb-row"><span class="ltb-badge">🔔 다음 추첨</span><b>제 ${r.next}회</b> · ${r.date} 20:35 · <span class="ltb-dday">D-${r.dday}</span></div>`+
@@ -3356,6 +3397,45 @@ function calcSubscore(){ const g=id=>{let v=parseFloat(document.getElementById(i
   show('ssRes',`<div class="label">청약 가점 (84점 만점)</div><div class="big" style="color:var(--f2)">${total} 점</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">무주택 기간 (${fmt(nh,0)}년)</span><span class="vl">${pNoHouse} / 32점</span></div><div class="ri"><span class="nm">부양가족 (${fmt(fam,0)}명)</span><span class="vl">${pFamily} / 35점</span></div><div class="ri"><span class="nm">청약통장 (${fmt(acc,0)}년)</span><span class="vl">${pAcc} / 17점</span></div></div><div class="sub">${total>=69?'🏆 상위권 점수예요! 인기 단지도 노려볼 만해요.':total>=50?'👍 중상위권. 지역·평형에 따라 당첨 가능성이 있어요.':'무주택기간·통장기간이 쌓일수록 점수가 올라가요.'}<br><span style="font-size:11px">무주택기간은 만 30세(혼인 시 혼인신고일)부터 산정. 실제 가점은 청약 시 자격 확인이 필요해요.</span></div>`); }
 
 /* ===== 건보 피부양자 자격판정 ===== */
+/* ===== 근로·자녀장려금 (2026년 지급분 · 조세특례제한법 제100조의5·제100조의29) ===== */
+function eitcAmount(type,x){ /* 근로장려금 법정 산식: 점증·평탄·점감 */
+  const T={single:[4e6,9e6,22e6,1650000],one:[7e6,14e6,32e6,2850000],dual:[8e6,17e6,44e6,3300000]}[type]; const [a,b,c,M]=T;
+  if(x<=0||x>=c)return 0; if(x<a)return M*x/a; if(x<b)return M; return M-(x-b)*M/(c-b); }
+function ctcAmount(type,x,kids){ /* 자녀장려금(1인당 최대 100만, 상한 7,000만에서 50만): 홑벌이 2,100만·맞벌이 2,500만부터 직선 감소 */
+  if(kids<=0||x>=7e7)return 0; const b=type==='dual'?25e6:21e6; const per=x<b?1e6:1e6-(x-b)*5e5/(7e7-b); return per*kids; }
+function calcEitc(){ let type=document.getElementById('etType').value; const x=parseFloat(document.getElementById('etIncome').value);
+  let asset=parseFloat(document.getElementById('etAsset').value); if(isNaN(asset)||asset<0)asset=0; let kids=parseInt(document.getElementById('etKids').value,10); if(isNaN(kids)||kids<0)kids=0; const late=document.getElementById('etLate').checked;
+  if(isNaN(x)||x<0){document.getElementById('etcRes').classList.remove('show');return;}
+  const notes=[]; if(type==='single'&&kids>0){ type='one'; notes.push('부양자녀가 있으면 단독이 아니라 <b>홑벌이 가구</b>로 계산해요.'); }
+  if(asset>=24e7) return show('etcRes',`<div class="label">근로·자녀장려금</div><div class="big" style="color:var(--f3)">신청 불가</div><div class="sub">가구원 재산 합계 ${fmt(asset,0)}원이 2억 4천만원 이상이에요. (부채는 빼지 않아요)</div>`);
+  const half=asset>=17e7, rate=(half?0.5:1)*(late?0.95:1);
+  const e0=eitcAmount(type,x), c0=ctcAmount(type,x,kids); const e=Math.floor(e0*rate), c=Math.floor(c0*rate), tot=e+c;
+  const cap={single:2200,one:3200,dual:4400}[type]; const tName={single:'단독',one:'홑벌이',dual:'맞벌이'}[type];
+  const seg=x<=0?'':x>={single:22e6,one:32e6,dual:44e6}[type]?'소득 상한 초과':x<{single:4e6,one:7e6,dual:8e6}[type]?'점증 구간 (소득이 늘수록 증가)':x<{single:9e6,one:14e6,dual:17e6}[type]?'평탄 구간 (최대액)':'점감 구간 (소득이 늘수록 감소)';
+  if(half)notes.push('재산 1억 7천만원 이상이라 <b>50% 감액</b>했어요.'); if(late)notes.push('기한 후 신청이라 <b>95%</b>만 지급돼요.');
+  if(kids>0&&c0===0&&x>=7e7)notes.push('총소득 7,000만원 이상이라 자녀장려금은 대상이 아니에요.');
+  if(c>0)notes.push('연말정산·종합소득세에서 자녀세액공제를 받았다면 그만큼 자녀장려금에서 빠져요.');
+  show('etcRes',`<div class="label">예상 장려금 합계 · ${tName} 가구</div><div class="big" style="color:var(--f2)">${fmt(tot,0)} 원</div><div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">근로장려금</span><span class="vl">${fmt(e,0)}원</span></div><div class="ri"><span class="nm">자녀장려금 (${kids}명)</span><span class="vl">${fmt(c,0)}원</span></div></div><div class="sub">근로장려금: ${seg} · 소득 상한 ${fmt(cap,0)}만원 미만<br>${notes.join('<br>')}${notes.length?'<br>':''}<span style="font-size:11px">정기신청은 매년 5월, 지급은 8월 말이에요. 정확한 금액은 홈택스 '장려금 계산해보기'로 확인하세요.</span></div>`); }
+
+/* ===== 기초연금 (2026년 · 기초연금법, 보건복지부 고시) ===== */
+const BP={ base:349700, sel:{single:2470000,couple:3952000}, wageDed:1160000, finDed:20000000, conv:0.04 };
+function calcBasicpension(){ const type=document.getElementById('bpType').value; const g=id=>{const v=parseFloat(document.getElementById(id).value); return isNaN(v)||v<0?0:v;};
+  const w1=g('bpWork'), w2=type==='single'?0:g('bpWork2'), other=g('bpOther'), basic=parseFloat(document.getElementById('bpRegion').value)||135000000, prop=g('bpProp'), fin=g('bpFin'), debt=g('bpDebt'), nps=g('bpNps');
+  if(!w1&&!w2&&!other&&!prop&&!fin){document.getElementById('bpnRes').classList.remove('show');return;}
+  /* 소득평가액: 근로소득은 1인별 116만 공제 후 70% 반영 */
+  const incEval=Math.max(w1-BP.wageDed,0)*0.7+Math.max(w2-BP.wageDed,0)*0.7+other;
+  /* 재산: 일반재산에서 기본재산액 공제(모자라면 금융재산에서), 금융재산 2,000만 공제, 부채 차감, 연 4% ÷ 12 */
+  let gen=prop-basic, f=fin; if(gen<0){ f+=gen; gen=0; } f=Math.max(f-BP.finDed,0); const assetNet=Math.max(gen+f-debt,0); const assetInc=assetNet*BP.conv/12;
+  const recog=incEval+assetInc; const couple=type!=='single'; const limit=couple?BP.sel.couple:BP.sel.single;
+  const head=`<div class="rowlist" style="margin-top:12px"><div class="ri"><span class="nm">소득평가액</span><span class="vl">${fmt(Math.round(incEval),0)}원</span></div><div class="ri"><span class="nm">재산의 소득환산액</span><span class="vl">${fmt(Math.round(assetInc),0)}원</span></div><div class="ri"><span class="nm">인정액 / 기준</span><span class="vl">${fmt(Math.round(recog),0)} / ${fmt(limit,0)}원</span></div></div>`;
+  if(recog>limit) return show('bpnRes',`<div class="label">기초연금</div><div class="big" style="color:var(--f3)">수급 대상 아님</div>${head}<div class="sub">소득인정액이 선정기준액보다 ${fmt(Math.round(recog-limit),0)}원 많아요.</div>`);
+  const n=type==='both'?2:1; const each=BP.base*(type==='both'?0.8:1); let total=each*n; const notes=[];
+  if(type==='both')notes.push('부부가 모두 받으면 각각 20% 감액돼요.');
+  /* 소득역전 방지: 소득인정액+기초연금이 선정기준액을 넘지 않게, 최소 기준연금액의 10% */
+  if(recog+total>limit){ const adj=Math.max(limit-recog,BP.base*0.1*n); notes.push(`소득역전 방지 감액: ${fmt(Math.round(total),0)}원 → ${fmt(Math.round(adj),0)}원`); total=adj; }
+  let npsNote=''; if(nps>BP.base*1.5){ const minE=Math.min(total,BP.base*0.5*(type==='both'?0.8:1)+(n-1)*each); npsNote=`<br>⚠️ 국민연금 월 ${fmt(nps,0)}원이 ${fmt(BP.base*1.5,0)}원(기준연금액의 150%)을 넘어 <b>연계 감액</b> 대상이에요. 본인 몫이 최대 50%까지 줄 수 있어 월 <b>${fmt(Math.round(minE),0)}~${fmt(Math.round(total),0)}원</b> 범위예요. 정확한 감액은 국민연금 A급여 기준이라 공단에 확인하세요.`; }
+  show('bpnRes',`<div class="label">예상 기초연금 (월${type==='both'?' · 부부 합계':''})</div><div class="big" style="color:var(--f2)">${fmt(Math.floor(total/10)*10,0)} 원</div>${head}<div class="sub">${notes.join('<br>')}${npsNote}${notes.length||npsNote?'<br>':''}<span style="font-size:11px">만 65세 이상이 대상이에요. 신청은 주민센터·국민연금공단·복지로에서 해요.</span></div>`); }
+
 function calcHealthdep(){ const inc=parseFloat(document.getElementById('hdIncome').value), prop=parseFloat(document.getElementById('hdProperty').value); const biz=document.getElementById('hdBiz').checked;
   if(isNaN(inc)&&isNaN(prop)&&!biz){document.getElementById('hdRes').classList.remove('show');return;}
   const income=isNaN(inc)?0:inc, property=isNaN(prop)?0:prop; const reasons=[]; let ok=true;
@@ -3416,7 +3496,7 @@ function reportExport(){ if(!report.length)return; const esc=s=>String(s).replac
 
 /* ===== 업데이트 내역 ===== */
 const CHANGELOG=[
-  ['2026.10','🎯 다게임 겹침 최소화: 같은 금액으로 최소 1게임 당첨 확률↑ (5게임 11.0%→11.8%, 확률 표시)','🧾 진단 탭 여러 게임 모드: 겹침·손해 확률 진단','🔧 결과가 안 보이던 8종 수정 (인생시계·페이스·육아휴직·학자금·적금표·택시·장바구니·로또 진단 — 화면 id 중복)','🛡️ 분할위험에 최근 22회 당첨 조합 재사용 감지 추가 · 기본 전략=분할 회피','🍀 로또 1244회(10.3) 최신화','🧮 근거 기반 엔진: 8,145,060조합 전수계산 분포로 필터 재설정(커버리지 71.8%→79.7%)','🧪 공정성 χ² 검정 표시(p=0.68: 핫·콜드 차이는 우연 범위)','🛡️ 당첨금 분할 위험 진단·회피 전략 추가','🎰 진단: 패턴별 정확 확률·전형성 백분위 표시'],
+  ['2026.10','🍀 로또 1245회(10.10) 최신화 · χ²=38.6, p=0.70','🔍 최근 22회 당첨번호를 회차별 기사 원문과 대조 → 1227·1234회 오기(1→11) 수정, 최근 20회 통계 재집계','🧧 새 계산기: 근로·자녀장려금(2026 지급분 법정 산식)','👵 새 계산기: 기초연금(소득인정액·부부감액·소득역전 방지)','🐞 실업급여 버그 수정: 상한(66,000)이 하한보다 낮아 모두 66,048원으로 나오던 문제 → 2026 상한 68,100원, 50세 이상 소정급여일수 표 정확화','👶 육아휴직 급여 2026 기준 전면 개편(1~6개월 100%·상한 250/200만, 사후지급금 폐지, 6+6 특례)','🏥 지역건보 점수당 211.5원·장기요양 13.14% 표기 통일, 4대보험 10원 미만 절사(공단 방식)','🧓 국민연금 A값 3,193,511원·가입연도별 소득대체율 상수, 학자금 상환기준 1,898만원·대학원 25%','🏠 전월세 전환율 법정 상한 5.0%(기준금리 3.00%)','🎯 다게임 겹침 최소화: 같은 금액으로 최소 1게임 당첨 확률↑ (5게임 11.0%→11.8%, 확률 표시)','🧾 진단 탭 여러 게임 모드: 겹침·손해 확률 진단','🔧 결과가 안 보이던 8종 수정 (인생시계·페이스·육아휴직·학자금·적금표·택시·장바구니·로또 진단 — 화면 id 중복)','🛡️ 분할위험에 최근 22회 당첨 조합 재사용 감지 추가 · 기본 전략=분할 회피','🍀 로또 1244회(10.3) 최신화','🧮 근거 기반 엔진: 8,145,060조합 전수계산 분포로 필터 재설정(커버리지 71.8%→79.7%)','🧪 공정성 χ² 검정 표시(p=0.68: 핫·콜드 차이는 우연 범위)','🛡️ 당첨금 분할 위험 진단·회피 전략 추가','🎰 진단: 패턴별 정확 확률·전형성 백분위 표시'],
   ['2026.09','🍀 로또 1243회(9.26) 최신화 + 최근 20회 트렌드 + 고정수·제외수 + 최근 당첨번호','🩺 건보 피부양자 판정·🏠 청약 가점·🛡️ 예금자보호·🎁 고향사랑기부 계산기','🎰 로또 진단에 최근 20회 트렌드 적중 지표','📊 결과 리포트 이미지에 금액 막대그래프 추가','⌨️ 단축키·🏬 배경·📱 모바일 정렬·🏦 퇴직연금·📆 영업일'],
   ['2026.08','📈 주식 평단가(물타기)·✈️ 여행 환전 예산 추가','🧾 연말정산 종합·ISA 절세·월세 세액공제','💱 실시간 환율 자동 연동(ECB)','🏬 백화점 배경 고도화·📱 모바일 최적화'],
   ['2026.07','🛒 위탁·매입 마진(플랫폼·관세 반영)','🔑 전월세 전환·🎯 목표 매도가·⚖️ 손익분기점·🎓 학점·💕 기념일','👥 방문자(누적·오늘·현재접속) 정밀 집계','📱 QR 결과 공유'],
@@ -3424,7 +3504,7 @@ const CHANGELOG=[
 ];
 function showChangelog(){ let ov=document.getElementById('clModal'); if(!ov){ ov=document.createElement('div'); ov.id='clModal'; ov.className='qr-modal'; ov.onclick=e=>{if(e.target===ov)ov.classList.remove('show');}; document.body.appendChild(ov); }
   const body=CHANGELOG.map(g=>`<div class="cl-group"><div class="cl-ver">${g[0]}</div>${g.slice(1).map(x=>`<div class="cl-item">${x}</div>`).join('')}</div>`).join('');
-  ov.innerHTML=`<div class="qr-box" style="max-width:380px;text-align:left"><button class="qr-x" onclick="document.getElementById('clModal').classList.remove('show')">✕</button><div class="qr-title" style="text-align:center">🆕 업데이트 내역</div><div class="cl-list">${body}</div><div class="sub" style="text-align:center;margin-top:6px">총 129종 · 매주 로또·매년 세율 최신화</div></div>`;
+  ov.innerHTML=`<div class="qr-box" style="max-width:380px;text-align:left"><button class="qr-x" onclick="document.getElementById('clModal').classList.remove('show')">✕</button><div class="qr-title" style="text-align:center">🆕 업데이트 내역</div><div class="cl-list">${body}</div><div class="sub" style="text-align:center;margin-top:6px">총 131종 · 매주 로또·매년 세율 최신화</div></div>`;
   ov.classList.add('show'); }
 
 /* ===== 키보드 단축키 ===== */
